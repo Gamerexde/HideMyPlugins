@@ -23,8 +23,6 @@ import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.*;
 
 
-
-
 public class Main extends JavaPlugin implements Listener {
     FileConfiguration config;
     ProtocolManager protocolManager;
@@ -54,8 +52,8 @@ public class Main extends JavaPlugin implements Listener {
         Bukkit.getServer().getPluginManager().registerEvents((Listener)this, (Plugin)this);
     
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-		console.sendMessage(ChatColor.YELLOW + "- HideMyPlugins -" + ChatColor.DARK_GRAY + "v1.0");
-		console.sendMessage(ChatColor.GRAY + "Version:"  + (ChatColor.LIGHT_PURPLE + " V1.0-BETA"));
+		console.sendMessage(ChatColor.YELLOW + "- HideMyPlugins -" + ChatColor.DARK_GRAY + "v1.1");
+		console.sendMessage(ChatColor.GRAY + "Version:"  + (ChatColor.LIGHT_PURPLE + " V1.1"));
 		console.sendMessage(ChatColor.GRAY + "Minecraft:"  + (ChatColor.LIGHT_PURPLE + " 1.8.8"));
 		console.sendMessage(ChatColor.GRAY + "");
 		console.sendMessage(ChatColor.GREEN + "El plugin a sido cargado sin ningun");
@@ -71,68 +69,55 @@ public class Main extends JavaPlugin implements Listener {
     
     @EventHandler
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event)  {
-        if(event.getMessage().equals("/?") && !event.getPlayer().isOp()) {
+        if(event.getMessage().equals("/?") && !event.getPlayer().hasPermission("hmp./?")) {
             event.setCancelled(true);
         }
-        if(event.getMessage().equals("/me") && !event.getPlayer().isOp()) {
+        if(event.getMessage().equals("/me") && !event.getPlayer().hasPermission("hmp.me")) {
             event.setCancelled(true);
         }
-        if(event.getMessage().equals("/ver") && !event.getPlayer().isOp()) {
+        if(event.getMessage().equals("/ver") && !event.getPlayer().hasPermission("hmp.ver")) {
             event.setCancelled(true);
         }
-        if(event.getMessage().equals("/ver *") && !event.getPlayer().isOp()) {
+        if(event.getMessage().equals("/ver *") && !event.getPlayer().hasPermission("hmp.ver*")) {
             event.setCancelled(true);
         }
-        if(event.getMessage().equals("/version") && !event.getPlayer().isOp()) {
+        if(event.getMessage().equals("/version") && !event.getPlayer().hasPermission("hmp.version")) {
             event.setCancelled(true);
         }
-        if(event.getMessage().equals("/pl") && !event.getPlayer().isOp()) {
+        if(event.getMessage().equals("/pl") && !event.getPlayer().hasPermission("hmp.pl")) {
             event.setCancelled(true);
         }
-        if(event.getMessage().equals("/plugman") && !event.getPlayer().isOp()) {
+        if(event.getMessage().equals("/plugman") && !event.getPlayer().hasPermission("hmp.plugman")) {
             event.setCancelled(true);
         }
-        if(event.getMessage().equals("/about") && !event.getPlayer().isOp()) {
+        if(event.getMessage().equals("/about") && !event.getPlayer().hasPermission("hmp.about")) {
             event.setCancelled(true);
         }
-        if(event.getMessage().equals("/help") && !event.getPlayer().isOp()) {
+        if(event.getMessage().equals("/help") && !event.getPlayer().hasPermission("hmp.help")) {
             event.setCancelled(true);
         }
-        if(event.getMessage().equals("/bukkit:help") && !event.getPlayer().isOp()) {
+        if(event.getMessage().equals("/bukkit:help") && !event.getPlayer().hasPermission("hmp.bukkit:help")) {
             event.setCancelled(true);
         }
-        if(event.getMessage().equals("/bukkit:ver") && !event.getPlayer().isOp()) {
+        if(event.getMessage().equals("/bukkit:ver") && !event.getPlayer().hasPermission("hmp.bukkit:ver")) {
             event.setCancelled(true);
         }
-        if(event.getMessage().equals("/bukkit:kill") && !event.getPlayer().isOp()) {
+        if(event.getMessage().equals("/bukkit:kill") && !event.getPlayer().hasPermission("hmp.bukkit:kill")) {
             event.setCancelled(true);
         }
-        if(event.getMessage().equals("/kill") && !event.getPlayer().isOp()) {
+        if(event.getMessage().equals("/kill") && !event.getPlayer().hasPermission("hmp.kill")) {
             event.setCancelled(true);
         }
-        if(event.getMessage().equals("/op") && !event.getPlayer().isOp()) {
+        if(event.getMessage().equals("/op") && !event.getPlayer().hasPermission("hmp.op")) {
             event.setCancelled(true);
         }
     }
-    public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
-        if (cmd.getName().equalsIgnoreCase("hmpReload")) {
-            if (sender.hasPermission("hmp.reload")) {
-                sender.sendMessage("§8[§eHideMyPlugins§8] §7Configuracion Recargada.");
-                this.reloadConfig();
-            }
-            else {
-                sender.sendMessage("§8[§eHideMyPlugins§8] §cNo tienes permisos de recargar!");
-            }
-        }
-        return false;
-    }
-    
 
 
 	public void onDisable() {
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-		console.sendMessage(ChatColor.YELLOW + "- HideMyPlugins -" + ChatColor.DARK_GRAY + "v1.0");
-		console.sendMessage(ChatColor.GRAY + "Version:"  + (ChatColor.LIGHT_PURPLE + " V1.0-BETA"));
+		console.sendMessage(ChatColor.YELLOW + "- HideMyPlugins -" + ChatColor.DARK_GRAY + "v1.1");
+		console.sendMessage(ChatColor.GRAY + "Version:"  + (ChatColor.LIGHT_PURPLE + " V1.1"));
 		console.sendMessage(ChatColor.GRAY + "Minecraft:"  + (ChatColor.LIGHT_PURPLE + " 1.8.8"));
 		console.sendMessage(ChatColor.GRAY + "");
 		console.sendMessage(ChatColor.RED + "El plugin a sido apagado sin ningun");
@@ -148,7 +133,7 @@ public class Main extends JavaPlugin implements Listener {
 	
 	public void onLoad(){
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-		console.sendMessage(ChatColor.YELLOW + "- HideMyPlugins -" + ChatColor.DARK_GRAY + "v1.0");
+		console.sendMessage(ChatColor.YELLOW + "- HideMyPlugins -" + ChatColor.DARK_GRAY + "v1.1");
 		console.sendMessage(ChatColor.GRAY + "Cargando Porfavor espere...");
 		for(Player player : Bukkit.getOnlinePlayers()){
 			TTA_Methods.sendTitle(player, "§e- HideMyPlugins -", 10, 50, 20,
