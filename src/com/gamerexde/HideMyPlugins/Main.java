@@ -7,8 +7,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -52,18 +50,14 @@ public class Main extends JavaPlugin implements Listener {
         Bukkit.getServer().getPluginManager().registerEvents((Listener)this, (Plugin)this);
     
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-		console.sendMessage(ChatColor.YELLOW + "- HideMyPlugins -" + ChatColor.DARK_GRAY + "v1.1");
-		console.sendMessage(ChatColor.GRAY + "Version:"  + (ChatColor.LIGHT_PURPLE + " V1.1"));
+		console.sendMessage(ChatColor.YELLOW + "- HideMyPlugins -" + ChatColor.DARK_GRAY + "v1.2");
+		console.sendMessage(ChatColor.GRAY + "Version:"  + (ChatColor.LIGHT_PURPLE + " V1.2"));
 		console.sendMessage(ChatColor.GRAY + "Minecraft:"  + (ChatColor.LIGHT_PURPLE + " 1.8.8"));
 		console.sendMessage(ChatColor.GRAY + "");
 		console.sendMessage(ChatColor.GREEN + "El plugin a sido cargado sin ningun");
 		console.sendMessage(ChatColor.GREEN + "problema!");
 		
 		
-		for(Player player : Bukkit.getOnlinePlayers()){
-			TTA_Methods.sendTitle(player, "§e- HideMyPlugins -", 10, 50, 20,
-					"§7Cargado!", 10, 50, 20);
-		}
 		
     }
     
@@ -105,6 +99,9 @@ public class Main extends JavaPlugin implements Listener {
         if(event.getMessage().equals("/bukkit:kill") && !event.getPlayer().hasPermission("hmp.bukkit:kill")) {
             event.setCancelled(true);
         }
+        if(event.getMessage().equals("/bukkit:?") && !event.getPlayer().hasPermission("hmp.bukkit:?")) {
+            event.setCancelled(true);
+        }
         if(event.getMessage().equals("/kill") && !event.getPlayer().hasPermission("hmp.kill")) {
             event.setCancelled(true);
         }
@@ -116,34 +113,20 @@ public class Main extends JavaPlugin implements Listener {
 
 	public void onDisable() {
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-		console.sendMessage(ChatColor.YELLOW + "- HideMyPlugins -" + ChatColor.DARK_GRAY + "v1.1");
-		console.sendMessage(ChatColor.GRAY + "Version:"  + (ChatColor.LIGHT_PURPLE + " V1.1"));
+		console.sendMessage(ChatColor.YELLOW + "- HideMyPlugins -" + ChatColor.DARK_GRAY + "v1.2");
+		console.sendMessage(ChatColor.GRAY + "Version:"  + (ChatColor.LIGHT_PURPLE + " V1.2"));
 		console.sendMessage(ChatColor.GRAY + "Minecraft:"  + (ChatColor.LIGHT_PURPLE + " 1.8.8"));
 		console.sendMessage(ChatColor.GRAY + "");
 		console.sendMessage(ChatColor.RED + "El plugin a sido apagado sin ningun");
-		console.sendMessage(ChatColor.RED + "problema!");
-		for(Player player : Bukkit.getOnlinePlayers()){
-			TTA_Methods.sendTitle(player, "§e- HideMyPlugins -", 10, 50, 20,
-					"§cApagando...", 10, 50, 20);
-		}
-
-    	
+		console.sendMessage(ChatColor.RED + "problema!");  	
     }
 	
 	
 	public void onLoad(){
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-		console.sendMessage(ChatColor.YELLOW + "- HideMyPlugins -" + ChatColor.DARK_GRAY + "v1.1");
+		console.sendMessage(ChatColor.YELLOW + "- HideMyPlugins -" + ChatColor.DARK_GRAY + "v1.2");
 		console.sendMessage(ChatColor.GRAY + "Cargando Porfavor espere...");
-		for(Player player : Bukkit.getOnlinePlayers()){
-			TTA_Methods.sendTitle(player, "§e- HideMyPlugins -", 10, 50, 20,
-					"§aPlugin detectado, iniciando...", 10, 50, 20);
-		}
 		
 	}
 	
 }
-
-	
-	        
-
