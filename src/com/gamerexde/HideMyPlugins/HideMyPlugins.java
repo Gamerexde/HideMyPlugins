@@ -16,15 +16,28 @@ public class HideMyPlugins implements CommandExecutor {
 		    if(args.length == 1){ 
 			      if(args[0].equalsIgnoreCase("reload")){ 
 			    	  if (sender.hasPermission("hmp.reload")) {
-			    		  sender.sendMessage("§8[§eHideMyPlugins§8] §7Configuracion Recargada.");
+			    		  sender.sendMessage("Â§8[Â§eHideMyPluginsÂ§8] Â§7Configuracion Recargada.");
 			    		  this.reloadConfig();
 			    	  }
 			    	  else {
-			    		  sender.sendMessage("§8[§eHideMyPlugins§8] §cNo tienes permisos de recargar!");
+			    		  sender.sendMessage("Â§8[Â§eHideMyPluginsÂ§8] Â§cNo tienes permisos!");
 			    	  }
 			        return false; 
 			      }
 			    }
+		    if(args.length == 1){ 
+			      if(args[0].equalsIgnoreCase("version")){ 
+			    	  if (sender.hasPermission("hmp.PLVersion")) {
+			    		  sender.sendMessage("Â§8[Â§eHideMyPluginsÂ§8] Â§6V1.2");
+			    		  this.reloadConfig();
+			    	  }
+			    	  else {
+			    		  sender.sendMessage("Â§8[Â§eHideMyPluginsÂ§8] Â§cNo tienes permisos!");
+			    	  }
+			        return false; 
+			      }
+			    }
+		    
 		    
 			if (!(sender instanceof Player)) {
 				
@@ -33,19 +46,16 @@ public class HideMyPlugins implements CommandExecutor {
 			}
 			
 			Player player = (Player) sender;
-			player.sendMessage("§8[§eHideMyPlugins§8]");
-			player.sendMessage("     §8[§e1.1§8]     ");
+			player.sendMessage("Â§8[Â§eHideMyPluginsÂ§8]");
+			player.sendMessage("     Â§8[Â§e1.2Â§8]     ");
 			player.sendMessage("");
-			player.sendMessage("§e/hidemyplugins Reload §8-> §eRecarga la Config.yml");
+			player.sendMessage("Â§e/hidemyplugins Reload Â§8-> Â§eRecarga la Config.yml");
+			player.sendMessage("Â§e/hidemyplugins Version Â§8-> Â§eMuestra la version actual.");
 			
-			TTA_Methods.sendTitle(player, "§e- HideMyPlugins -", 10, 50, 10,"§8[§e1.1§8]" , 10, 50, 10);
+			TTA_Methods.sendTitle(player, "Â§e- HideMyPlugins -", 10, 50, 10,"Â§8[Â§e1.2Â§8]" , 10, 50, 10);
 			
 		    return true;
 		}
-		
-		
-		
-  
 
 		return false;
 	}
@@ -56,4 +66,3 @@ public class HideMyPlugins implements CommandExecutor {
 
 
 }
-
