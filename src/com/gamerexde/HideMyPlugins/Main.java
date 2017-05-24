@@ -11,6 +11,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.*;
 import de.Herbystar.TTA.*;
@@ -24,12 +25,14 @@ import com.comphenix.protocol.events.*;
 public class Main extends JavaPlugin implements Listener {
     FileConfiguration config;
     ProtocolManager protocolManager;
+	
     
     
     public void onEnable() {
         this.config = this.getConfig();
         this.saveDefaultConfig();
         getCommand("HideMyPlugins").setExecutor(new HideMyPlugins());
+        // Primary Method
         (this.protocolManager = ProtocolLibrary.getProtocolManager()).addPacketListener((PacketListener)new PacketAdapter(this, ListenerPriority.NORMAL, new PacketType[] { PacketType.Play.Client.TAB_COMPLETE }) {
             public void onPacketReceiving(final PacketEvent event) {
                 if (event.getPacketType() == PacketType.Play.Client.TAB_COMPLETE) {
@@ -40,72 +43,124 @@ public class Main extends JavaPlugin implements Listener {
                         if (message.startsWith("") && !message.contains("  ")) {
                             event.setCancelled(true);
                         }
+                        
+                        
                     }
                     catch (FieldAccessException e) {
                     	Main.this.getLogger().log(Level.SEVERE, "Couldn't access field.", (Throwable)e);
                     }
                 }
             }
-        });        
+        }); 
+          
         Bukkit.getServer().getPluginManager().registerEvents((Listener)this, (Plugin)this);
     
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-		console.sendMessage(ChatColor.YELLOW + "- HideMyPlugins -" + ChatColor.DARK_GRAY + "v1.2");
-		console.sendMessage(ChatColor.GRAY + "Version:"  + (ChatColor.LIGHT_PURPLE + " V1.2"));
-		console.sendMessage(ChatColor.GRAY + "Minecraft:"  + (ChatColor.LIGHT_PURPLE + " 1.8.8"));
-		console.sendMessage(ChatColor.GRAY + "");
-		console.sendMessage(ChatColor.GREEN + "El plugin a sido cargado sin ningun");
-		console.sendMessage(ChatColor.GREEN + "problema!");
-		
+		console.sendMessage(ChatColor.YELLOW + "- HideMyPlugins -" + ChatColor.DARK_GRAY + "v2.0");
+		console.sendMessage(ChatColor.GREEN + "Plugin Succesfully Loaded and Enabled!");  
 		
 		
     }
     
-    @EventHandler
-    public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event)  {
+
+    
+    // Base anti-tab.
+    public void antiTab() {
+        protocolManager = ProtocolLibrary.getProtocolManager();
+        protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, new PacketType[] { PacketType.Play.Client.TAB_COMPLETE }) {
+          public void onPacketReceiving(PacketEvent event) {
+            if (event.getPacketType() == PacketType.Play.Client.TAB_COMPLETE) {
+              try {
+                if (event.getPlayer().hasPermission("hmp.bypass")) {
+                 return;
+                }
+                
+                
+                PacketContainer packet = event.getPacket();
+                String message = ((String)packet.getSpecificModifier(String.class).read(0)).toLowerCase();
+                Player player = event.getPlayer();
+                if (((message.startsWith("/")) && (!message.contains(" "))) || ((message.startsWith("/ver")) && (!message.contains("  "))) || ((message.startsWith("/version")) && (!message.contains("  "))) || ((message.startsWith("/?")) && (!message.contains("  "))) || ((message.startsWith("/about")) && (!message.contains("  "))) || ((message.startsWith("/help")) && (!message.contains("  ")))) {
+                  event.setCancelled(true);
+                  TTA_Methods.sendTitle(player, "§c§lGuard", 10, 50, 10,"§7Sorry, Access Denied." , 10, 50, 10);
+                }
+              }
+              catch (FieldAccessException e) {
+                Main.this.getLogger().log(Level.SEVERE, "Couldn't access field.", e);
+              }
+            }
+          }
+        });
+    }
+    
+    
+    
+    
+    
+    @EventHandler(priority=EventPriority.HIGHEST)
+    public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event)  {	
+    	Player player = event.getPlayer();
         if(event.getMessage().equals("/?") && !event.getPlayer().hasPermission("hmp./?")) {
+        	TTA_Methods.sendTitle(player, "§c§lGuard", 10, 50, 10,"§7Sorry, Access Denied." , 10, 50, 10);
             event.setCancelled(true);
         }
         if(event.getMessage().equals("/me") && !event.getPlayer().hasPermission("hmp.me")) {
+        	TTA_Methods.sendTitle(player, "§c§lGuard", 10, 50, 10,"§7Sorry, Access Denied." , 10, 50, 10);
             event.setCancelled(true);
         }
         if(event.getMessage().equals("/ver") && !event.getPlayer().hasPermission("hmp.ver")) {
+        	TTA_Methods.sendTitle(player, "§c§lGuard", 10, 50, 10,"§7Sorry, Access Denied." , 10, 50, 10);
             event.setCancelled(true);
         }
         if(event.getMessage().equals("/ver *") && !event.getPlayer().hasPermission("hmp.ver*")) {
+        	TTA_Methods.sendTitle(player, "§c§lGuard", 10, 50, 10,"§7Sorry, Access Denied." , 10, 50, 10);
             event.setCancelled(true);
         }
         if(event.getMessage().equals("/version") && !event.getPlayer().hasPermission("hmp.version")) {
+        	TTA_Methods.sendTitle(player, "§c§lGuard", 10, 50, 10,"§7Sorry, Access Denied." , 10, 50, 10);
             event.setCancelled(true);
         }
         if(event.getMessage().equals("/pl") && !event.getPlayer().hasPermission("hmp.pl")) {
+        	TTA_Methods.sendTitle(player, "§c§lGuard", 10, 50, 10,"§7Sorry, Access Denied." , 10, 50, 10);
+            event.setCancelled(true);
+        }
+        if(event.getMessage().equals("/plugins") && !event.getPlayer().hasPermission("hmp.plugins")) {
+        	TTA_Methods.sendTitle(player, "§c§lGuard", 10, 50, 10,"§7Sorry, Access Denied." , 10, 50, 10);
             event.setCancelled(true);
         }
         if(event.getMessage().equals("/plugman") && !event.getPlayer().hasPermission("hmp.plugman")) {
+        	TTA_Methods.sendTitle(player, "§c§lGuard", 10, 50, 10,"§7Sorry, Access Denied." , 10, 50, 10);
             event.setCancelled(true);
         }
         if(event.getMessage().equals("/about") && !event.getPlayer().hasPermission("hmp.about")) {
+        	TTA_Methods.sendTitle(player, "§c§lGuard", 10, 50, 10,"§7Sorry, Access Denied." , 10, 50, 10);
             event.setCancelled(true);
         }
         if(event.getMessage().equals("/help") && !event.getPlayer().hasPermission("hmp.help")) {
+        	TTA_Methods.sendTitle(player, "§c§lGuard", 10, 50, 10,"§7Sorry, Access Denied." , 10, 50, 10);
             event.setCancelled(true);
         }
         if(event.getMessage().equals("/bukkit:help") && !event.getPlayer().hasPermission("hmp.bukkit:help")) {
+        	TTA_Methods.sendTitle(player, "§c§lGuard", 10, 50, 10,"§7Sorry, Access Denied." , 10, 50, 10);
             event.setCancelled(true);
         }
         if(event.getMessage().equals("/bukkit:ver") && !event.getPlayer().hasPermission("hmp.bukkit:ver")) {
+        	TTA_Methods.sendTitle(player, "§c§lGuard", 10, 50, 10,"§7Sorry, Access Denied." , 10, 50, 10);
             event.setCancelled(true);
         }
         if(event.getMessage().equals("/bukkit:kill") && !event.getPlayer().hasPermission("hmp.bukkit:kill")) {
+        	TTA_Methods.sendTitle(player, "§c§lGuard", 10, 50, 10,"§7Sorry, Access Denied." , 10, 50, 10);
             event.setCancelled(true);
         }
         if(event.getMessage().equals("/bukkit:?") && !event.getPlayer().hasPermission("hmp.bukkit:?")) {
+        	TTA_Methods.sendTitle(player, "§c§lGuard", 10, 50, 10,"§7Sorry, Access Denied." , 10, 50, 10);
             event.setCancelled(true);
         }
         if(event.getMessage().equals("/kill") && !event.getPlayer().hasPermission("hmp.kill")) {
+        	TTA_Methods.sendTitle(player, "§c§lGuard", 10, 50, 10,"§7Sorry, Access Denied." , 10, 50, 10);
             event.setCancelled(true);
         }
         if(event.getMessage().equals("/op") && !event.getPlayer().hasPermission("hmp.op")) {
+        	TTA_Methods.sendTitle(player, "§c§lGuard", 10, 50, 10,"§7Sorry, Access Denied." , 10, 50, 10);
             event.setCancelled(true);
         }
     }
@@ -113,19 +168,16 @@ public class Main extends JavaPlugin implements Listener {
 
 	public void onDisable() {
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-		console.sendMessage(ChatColor.YELLOW + "- HideMyPlugins -" + ChatColor.DARK_GRAY + "v1.2");
-		console.sendMessage(ChatColor.GRAY + "Version:"  + (ChatColor.LIGHT_PURPLE + " V1.2"));
-		console.sendMessage(ChatColor.GRAY + "Minecraft:"  + (ChatColor.LIGHT_PURPLE + " 1.8.8"));
-		console.sendMessage(ChatColor.GRAY + "");
-		console.sendMessage(ChatColor.RED + "El plugin a sido apagado sin ningun");
-		console.sendMessage(ChatColor.RED + "problema!");  	
+		console.sendMessage(ChatColor.LIGHT_PURPLE + "- HideMyPlugins -" + ChatColor.GRAY + "v2.0");
+		console.sendMessage(ChatColor.RED + "Plugin will now Shutdown...");  
     }
+
 	
 	
 	public void onLoad(){
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-		console.sendMessage(ChatColor.YELLOW + "- HideMyPlugins -" + ChatColor.DARK_GRAY + "v1.2");
-		console.sendMessage(ChatColor.GRAY + "Cargando Porfavor espere...");
+		console.sendMessage(ChatColor.LIGHT_PURPLE + "- HideMyPlugins -" + ChatColor.GRAY + "v2.0");  
+		console.sendMessage(ChatColor.GRAY + "Loading...");
 		
 	}
 	
