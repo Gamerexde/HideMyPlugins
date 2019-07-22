@@ -20,7 +20,7 @@ public class Blocker implements Listener {
         final FileConfiguration msgconfig = Main.getInstance().getMsgConfig();
         for (final String command : Main.getInstance().getBlockedCommands()) {
             if (msg[0].toLowerCase().equals("/" + command)) {
-                if (player.hasPermission("hidemyplugins.notify.message")) {
+                if (player.hasPermission("hidemyplugins.access")) {
                     if (Objects.requireNonNull(msgconfig.getString("grantMessage")).equalsIgnoreCase("none")) {
                         return;
                     }
