@@ -1,5 +1,5 @@
-# HideMyPlugins
-##The best way to protect your Plugins.
+![alt text](https://www.spigotmc.org/attachments/logo-png.241364/ "Banner")
+The best way to protect your Plugins.
 
 ### Introduccion:
 HideMyPlugins es un plugin gratis enfocado a la proteccion
