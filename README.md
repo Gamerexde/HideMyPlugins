@@ -1,23 +1,16 @@
 ![alt text](https://www.spigotmc.org/attachments/logo-png.241364/ "Banner")
 The best way to protect your Plugins.
 
-### Introduccion:
-HideMyPlugins es un plugin gratis enfocado a la proteccion
-de robos de plugin usando el classico /ver o /bukkit:help,
-todo commando relacionado esta bloqueado usando este plugin.
+## Introduction:
+HideMyPlugins its a free plugin focused on blocking and refusing all suspect user activity, this plugins blocks the most plugins lookup methods. And protecting your plugin privacy. This way other people can't clone you server style.
 
-### Spigot:
-El plugin tambien esta disponibe en spigot!
+## Dependency:
+
+You will need  [ProtocolLib](http://bit.ly/1QMmyyW) in order to run HideMyPlugins.
 
 
-### Instalacion:
-Para hacer que este plugin funcione necesitamos
-2 plugins, sin uno de ellos el plugin puede crashear
-y no funcionar. Obviamente estos plugins los puedes conseguir
-facilmente y no hay necesidad de configurarlos.
+## Instalation:
+First of all, you need the 2 required plugins to this one work, otherwise you will recive a big ass error that might be fatal... So verify that you have up to date all the required plugins and HideMyPlugins.
 
---------[]
-#### TTA: http://bit.ly/2miuo90
-#### ProtocolLib: http://bit.ly/1QMmyyW
---------[]
+The instalation its very easy, just drop it to the plugins folder, use /pl to verify that you have installed correctly and if its on red that might be an error. Report it on github quickly!
 
