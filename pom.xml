@@ -4,10 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.gamerexde.HideMyPlugins</groupId>
+    <groupId>com.gamerexde.hidemyplugins</groupId>
     <artifactId>HideMyPlugins</artifactId>
-    <version>2.1-BETA</version>
-    <packaging>jar</packaging>
+    <version>2.1.1-SNAPSHOT</version>
 
     <name>HideMyPlugins</name>
 
@@ -15,7 +14,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <url>https://gamerexde.pro/</url>
+    <url>https://www.gamerexde.pro/</url>
 
     <build>
         <defaultGoal>clean package</defaultGoal>
@@ -60,10 +59,6 @@
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
         </repository>
         <repository>
-            <id>tta-repo</id>
-            <url>http://releases.herbystar.eu</url>
-        </repository>
-        <repository>
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
@@ -77,19 +72,19 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.12.2-R0.1-SNAPSHOT</version>
+            <version>1.14.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>1.14.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
             <version>4.4.0</version>
-        </dependency>
-        <dependency>
-            <groupId>de.Herbystar</groupId>
-            <artifactId>TTA</artifactId>
-            <version>3.6</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

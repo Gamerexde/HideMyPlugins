@@ -1,0 +1,4 @@
+# Deny message.
+blockMessage: '&e&lHideMyPlugins> &7Access Denied.'
+# Allow message.
+grantMessage: '&e&lHideMyPlugins> &7Access Granted.'

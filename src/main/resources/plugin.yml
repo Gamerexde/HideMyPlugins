@@ -1,7 +1,9 @@
 name: HideMyPlugins
 version: ${project.version}
-main: com.gamerexde.hidemyplugins.hidemyplugins.HideMyPlugins
+main: com.gamerexde.HideMyPlugins.Main
 depend: [ProtocolLib]
 authors: [Gamerexde]
 description: The best way to protect your plugins.
 website: https://gamerexde.pro/
+commands:
+  hidemyplugins:

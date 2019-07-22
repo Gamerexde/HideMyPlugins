@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.gamerexde.HideMyPlugins</groupId>
+  <groupId>com.gamerexde.hidemyplugins</groupId>
   <artifactId>HideMyPlugins</artifactId>
   <name>HideMyPlugins</name>
-  <version>2.1-BETA</version>
+  <version>2.1.1-SNAPSHOT</version>
   <description>The best way to protect your plugins.</description>
-  <url>https://gamerexde.pro/</url>
+  <url>https://www.gamerexde.pro/</url>
   <build>
     <defaultGoal>clean package</defaultGoal>
     <resources>
@@ -47,10 +47,6 @@
       <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
     </repository>
     <repository>
-      <id>tta-repo</id>
-      <url>http://releases.herbystar.eu</url>
-    </repository>
-    <repository>
       <id>sonatype</id>
       <url>https://oss.sonatype.org/content/groups/public/</url>
     </repository>
@@ -63,7 +59,7 @@
     <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot-api</artifactId>
-      <version>1.12.2-R0.1-SNAPSHOT</version>
+      <version>1.14.2-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
@@ -71,8 +67,32 @@
           <groupId>commons-lang</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>json-simple</artifactId>
-          <groupId>com.googlecode.json-simple</groupId>
+          <artifactId>guava</artifactId>
+          <groupId>com.google.guava</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>gson</artifactId>
+          <groupId>com.google.code.gson</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>bungeecord-chat</artifactId>
+          <groupId>net.md-5</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>snakeyaml</artifactId>
+          <groupId>org.yaml</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.bukkit</groupId>
+      <artifactId>bukkit</artifactId>
+      <version>1.14.2-R0.1-SNAPSHOT</version>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>commons-lang</artifactId>
+          <groupId>commons-lang</groupId>
         </exclusion>
         <exclusion>
           <artifactId>guava</artifactId>
@@ -86,17 +106,7 @@
           <artifactId>snakeyaml</artifactId>
           <groupId>org.yaml</groupId>
         </exclusion>
-        <exclusion>
-          <artifactId>bungeecord-chat</artifactId>
-          <groupId>net.md-5</groupId>
-        </exclusion>
       </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>de.Herbystar</groupId>
-      <artifactId>TTA</artifactId>
-      <version>3.6</version>
-      <scope>provided</scope>
     </dependency>
   </dependencies>
   <properties>
