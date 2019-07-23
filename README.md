@@ -14,7 +14,15 @@ You will need  [ProtocolLib](http://bit.ly/1QMmyyW) in order to run HideMyPlugin
 
 
 ## Instalation:
-First of all, you need the 2 required plugins to this one work, otherwise you will recive a big ass error that might be fatal... So verify that you have up to date all the required plugins and HideMyPlugins.
+First of all, you need the [ProtocolLib](https://www.spigotmc.org/resources/protocollib.1997/) libary in order to work, otherwise you will recive a error that can crash the plugin, or cause the plugin to work unstable... So verify that you have up to date ProtocolLib for HideMyPlugins.
+
+**ProtocolLib Versions**
+
+If you're running 1.14, use the [latest dev build](http://ci.dmulloy2.net/job/ProtocolLib%20Gradle/lastStableBuild/)
+
+If you're running 1.8 through 1.13, use the [latest release](https://www.spigotmc.org/resources/protocollib.1997/download?version=241216)
+
+1.7 Is not supported in HideMyPlugins, but that dosen't say that can't work, you can try. If you're using Spigot/Bukkit 1.7 use [3.7.0 release](https://github.com/dmulloy2/ProtocolLib/releases/tag/3.7.0)
 
 The instalation its very easy, just drop it to the plugins folder, use /pl to verify that you have installed correctly and if its on red that might be an error. Report it on github quickly!
 
