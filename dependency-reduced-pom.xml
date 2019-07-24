@@ -4,7 +4,7 @@
   <groupId>com.gamerexde.hidemyplugins</groupId>
   <artifactId>HideMyPlugins</artifactId>
   <name>HideMyPlugins</name>
-  <version>2.1.1-SNAPSHOT</version>
+  <version>2.1.2-SNAPSHOT</version>
   <description>The best way to protect your plugins.</description>
   <url>https://www.gamerexde.pro/</url>
   <build>

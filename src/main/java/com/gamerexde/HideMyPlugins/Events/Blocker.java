@@ -24,7 +24,7 @@ public class Blocker implements Listener {
                     if (Objects.requireNonNull(msgconfig.getString("grantMessage")).equalsIgnoreCase("none")) {
                         return;
                     }
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', (String)Objects.requireNonNull(msgconfig.getString("blockMessage"))));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', (String)Objects.requireNonNull(msgconfig.getString("grantMessage"))));
                     return;
                 }
                 else {
@@ -32,7 +32,6 @@ public class Blocker implements Listener {
                     if (Objects.requireNonNull(msgconfig.getString("blockMessage")).equalsIgnoreCase("none")) {
                         return;
                     }
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', (String)Objects.requireNonNull(msgconfig.getString("blockMessage"))));
                 }
             }
             else {
@@ -52,10 +51,10 @@ public class Blocker implements Listener {
                     return;
                 }
                 event.setCancelled(true);
-                if (Objects.requireNonNull(config.getString("blockedcommandsMessage")).equalsIgnoreCase("none")) {
+                if (Objects.requireNonNull((String)Objects.requireNonNull(msgconfig.getString("blockMessage"))).equalsIgnoreCase("none")) {
                     return;
                 }
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', (String)Objects.requireNonNull(config.getString("blockedcommandsMessage"))));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', (String)Objects.requireNonNull(msgconfig.getString("blockMessage"))));
             }
         }
     }

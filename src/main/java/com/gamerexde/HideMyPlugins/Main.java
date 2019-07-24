@@ -35,17 +35,12 @@ public final class Main extends JavaPlugin {
     private FileConfiguration newConfig;
     private File configFile;
 
-    public static final String version = "2.1.1-SNAPSHOT";
+    public static final String version = "2.1.2-SNAPSHOT";
 
+    /*-------------- [CONFIG MANAGER] --------------------*/
     public Main() {
         newConfig = null;
         configFile = new File(getDataFolder(), "messages.yml");
-    }
-    public static Main getInstance() {
-        return (Main)getPlugin((Class)Main.class);
-    }
-    public List<String> getBlockedCommands() {
-        return new ArrayList<String>(getConfig().getStringList("blockedCommands"));
     }
 
     public FileConfiguration getMsgConfig() {
@@ -54,6 +49,7 @@ public final class Main extends JavaPlugin {
         }
         return newConfig;
     }
+
     public void reloadMsgConfig() {
         newConfig = (FileConfiguration) YamlConfiguration.loadConfiguration(configFile);
         final InputStream defConfigStream = getResource("messages.yml");
@@ -61,6 +57,14 @@ public final class Main extends JavaPlugin {
             return;
         }
         newConfig.setDefaults((Configuration)YamlConfiguration.loadConfiguration((Reader)new InputStreamReader(defConfigStream, Charsets.UTF_8)));
+    }
+    /*-------------- [CONFIG MANAGER] --------------------*/
+
+    public static Main getInstance() {
+        return (Main)getPlugin((Class)Main.class);
+    }
+    public List<String> getBlockedCommands() {
+        return new ArrayList<String>(getConfig().getStringList("blockedCommands"));
     }
 
     @Override
