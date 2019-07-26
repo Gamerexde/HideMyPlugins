@@ -35,7 +35,7 @@ public final class Main extends JavaPlugin {
     private FileConfiguration newConfig;
     private File configFile;
 
-    public static final String version = "2.1.2-SNAPSHOT";
+    public static final String version = "2.1.3-SNAPSHOT";
 
     /*-------------- [CONFIG MANAGER] --------------------*/
     public Main() {
@@ -97,8 +97,17 @@ public final class Main extends JavaPlugin {
 
 
         ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-        console.sendMessage(ChatColor.DARK_GREEN + "- HideMyPlugins -" + ChatColor.DARK_GRAY + version);
-        console.sendMessage(ChatColor.GREEN + "Plugin Succesfully Loaded and Enabled!");
+
+        console.sendMessage(ChatColor.YELLOW + "  ___ ___    _____ __________ " + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.YELLOW + " /   |   \\  /     \\\\______   \\" + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.YELLOW + "/    ~    \\/  \\ /  \\|     ___/" + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.YELLOW + "\\    Y    /    Y    \\    |    " + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.YELLOW + " \\___|_  /\\____|__  /____|    " + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.YELLOW + "       \\/         \\/          " + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.GOLD + "       Ver:" + version + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.GOLD + "       Status:" + ChatColor.GREEN + "ON" + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.GREEN + "");
+        console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7The plugin has loaded correctly!"));
 
 
 
@@ -121,7 +130,7 @@ public final class Main extends JavaPlugin {
             if(args.length == 1){
                 if(args[0].equalsIgnoreCase("version")){
                     if (sender.hasPermission("hidemyplugins.version")) {
-                        sender.sendMessage("§e§lHideMyPlugins> §7You are currently running HideMyPlugins " + version + "");
+                        sender.sendMessage("§e§lHideMyPlugins> §7You are currently running HideMyPlugins " + version + " by Gamerexde.");
                         reloadConfig();
                     }
                     else {
@@ -159,8 +168,34 @@ public final class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-        console.sendMessage(ChatColor.DARK_GREEN + "- HideMyPlugins -" + ChatColor.GRAY + version);
-        console.sendMessage(ChatColor.RED + "Plugin will now Shutdown...");
+
+        console.sendMessage(ChatColor.YELLOW + "  ___ ___    _____ __________ " + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.YELLOW + " /   |   \\  /     \\\\______   \\" + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.YELLOW + "/    ~    \\/  \\ /  \\|     ___/" + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.YELLOW + "\\    Y    /    Y    \\    |    " + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.YELLOW + " \\___|_  /\\____|__  /____|    " + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.YELLOW + "       \\/         \\/          " + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.GOLD + "       Ver:" + version + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.GOLD + "       Status:" + ChatColor.RED + "OFF" + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.GREEN + "");
+        console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7The plugin will now shutdown..."));
+    }
+
+    @Override
+    public void onLoad() {
+        ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
+
+
+        console.sendMessage(ChatColor.YELLOW + "  ___ ___    _____ __________ " + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.YELLOW + " /   |   \\  /     \\\\______   \\" + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.YELLOW + "/    ~    \\/  \\ /  \\|     ___/" + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.YELLOW + "\\    Y    /    Y    \\    |    " + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.YELLOW + " \\___|_  /\\____|__  /____|    " + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.YELLOW + "       \\/         \\/          " + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.GOLD + "       Ver:" + version + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.GOLD + "       Status:" + ChatColor.YELLOW + "Loading..." + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.GREEN + "");
+        console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Starting up..."));
     }
 
 }
