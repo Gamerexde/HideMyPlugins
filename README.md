@@ -1,4 +1,4 @@
-![alt text](https://www.spigotmc.org/attachments/logo-png.241364/ "Banner")
+![alt text](https://www.spigotmc.org/attachments/logo-png.241364 "Banner")
 [![Build Status](https://hub.gamerexde.pro/jenkins/job/HideMyPlugins/badge/icon)](https://hub.gamerexde.pro/jenkins/job/HideMyPlugins/)
 [![Build Status](https://hub.gamerexde.pro/jenkins/job/HideMyPlugins/badge/icon?subject=Discord%20Server&status=Join)](https://discord.gg/RtKQpc9)
 [![Build Status](https://hub.gamerexde.pro/jenkins/job/HideMyPlugins/badge/icon?subject=SpigotMC&status=Plugin)](https://www.spigotmc.org/resources/%E2%9C%A6%E2%80%B9hidemyplugins%E2%80%BA%E2%9C%A6.37235/)
