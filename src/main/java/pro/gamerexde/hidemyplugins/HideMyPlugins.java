@@ -184,7 +184,6 @@ public final class HideMyPlugins extends JavaPlugin implements Listener {
     }
 
     public void doReloadConfiguration(){
-        /** Efe **/
         reloadMsgConfig();
         reloadConfig();
     }
