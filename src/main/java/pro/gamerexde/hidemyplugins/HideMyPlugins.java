@@ -147,11 +147,6 @@ public final class HideMyPlugins extends JavaPlugin implements Listener {
         });
     }
 
-    public void testCommit(){
-        String test = "Ignore please.";
-    }
-
-
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (label.equalsIgnoreCase("HideMyPlugins")) {
             if(args.length == 1){
@@ -189,6 +184,7 @@ public final class HideMyPlugins extends JavaPlugin implements Listener {
     }
 
     public void doReloadConfiguration(){
+        /** Efe **/
         reloadMsgConfig();
         reloadConfig();
     }
