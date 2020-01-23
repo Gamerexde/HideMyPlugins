@@ -1,3 +1,5 @@
-com\gamerexde\hidemyplugins\hidemyplugins\Events\PluginListener.class
-com\gamerexde\hidemyplugins\hidemyplugins\HideMyPlugins.class
-com\gamerexde\hidemyplugins\hidemyplugins\HideMyPlugins$1.class
+pro/gamerexde/hidemyplugins/Events/Blocker.class
+pro/gamerexde/hidemyplugins/Listeners/CommandList.class
+pro/gamerexde/hidemyplugins/HideMyPlugins$1.class
+pro/gamerexde/hidemyplugins/Utils/Reflection.class
+pro/gamerexde/hidemyplugins/HideMyPlugins.class
