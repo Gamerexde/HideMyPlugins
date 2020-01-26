@@ -26,7 +26,7 @@ If you're running 1.8 through 1.13, use the [latest release](https://www.spigotm
 
 Second Step:
 
-Once you have ProtocolLib installed correctly, go to my personal [Jenkins](https://hub.gamerexde.pro/jenkins) or [SpigotMC](https://www.spigotmc.org/resources/%E2%9C%A6%E2%80%B9hidemyplugins%E2%80%BA%E2%9C%A6.37235/) and download the latest successful build.
+Once you have ProtocolLib installed correctly, go to my personal [Jenkins](https://ci.gamerexde.com/job/HideMyPlugins/) or [SpigotMC](https://www.spigotmc.org/resources/%E2%9C%A6%E2%80%B9hidemyplugins%E2%80%BA%E2%9C%A6.37235/) and download the latest successful build.
 
 Third Step:
 
