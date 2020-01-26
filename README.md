@@ -1,7 +1,5 @@
 ![](https://i.imgur.com/TV1ju15.png "Banner")
-[![Build Status](https://hub.gamerexde.pro/jenkins/job/HideMyPlugins/badge/icon)](https://hub.gamerexde.pro/jenkins/job/HideMyPlugins/)
-[![Build Status](https://hub.gamerexde.pro/jenkins/job/HideMyPlugins/badge/icon?subject=Discord%20Server&status=Join)](https://discord.gg/RtKQpc9)
-[![Build Status](https://hub.gamerexde.pro/jenkins/job/HideMyPlugins/badge/icon?subject=SpigotMC&status=Plugin)](https://www.spigotmc.org/resources/%E2%9C%A6%E2%80%B9hidemyplugins%E2%80%BA%E2%9C%A6.37235/)
+[![Build Status](https://ci.gamerexde.com/job/HideMyPlugins/badge/icon)](https://ci.gamerexde.com/job/HideMyPlugins/)
 
 The best way to protect your Plugins.
 
