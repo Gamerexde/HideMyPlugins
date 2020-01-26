@@ -7,3 +7,6 @@ description: The best way to protect your plugins.
 website: https://gamerexde.pro/
 commands:
   hidemyplugins:
+    description: HideMyPlugins main commands.
+  hmpa:
+    description: HideMyPlugins admin commands.

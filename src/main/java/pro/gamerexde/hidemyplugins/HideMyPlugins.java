@@ -6,41 +6,51 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Constructor;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
+import com.comphenix.protocol.events.*;
+import com.comphenix.protocol.reflect.FieldAccessException;
+import pro.gamerexde.hidemyplugins.Commands.Hidemyplugins;
+import pro.gamerexde.hidemyplugins.Commands.hmpa;
+import pro.gamerexde.hidemyplugins.Database.Database;
+import pro.gamerexde.hidemyplugins.Database.MySQL;
+import pro.gamerexde.hidemyplugins.Database.SQLite;
 import pro.gamerexde.hidemyplugins.Events.Blocker;
 import com.google.common.base.Charsets;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
-import com.comphenix.protocol.reflect.*;
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
-import com.comphenix.protocol.events.*;
+import pro.gamerexde.hidemyplugins.Utils.IDGenerator;
 import pro.gamerexde.hidemyplugins.Utils.Reflection;
 
 import static pro.gamerexde.hidemyplugins.Utils.Reflection.getNMSClass;
 
 
 public final class HideMyPlugins extends JavaPlugin implements Listener {
-    ProtocolManager protocolManager;
+    private Database db;
+    private MySQL msql;
+
     private FileConfiguration newConfig;
     private File configFile;
 
-    public static final String version = "2.2.0-SNAPSHOT";
+    public static final String version = "2.3.0-SNAPSHOT";
+    private ProtocolManager protocolManager;
 
     public HideMyPlugins() {
         newConfig = null;
@@ -72,15 +82,9 @@ public final class HideMyPlugins extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        this.getServer().getPluginManager().registerEvents((Listener)new Blocker(), (Plugin)this);
+        this.getServer().getPluginManager().registerEvents((Listener)new Blocker(this), (Plugin)this);
 
-        if (!new File(getDataFolder(), "config.yml").exists()) {
-            getConfig().options().copyDefaults(true);
-            saveDefaultConfig();
-        }
-        if (!new File(getDataFolder(), "messages.yml").exists()) {
-            saveResource("messages.yml", false);
-        }
+        loadConfig();
 
         ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 
@@ -95,27 +99,21 @@ public final class HideMyPlugins extends JavaPlugin implements Listener {
         console.sendMessage(ChatColor.GREEN + "");
         console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7The plugin has loaded correctly!"));
 
+        initDatabase();
         onTabEvent();
+
+        getCommand("hidemyplugins").setExecutor(new Hidemyplugins(this));
+        getCommand("hmpa").setExecutor(new hmpa(this));
+
+
     }
 
-    public void onTabEvent(){
+    public void onTabEvent() {
         final FileConfiguration msgconfig = HideMyPlugins.getInstance().getMsgConfig();
         (this.protocolManager = ProtocolLibrary.getProtocolManager()).addPacketListener((PacketListener)new PacketAdapter(this, ListenerPriority.NORMAL, new PacketType[] { PacketType.Play.Client.TAB_COMPLETE }) {
             public void onPacketReceiving(final PacketEvent event) {
                 if (event.getPacketType() == PacketType.Play.Client.TAB_COMPLETE) {
                     if (event.getPlayer().hasPermission("hidemyplugins.access")){
-                        try {
-                            Object enumTitle = getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0].getField("TITLE").get(null);
-                            Object chat = getNMSClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class).invoke(null, "{\"text\":\"" + ChatColor.translateAlternateColorCodes('&', (String) Objects.requireNonNull(msgconfig.getString("titleGrantMessage"))) + "\"}");
-
-                            Constructor<?> titleConstructor = getNMSClass("PacketPlayOutTitle").getConstructor(getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0], getNMSClass("IChatBaseComponent"), int.class, int.class, int.class);
-                            Object packetReflection = titleConstructor.newInstance(enumTitle, chat, 20, 40, 20);
-
-                            Reflection.sendPacket(event.getPlayer(), packetReflection);
-                        }
-                        catch (Exception e1) {
-                            e1.printStackTrace();
-                        }
                         return;
                     } else
                         try {
@@ -132,63 +130,109 @@ public final class HideMyPlugins extends JavaPlugin implements Listener {
 
                                     Reflection.sendPacket(event.getPlayer(), packetReflection);
                                 }
-
                                 catch (Exception e1) {
                                     e1.printStackTrace();
+                                }
+                                try {
+                                    if (plugin.getConfig().getBoolean("use-mysql")){
+                                        Connection con = getMySQL().getConnection();
+
+                                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                                        LocalDateTime now = LocalDateTime.now();
+
+                                        String name = event.getPlayer().getName();
+                                        String uuid = event.getPlayer().getUniqueId().toString();
+                                        String date = dtf.format(now);
+                                        String executedCommand = "TAB COMPLETION";
+
+                                        PreparedStatement create = con.prepareStatement("INSERT INTO `"
+                                                + plugin.getConfig().getString("MySQL.table_name")
+                                                + "` (`ID`, `UUID`, `USER`, `EXECUTED_COMMAND`, `DATE`) VALUES ('"
+                                                + IDGenerator.getAlphaNumericString() + "', '"
+                                                + uuid + "', '"
+                                                + name + "', '" + executedCommand
+                                                + "', '" + date
+                                                + "');");
+
+                                        create.executeUpdate();
+
+                                    } else if (plugin.getConfig().getBoolean("use-sqlite")){
+                                        Database con = getRDatabase();
+
+                                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                                        LocalDateTime now = LocalDateTime.now();
+
+                                        String name = event.getPlayer().getName();
+                                        String uuid = event.getPlayer().getUniqueId().toString();
+                                        String date = dtf.format(now);
+                                        String executedCommand = "TAB COMPLETION";
+
+                                        PreparedStatement send = con.executeCommand(IDGenerator.getAlphaNumericString(),uuid,name,executedCommand,date);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
                                 event.setCancelled(true);
                             }
                         }
-                    catch (FieldAccessException e) {
-                        HideMyPlugins.this.getLogger().log(Level.SEVERE, "Couldn't access field.", (Throwable)e);
-                    }
+                        catch (FieldAccessException e) {
+                            plugin.getLogger().log(Level.SEVERE, "Couldn't access field.", (Throwable)e);
+                        }
                 }
             }
         });
     }
 
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (label.equalsIgnoreCase("HideMyPlugins")) {
-            if(args.length == 1){
-                if(args[0].equalsIgnoreCase("reload")){
-                    if (sender.hasPermission("hidemyplugins.reload")) {
-                        doReloadConfiguration();
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Configuration reloaded!"));
-                    }
-                    else {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7You can't reload the plugin because you don't have permissions..."));
-                    }
-                    return false;
-                }
-            }
-            if(args.length == 1){
-            }
-
-            if (!(sender instanceof Player)) {
-                sender.sendMessage("(!) You need to be a player in order to execute that command.");
-                return false;
-            }
-
-            Player player = (Player) sender;
-
-            player.sendMessage("§8                       [§eHideMyPlugins§8]");
-            player.sendMessage("                      §e" + HideMyPlugins.version +"");
-            player.sendMessage("");
-            player.sendMessage("§7 - §a/hidemyplugins reload §8-> §7Reload the configuration.");
-            player.sendMessage("");
-
-            return true;
+    public void initDatabase() {
+        if (this.getConfig().getBoolean("use-sqlite")){
+            if (this.getConfig().getBoolean("use-mysql")) {
+                ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
+                console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7You cannot select &cMySQL &7and &cSQLite &7at the same time in the config.yml, for security reasons the server will shutdown until you set up the config correctly..."));
+                Bukkit.shutdown();
+                return;
+            } else
+            this.db = new SQLite(this);
+            this.db.load();
+        } else if (this.getConfig().getBoolean("use-mysql")) {
+            if (this.getConfig().getBoolean("use-sqlite")) {
+                ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
+                console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7You cannot select &cMySQL &7and &cSQLite &7at the same time in the config.yml, for security reasons the server will shutdown until you set up the config correctly..."));
+                Bukkit.shutdown();
+                return;
+            } else
+            this.msql = new MySQL(this);
+            this.msql.initMySQLDatabase();
+        } else {
+            ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
+            console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7You need to select at least one database method on the config.yml, for security reasons the server will shutdown until you set up the config correctly..."));
+            Bukkit.shutdown();
         }
-
-        return false;
     }
 
-    public void doReloadConfiguration(){
-        reloadMsgConfig();
+    public Database getRDatabase() {
+        return this.db;
+    }
+
+    public MySQL getMySQL() {
+        return this.msql;
+    }
+
+
+    public void loadConfig(){
+        if (!new File(getDataFolder(), "config.yml").exists()) {
+            getConfig().options().copyDefaults(true);
+            saveDefaultConfig();
+        }
+        if (!new File(getDataFolder(), "messages.yml").exists()) {
+            saveResource("messages.yml", false);
+        }
+    }
+
+
+
+    public void reloadConfiguration(){
         reloadConfig();
     }
-
-
 
     @Override
     public void onDisable() {

@@ -11,7 +11,7 @@ import java.util.List;
 public class CommandList implements Listener {
     @EventHandler
     public void onCommandSend(final PlayerCommandSendEvent event) {
-        if (HideMyPlugins.getInstance().getConfig().getBoolean("blockTabCompletions")) {
+        if (HideMyPlugins.getInstance().getConfig().getBoolean("blockCommands")) {
             final List<String> commands = new ArrayList<String>(event.getCommands());
             for (final String command : commands) {
             }
