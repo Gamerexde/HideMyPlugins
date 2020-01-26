@@ -1,14 +1,28 @@
-## Messages
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#   +-------------------------------------------------------------------------------+ #
+#    _____ _____ ____  _____ _____ __ __ _____ __    _____ _____ _____ _____ _____ _  #
+#    |  |  |     |    \|   __|     |  |  |  _  |  |  |  |  |   __|     |   | |   __|  #
+#    |     |-   -|  |  |   __| | | |_   _|   __|  |__|  |  |  |  |-   -| | | |__   |  #
+#    |__|__|_____|____/|_____|_|_|_| |_| |__|  |_____|_____|_____|_____|_|___|_____|  #
+#   +-------------------------------------------------------------------------------+ #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# # # # # # # # # # #
+#  +--------------+ #
+#      Messages     #
+#  +--------------+ #
+# # # # # # # # # # #
+
+#No permisions.
+noPerms: "&e&lHideMyPlugins> &7You don't have permissions..."
 
 # Deny message.
 blockMessage: '&e&lHideMyPlugins> &7Access Denied.'
-# Allow message.
-grantMessage: '&e&lHideMyPlugins> &7Access Granted.'
+
+# Admin Notify Deny message.
+blockAdminNotifyMessage: '&e&lHideMyPlugins> &e{USER} &7tried to use a blocked command.'
 
 ## Title
 
 # Title Deny message.
 titleBlockMessage: '&eAccess Denied'
-# Title Allow message.
-titleGrantMessage: '&eAccess Granted'
-

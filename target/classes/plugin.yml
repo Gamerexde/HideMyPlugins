@@ -1,5 +1,5 @@
 name: HideMyPlugins
-version: 2.2.0-SNAPSHOT
+version: 2.3.0-SNAPSHOT
 main: pro.gamerexde.hidemyplugins.HideMyPlugins
 depend: [ProtocolLib]
 authors: [Gamerexde]
@@ -7,3 +7,6 @@ description: The best way to protect your plugins.
 website: https://gamerexde.pro/
 commands:
   hidemyplugins:
+    description: HideMyPlugins main commands.
+  hmpa:
+    description: HideMyPlugins admin commands.

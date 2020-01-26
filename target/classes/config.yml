@@ -1,14 +1,51 @@
-# _   _ _     _     ___  ___     ______ _             _
-#| | | (_)   | |    |  \/  |     | ___ \ |           (_)
-#| |_| |_  __| | ___| .  . |_   _| |_/ / |_   _  __ _ _ _ __  ___
-#|  _  | |/ _` |/ _ \ |\/| | | | |  __/| | | | |/ _` | | '_ \/ __|
-#| | | | | (_| |  __/ |  | | |_| | |   | | |_| | (_| | | | | \__ \
-#\_| |_/_|\__,_|\___\_|  |_/\__, \_|   |_|\__,_|\__, |_|_| |_|___/
-#                            __/ |               __/ |
-#                           |___/               |___/
-#                           By Gamerexde
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#   +-------------------------------------------------------------------------------+ #
+#    _____ _____ ____  _____ _____ __ __ _____ __    _____ _____ _____ _____ _____ _  #
+#    |  |  |     |    \|   __|     |  |  |  _  |  |  |  |  |   __|     |   | |   __|  #
+#    |     |-   -|  |  |   __| | | |_   _|   __|  |__|  |  |  |  |-   -| | | |__   |  #
+#    |__|__|_____|____/|_____|_|_|_| |_| |__|  |_____|_____|_____|_____|_|___|_____|  #
+#   +-------------------------------------------------------------------------------+ #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# # # # # # # # # # #
+#  +--------------+ #
+#      Database     #
+#  +--------------+ #
+# # # # # # # # # # #
+
+# SQLite
+use-sqlite: true
+SQLite:
+  filename: "database"
+  table_name: "hmp"
+
+# MySQL
+use-mysql: false
+MySQL:
+  host: "localhost"
+  port: 3306
+  database: "hidemyplugins"
+  user: "user"
+  password: "123"
+  table_name: "hmp"
+
+# Don't touch anything of these unless you have knowlege.
+# Touching this configuration without knowing what this does
+# can result in the MySQL Connection to not start.
 #
-#
+# This is an advanced option, if you know what are you doing this
+# option allows you to change the SQL protocol.
+database-driver: "jdbc:mysql://"
+database-class: "com.mysql.jdbc.Driver"
+
+# # # # # # # # # # #
+#  +--------------+ #
+#      Commands     #
+#  +--------------+ #
+# # # # # # # # # # #
+
+#Block commands listed below?
+blockCommands: true
 
 # Here are some commands that are blocked to regular users.
 # You can add more commands to block if you like.
@@ -20,7 +57,6 @@ blockedCommands:
   - 'bukkit'
   - 'minecraft'
   - '?'
-  - 'help'
   - 'pl'
   - 'ver'
   - 'version'
