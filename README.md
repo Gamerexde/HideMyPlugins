@@ -4,7 +4,11 @@
 The best way to protect your Plugins.
 
 ## Introduction:
-HideMyPlugins its a free plugin focused on blocking and refusing all suspect user activity, this plugins blocks the most plugins lookup methods. And protecting your plugin privacy. This way other people can't clone you server style.
+HideMyPlugins is a free and open source plugin focused on blocking and protecting internal plugins, this plugins blocks the most plugins lookup methods, protecting your plugins privacy. This way other people can't clone you server style, or prevent hackers to find a way to exploit your server easly.
+
+The goal with HideMyPlugins is to create a more advanced plugin protection, while maintaining the plugin simple and easy to work with.
+
+The plugin can work in Spigot and BungeeCord to ensure compatibility with Network Servers, this way you don't need to place the server individually on every server.
 
 ## Dependency:
 
