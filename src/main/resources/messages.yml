@@ -22,7 +22,14 @@ blockMessage: '&e&lHideMyPlugins> &7Access Denied.'
 # Admin Notify Deny message.
 blockAdminNotifyMessage: '&e&lHideMyPlugins> &e{USER} &7tried to use a blocked command.'
 
-## Title
+# Bungee Admin Notify Deny message.
+blockBungeeAdminNotifyMessage: '&e&lHideMyPlugins> &e{USER} &7tried to use a blocked command on server &e{SERVER}.'
+
+# # # # # # # # # # #
+#  +--------------+ #
+#       Title       #
+#  +--------------+ #
+# # # # # # # # # # #
 
 # Title Deny message.
 titleBlockMessage: '&eAccess Denied'

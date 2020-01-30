@@ -13,7 +13,7 @@
 #  +--------------+ #
 # # # # # # # # # # #
 
-# SQLite
+# SQLite (This option only works for Spigot. You will need to use MySQL if you use BungeeCord.)
 use-sqlite: true
 SQLite:
   filename: "database"
@@ -44,8 +44,9 @@ database-class: "com.mysql.jdbc.Driver"
 #  +--------------+ #
 # # # # # # # # # # #
 
-#Block commands listed below?
-blockCommands: true
+# This will notify everyone with the notify permission if a player
+# uses a blocked command.
+adminNotify: true
 
 # Here are some commands that are blocked to regular users.
 # You can add more commands to block if you like.

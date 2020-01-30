@@ -1,8 +1,6 @@
 package pro.gamerexde.hidemyplugins.Events;
 
 import org.bukkit.Bukkit;
-import pro.gamerexde.hidemyplugins.Database.Database;
-import pro.gamerexde.hidemyplugins.HideMyPlugins;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -10,6 +8,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import pro.gamerexde.hidemyplugins.Database.Database;
+import pro.gamerexde.hidemyplugins.HideMyPlugins;
 import pro.gamerexde.hidemyplugins.Utils.IDGenerator;
 import pro.gamerexde.hidemyplugins.Utils.Reflection;
 
@@ -55,80 +55,145 @@ public class Blocker implements Listener {
                     return;
                 }
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', (String) Objects.requireNonNull(msgconfig.getString("blockMessage"))));
+                for (Player players : Bukkit.getOnlinePlayers()) {
+                    if (players.hasPermission("hidemyplugins.notify.message")) {
+                        if (plugin.getConfig().getBoolean("adminNotify")) {
+                            String message = msgconfig.getString("blockAdminNotifyMessage");
+                            message = message.replace("{USER}", event.getPlayer().getName());
+
+                            players.sendMessage(ChatColor.translateAlternateColorCodes('&', message.replace("{USER}", event.getPlayer().getName())));
+                        }
+
+                        try {
+                            Object enumTitle = getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0].getField("TITLE").get(null);
+                            Object chat = getNMSClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class).invoke(null, "{\"text\":\"" + ChatColor.translateAlternateColorCodes('&', (String) Objects.requireNonNull(msgconfig.getString("titleBlockMessage"))) + "\"}");
+
+                            Constructor<?> titleConstructor = getNMSClass("PacketPlayOutTitle").getConstructor(getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0], getNMSClass("IChatBaseComponent"), int.class, int.class, int.class);
+                            Object packet = titleConstructor.newInstance(enumTitle, chat, 20, 40, 20);
+
+                            Reflection.sendPacket(event.getPlayer(), packet);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        try {
+                            if (plugin.getConfig().getBoolean("use-mysql")){
+                                Connection con = plugin.getMySQL().getConnection();
+
+                                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                                LocalDateTime now = LocalDateTime.now();
+
+                                String name = event.getPlayer().getName();
+                                String uuid = event.getPlayer().getUniqueId().toString();
+                                String date = dtf.format(now);
+                                String executedCommand = msg[0];
+
+                                PreparedStatement create = con.prepareStatement("INSERT INTO `" + plugin.getConfig().getString("MySQL.table_name")
+                                        + "` (`ID`, `UUID`, `USER`, `EXECUTED_COMMAND`, `DATE`) VALUES ('"
+                                        + IDGenerator.getAlphaNumericString()
+                                        + "', '" + uuid + "', '"
+                                        + name
+                                        + "', '"
+                                        + executedCommand
+                                        + "', '"
+                                        + date
+                                        + "');");
+
+                                create.executeUpdate();
+
+                            } else if (plugin.getConfig().getBoolean("use-sqlite")){
+                                Database con = plugin.getRDatabase();
+
+                                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                                LocalDateTime now = LocalDateTime.now();
+
+                                String name = event.getPlayer().getName();
+                                String uuid = event.getPlayer().getUniqueId().toString();
+                                String date = dtf.format(now);
+                                String executedCommand = msg[0];
+
+                                PreparedStatement send = con.executeCommand(IDGenerator.getAlphaNumericString(),uuid,name,executedCommand,date);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                break;
             }
         }
+
         for (final String command : HideMyPlugins.getInstance().getBlockedCommands()) {
             if (msg[0].toLowerCase().equals("/" + command)) {
                 List<Player> output = new ArrayList<Player>();
                 for (Player players : Bukkit.getOnlinePlayers()) {
                     if (players.hasPermission("hidemyplugins.notify.message")) {
+                        if (plugin.getConfig().getBoolean("adminNotify")) {
+                            String message = msgconfig.getString("blockAdminNotifyMessage");
+                            message = message.replace("{USER}", event.getPlayer().getName());
 
-                        String message = msgconfig.getString("blockAdminNotifyMessage");
-                        message = message.replace("{USER}", event.getPlayer().getName());
+                            players.sendMessage(ChatColor.translateAlternateColorCodes('&', message.replace("{USER}", event.getPlayer().getName())));
+                        }
 
-                        players.sendMessage(ChatColor.translateAlternateColorCodes('&', message.replace("{USER}", event.getPlayer().getName())));
+                        try {
+                            Object enumTitle = getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0].getField("TITLE").get(null);
+                            Object chat = getNMSClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class).invoke(null, "{\"text\":\"" + ChatColor.translateAlternateColorCodes('&', (String) Objects.requireNonNull(msgconfig.getString("titleBlockMessage"))) + "\"}");
+
+                            Constructor<?> titleConstructor = getNMSClass("PacketPlayOutTitle").getConstructor(getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0], getNMSClass("IChatBaseComponent"), int.class, int.class, int.class);
+                            Object packet = titleConstructor.newInstance(enumTitle, chat, 20, 40, 20);
+
+                            Reflection.sendPacket(event.getPlayer(), packet);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        try {
+                            if (plugin.getConfig().getBoolean("use-mysql")){
+                                Connection con = plugin.getMySQL().getConnection();
+
+                                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                                LocalDateTime now = LocalDateTime.now();
+
+                                String name = event.getPlayer().getName();
+                                String uuid = event.getPlayer().getUniqueId().toString();
+                                String date = dtf.format(now);
+                                String executedCommand = msg[0];
+
+                                PreparedStatement create = con.prepareStatement("INSERT INTO `" + plugin.getConfig().getString("MySQL.table_name")
+                                        + "` (`ID`, `UUID`, `USER`, `EXECUTED_COMMAND`, `DATE`) VALUES ('"
+                                        + IDGenerator.getAlphaNumericString()
+                                        + "', '" + uuid + "', '"
+                                        + name
+                                        + "', '"
+                                        + executedCommand
+                                        + "', '"
+                                        + date
+                                        + "');");
+
+                                create.executeUpdate();
+
+                            } else if (plugin.getConfig().getBoolean("use-sqlite")){
+                                Database con = plugin.getRDatabase();
+
+                                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                                LocalDateTime now = LocalDateTime.now();
+
+                                String name = event.getPlayer().getName();
+                                String uuid = event.getPlayer().getUniqueId().toString();
+                                String date = dtf.format(now);
+                                String executedCommand = msg[0];
+
+                                PreparedStatement send = con.executeCommand(IDGenerator.getAlphaNumericString(),uuid,name,executedCommand,date);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
-
-                event.setCancelled(true);
                 if (Objects.requireNonNull((String) Objects.requireNonNull(msgconfig.getString("blockMessage"))).equalsIgnoreCase("none")) {
                     return;
                 }
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', (String) Objects.requireNonNull(msgconfig.getString("blockMessage"))));
-
-                try {
-                    Object enumTitle = getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0].getField("TITLE").get(null);
-                    Object chat = getNMSClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class).invoke(null, "{\"text\":\"" + ChatColor.translateAlternateColorCodes('&', (String) Objects.requireNonNull(msgconfig.getString("titleBlockMessage"))) + "\"}");
-
-                    Constructor<?> titleConstructor = getNMSClass("PacketPlayOutTitle").getConstructor(getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0], getNMSClass("IChatBaseComponent"), int.class, int.class, int.class);
-                    Object packet = titleConstructor.newInstance(enumTitle, chat, 20, 40, 20);
-
-                    Reflection.sendPacket(event.getPlayer(), packet);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    if (plugin.getConfig().getBoolean("use-mysql")){
-                        Connection con = plugin.getMySQL().getConnection();
-
-                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-                        LocalDateTime now = LocalDateTime.now();
-
-                        String name = event.getPlayer().getName();
-                        String uuid = event.getPlayer().getUniqueId().toString();
-                        String date = dtf.format(now);
-                        String executedCommand = msg[0];
-
-                        PreparedStatement create = con.prepareStatement("INSERT INTO `" + plugin.getConfig().getString("MySQL.table_name")
-                                + "` (`ID`, `UUID`, `USER`, `EXECUTED_COMMAND`, `DATE`) VALUES ('"
-                                + IDGenerator.getAlphaNumericString()
-                                + "', '" + uuid + "', '"
-                                + name
-                                + "', '"
-                                + executedCommand
-                                + "', '"
-                                + date
-                                + "');");
-
-                        create.executeUpdate();
-
-                    } else if (plugin.getConfig().getBoolean("use-sqlite")){
-                        Database con = plugin.getRDatabase();
-
-                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-                        LocalDateTime now = LocalDateTime.now();
-
-                        String name = event.getPlayer().getName();
-                        String uuid = event.getPlayer().getUniqueId().toString();
-                        String date = dtf.format(now);
-                        String executedCommand = msg[0];
-
-                        PreparedStatement send = con.executeCommand(IDGenerator.getAlphaNumericString(),uuid,name,executedCommand,date);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
 
             }
         }

@@ -1,0 +1,6 @@
+name: HideMyPlugins
+main: com.gamerexde.hidemypluginsbungee.HideMyPluginsBungee
+version: ${project.version}
+author: Gamerexde
+description: The best way to protect your plugins.
+website: https://gamerexde.pro/

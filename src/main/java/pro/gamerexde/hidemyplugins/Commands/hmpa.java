@@ -10,7 +10,9 @@ import org.bukkit.entity.Player;
 import pro.gamerexde.hidemyplugins.Database.Database;
 import pro.gamerexde.hidemyplugins.HideMyPlugins;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class hmpa implements CommandExecutor {
     HideMyPlugins plugin;
@@ -243,8 +245,8 @@ public class hmpa implements CommandExecutor {
         player.sendMessage("                      §e" + plugin.version +"");
         player.sendMessage("");
         player.sendMessage("§7 - §a/hmpa §8-> §7Shows useful admin commands.");
-        player.sendMessage("§7 - §a/hmpa history <user>§8-> §7Shows history of used blocked.");
-        player.sendMessage("§7 -                            §7commands for that player.");
+        player.sendMessage("§7 - §a/hmpa history <user> <page>§8-> §7Shows history of used.");
+        player.sendMessage("§7 - §7blocked commands for that player.");
         player.sendMessage("");
 
         return true;
