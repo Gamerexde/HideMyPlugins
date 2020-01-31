@@ -17,6 +17,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+
 import pro.gamerexde.hidemyplugins.Commands.Hidemyplugins;
 import pro.gamerexde.hidemyplugins.Commands.hmpa;
 import pro.gamerexde.hidemyplugins.Database.Database;
@@ -49,7 +50,7 @@ public final class HideMyPlugins extends JavaPlugin implements Listener {
     private FileConfiguration newConfig;
     private File configFile;
 
-    public static final String version = "2.3.2-SNAPSHOT";
+    public static final String version = "2.3.3-SNAPSHOT";
 
     private ProtocolManager protocolManager;
 
@@ -120,56 +121,60 @@ public final class HideMyPlugins extends JavaPlugin implements Listener {
                     if (event.getPlayer().hasPermission("hidemyplugins.access")) {
                         return;
                     } else {
-                        try {
-                            Object enumTitle = getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0].getField("TITLE").get(null);
-                            Object chat = getNMSClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class).invoke(null, "{\"text\":\"" + ChatColor.translateAlternateColorCodes('&', (String) Objects.requireNonNull(msgconfig.getString("titleBlockMessage"))) + "\"}");
+                        if (getConfig().getBoolean("tabCompletionAlert")) {
+                            try {
+                                Object enumTitle = getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0].getField("TITLE").get(null);
+                                Object chat = getNMSClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class).invoke(null, "{\"text\":\"" + ChatColor.translateAlternateColorCodes('&', (String) Objects.requireNonNull(msgconfig.getString("titleBlockMessage"))) + "\"}");
 
-                            Constructor<?> titleConstructor = getNMSClass("PacketPlayOutTitle").getConstructor(getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0], getNMSClass("IChatBaseComponent"), int.class, int.class, int.class);
-                            Object packetReflection = titleConstructor.newInstance(enumTitle, chat, 20, 40, 20);
+                                Constructor<?> titleConstructor = getNMSClass("PacketPlayOutTitle").getConstructor(getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0], getNMSClass("IChatBaseComponent"), int.class, int.class, int.class);
+                                Object packetReflection = titleConstructor.newInstance(enumTitle, chat, 20, 40, 20);
 
-                            Reflection.sendPacket(event.getPlayer(), packetReflection);
-                        }
-                        catch (Exception e1) {
-                            e1.printStackTrace();
-                        }
-                        try {
-                            if (plugin.getConfig().getBoolean("use-mysql")){
-                                Connection con = getMySQL().getConnection();
-
-                                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-                                LocalDateTime now = LocalDateTime.now();
-
-                                String name = event.getPlayer().getName();
-                                String uuid = event.getPlayer().getUniqueId().toString();
-                                String date = dtf.format(now);
-                                String executedCommand = "TAB COMPLETION";
-
-                                PreparedStatement create = con.prepareStatement("INSERT INTO `"
-                                        + plugin.getConfig().getString("MySQL.table_name")
-                                        + "` (`ID`, `UUID`, `USER`, `EXECUTED_COMMAND`, `DATE`) VALUES ('"
-                                        + IDGenerator.getAlphaNumericString() + "', '"
-                                        + uuid + "', '"
-                                        + name + "', '" + executedCommand
-                                        + "', '" + date
-                                        + "');");
-
-                                create.executeUpdate();
-
-                            } else if (plugin.getConfig().getBoolean("use-sqlite")){
-                                Database con = getRDatabase();
-
-                                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-                                LocalDateTime now = LocalDateTime.now();
-
-                                String name = event.getPlayer().getName();
-                                String uuid = event.getPlayer().getUniqueId().toString();
-                                String date = dtf.format(now);
-                                String executedCommand = "TAB COMPLETION";
-
-                                PreparedStatement send = con.executeCommand(IDGenerator.getAlphaNumericString(),uuid,name,executedCommand,date);
+                                Reflection.sendPacket(event.getPlayer(), packetReflection);
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                            catch (Exception e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                        if (getConfig().getBoolean("tabCompletionLoggin")) {
+                            try {
+                                if (plugin.getConfig().getBoolean("use-mysql")){
+                                    Connection con = getMySQL().getConnection();
+
+                                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                                    LocalDateTime now = LocalDateTime.now();
+
+                                    String name = event.getPlayer().getName();
+                                    String uuid = event.getPlayer().getUniqueId().toString();
+                                    String date = dtf.format(now);
+                                    String executedCommand = "TAB COMPLETION";
+
+                                    PreparedStatement create = con.prepareStatement("INSERT INTO `"
+                                            + plugin.getConfig().getString("MySQL.table_name")
+                                            + "` (`ID`, `UUID`, `USER`, `EXECUTED_COMMAND`, `DATE`) VALUES ('"
+                                            + IDGenerator.getAlphaNumericString() + "', '"
+                                            + uuid + "', '"
+                                            + name + "', '" + executedCommand
+                                            + "', '" + date
+                                            + "');");
+
+                                    create.executeUpdate();
+
+                                } else if (plugin.getConfig().getBoolean("use-sqlite")){
+                                    Database con = getRDatabase();
+
+                                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                                    LocalDateTime now = LocalDateTime.now();
+
+                                    String name = event.getPlayer().getName();
+                                    String uuid = event.getPlayer().getUniqueId().toString();
+                                    String date = dtf.format(now);
+                                    String executedCommand = "TAB COMPLETION";
+
+                                    PreparedStatement send = con.executeCommand(IDGenerator.getAlphaNumericString(),uuid,name,executedCommand,date);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                         event.setCancelled(true);
 

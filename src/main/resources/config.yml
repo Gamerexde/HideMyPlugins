@@ -40,6 +40,23 @@ database-class: "com.mysql.jdbc.Driver"
 
 # # # # # # # # # # #
 #  +--------------+ #
+#   Tab Completion  #
+#  +--------------+ #
+# # # # # # # # # # #
+
+# This option will enable/disable loggin from players who use
+# the TAB COMPLETION method to look up into plugins.
+# It is recomended that you turn this off if you use MC 1.14 or
+# newer since this can annoy users...
+tabCompletionLoggin: true
+
+# This option will enable/disable title alerts to players who use
+# the TAB COMPLETION method. I recomended that you turn this off if
+# you use MC 1.14 or newer, since this can annoy users...
+tabCompletionAlert: true
+
+# # # # # # # # # # #
+#  +--------------+ #
 #      Commands     #
 #  +--------------+ #
 # # # # # # # # # # #
@@ -47,6 +64,10 @@ database-class: "com.mysql.jdbc.Driver"
 # This will notify everyone with the notify permission if a player
 # uses a blocked command.
 adminNotify: true
+
+# This option will enable/disable title alerts to players who use
+# blocked commands.
+blockedCommandAlert: true
 
 # Here are some commands that are blocked to regular users.
 # You can add more commands to block if you like.

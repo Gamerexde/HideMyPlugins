@@ -39,33 +39,35 @@ public class onTabEvent implements Listener {
         command = command.substring(1);
         if (this.plugin.equalsIgnoreCase(this.plugin.getBlockedCommands(), command)) {
             event.setCancelled(true);
-            try {
-                if (plugin.getConfig().getBoolean("use-mysql")) {
-                    Connection con = plugin.getMySQL().getConnection();
+            if (plugin.getConfig().getBoolean("tabCompletionLoggin")) {
+                try {
+                    if (plugin.getConfig().getBoolean("use-mysql")) {
+                        Connection con = plugin.getMySQL().getConnection();
 
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-                    LocalDateTime now = LocalDateTime.now();
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                        LocalDateTime now = LocalDateTime.now();
 
-                    String name = player.getName();
-                    String uuid = player.getUniqueId().toString();
-                    String date = dtf.format(now);
-                    String executedCommand = "TAB COMPLETION";
+                        String name = player.getName();
+                        String uuid = player.getUniqueId().toString();
+                        String date = dtf.format(now);
+                        String executedCommand = "TAB COMPLETION";
 
-                    String id = createIDString();
+                        String id = createIDString();
 
-                    PreparedStatement create = con.prepareStatement("INSERT INTO `"
-                            + plugin.getConfig().getString("MySQL.table_name")
-                            + "` (`ID`, `UUID`, `USER`, `EXECUTED_COMMAND`, `DATE`) VALUES ('"
-                            + id + "', '"
-                            + uuid + "', '"
-                            + name + "', '" + executedCommand
-                            + "', '" + date
-                            + "');");
+                        PreparedStatement create = con.prepareStatement("INSERT INTO `"
+                                + plugin.getConfig().getString("MySQL.table_name")
+                                + "` (`ID`, `UUID`, `USER`, `EXECUTED_COMMAND`, `DATE`) VALUES ('"
+                                + id + "', '"
+                                + uuid + "', '"
+                                + name + "', '" + executedCommand
+                                + "', '" + date
+                                + "');");
 
-                    create.executeUpdate();
+                        create.executeUpdate();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         }
     }

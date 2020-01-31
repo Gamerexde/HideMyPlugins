@@ -6,7 +6,7 @@
 
     <groupId>pro.gamerexde</groupId>
     <artifactId>HideMyPlugins</artifactId>
-    <version>2.3.2-SNAPSHOT</version>
+    <version>2.3.3-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>HideMyPlugins</name>
