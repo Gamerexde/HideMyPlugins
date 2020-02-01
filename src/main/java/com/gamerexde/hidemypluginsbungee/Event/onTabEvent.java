@@ -39,6 +39,7 @@ public class onTabEvent implements Listener {
         command = command.substring(1);
         if (this.plugin.equalsIgnoreCase(this.plugin.getBlockedCommands(), command)) {
             event.setCancelled(true);
+            player.sendMessage(plugin.getMsgConfig().getString("blockMessage"));
             if (plugin.getConfig().getBoolean("tabCompletionLoggin")) {
                 try {
                     if (plugin.getConfig().getBoolean("use-mysql")) {

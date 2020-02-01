@@ -70,6 +70,47 @@ public class Blocker implements Listener {
                         e1.printStackTrace();
                     }
                 }
+                try {
+                    if (plugin.getConfig().getBoolean("use-mysql")){
+                        Connection con = plugin.getMySQL().getConnection();
+
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                        LocalDateTime now = LocalDateTime.now();
+
+                        String name = event.getPlayer().getName();
+                        String uuid = event.getPlayer().getUniqueId().toString();
+                        String date = dtf.format(now);
+                        String executedCommand = msg[0];
+
+                        PreparedStatement create = con.prepareStatement("INSERT INTO `" + plugin.getConfig().getString("MySQL.table_name")
+                                + "` (`ID`, `UUID`, `USER`, `EXECUTED_COMMAND`, `DATE`) VALUES ('"
+                                + IDGenerator.getAlphaNumericString()
+                                + "', '" + uuid + "', '"
+                                + name
+                                + "', '"
+                                + executedCommand
+                                + "', '"
+                                + date
+                                + "');");
+
+                        create.executeUpdate();
+
+                    } else if (plugin.getConfig().getBoolean("use-sqlite")){
+                        Database con = plugin.getRDatabase();
+
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                        LocalDateTime now = LocalDateTime.now();
+
+                        String name = event.getPlayer().getName();
+                        String uuid = event.getPlayer().getUniqueId().toString();
+                        String date = dtf.format(now);
+                        String executedCommand = msg[0];
+
+                        PreparedStatement send = con.executeCommand(IDGenerator.getAlphaNumericString(),uuid,name,executedCommand,date);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 for (Player players : Bukkit.getOnlinePlayers()) {
                     if (players.hasPermission("hidemyplugins.notify.message")) {
@@ -78,47 +119,6 @@ public class Blocker implements Listener {
                             message = message.replace("{USER}", event.getPlayer().getName());
 
                             players.sendMessage(ChatColor.translateAlternateColorCodes('&', message.replace("{USER}", event.getPlayer().getName())));
-                        }
-                        try {
-                            if (plugin.getConfig().getBoolean("use-mysql")){
-                                Connection con = plugin.getMySQL().getConnection();
-
-                                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-                                LocalDateTime now = LocalDateTime.now();
-
-                                String name = event.getPlayer().getName();
-                                String uuid = event.getPlayer().getUniqueId().toString();
-                                String date = dtf.format(now);
-                                String executedCommand = msg[0];
-
-                                PreparedStatement create = con.prepareStatement("INSERT INTO `" + plugin.getConfig().getString("MySQL.table_name")
-                                        + "` (`ID`, `UUID`, `USER`, `EXECUTED_COMMAND`, `DATE`) VALUES ('"
-                                        + IDGenerator.getAlphaNumericString()
-                                        + "', '" + uuid + "', '"
-                                        + name
-                                        + "', '"
-                                        + executedCommand
-                                        + "', '"
-                                        + date
-                                        + "');");
-
-                                create.executeUpdate();
-
-                            } else if (plugin.getConfig().getBoolean("use-sqlite")){
-                                Database con = plugin.getRDatabase();
-
-                                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-                                LocalDateTime now = LocalDateTime.now();
-
-                                String name = event.getPlayer().getName();
-                                String uuid = event.getPlayer().getUniqueId().toString();
-                                String date = dtf.format(now);
-                                String executedCommand = msg[0];
-
-                                PreparedStatement send = con.executeCommand(IDGenerator.getAlphaNumericString(),uuid,name,executedCommand,date);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
                         }
                     }
                 }
@@ -137,53 +137,53 @@ public class Blocker implements Listener {
 
                             players.sendMessage(ChatColor.translateAlternateColorCodes('&', message.replace("{USER}", event.getPlayer().getName())));
                         }
-                        try {
-                            if (plugin.getConfig().getBoolean("use-mysql")){
-                                Connection con = plugin.getMySQL().getConnection();
-
-                                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-                                LocalDateTime now = LocalDateTime.now();
-
-                                String name = event.getPlayer().getName();
-                                String uuid = event.getPlayer().getUniqueId().toString();
-                                String date = dtf.format(now);
-                                String executedCommand = msg[0];
-
-                                PreparedStatement create = con.prepareStatement("INSERT INTO `" + plugin.getConfig().getString("MySQL.table_name")
-                                        + "` (`ID`, `UUID`, `USER`, `EXECUTED_COMMAND`, `DATE`) VALUES ('"
-                                        + IDGenerator.getAlphaNumericString()
-                                        + "', '" + uuid + "', '"
-                                        + name
-                                        + "', '"
-                                        + executedCommand
-                                        + "', '"
-                                        + date
-                                        + "');");
-
-                                create.executeUpdate();
-
-                            } else if (plugin.getConfig().getBoolean("use-sqlite")){
-                                Database con = plugin.getRDatabase();
-
-                                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-                                LocalDateTime now = LocalDateTime.now();
-
-                                String name = event.getPlayer().getName();
-                                String uuid = event.getPlayer().getUniqueId().toString();
-                                String date = dtf.format(now);
-                                String executedCommand = msg[0];
-
-                                PreparedStatement send = con.executeCommand(IDGenerator.getAlphaNumericString(),uuid,name,executedCommand,date);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
                     }
                 }
                 if (Objects.requireNonNull((String) Objects.requireNonNull(msgconfig.getString("blockMessage"))).equalsIgnoreCase("none")) {
                     return;
                 }
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', (String) Objects.requireNonNull(msgconfig.getString("blockMessage"))));
+                try {
+                    if (plugin.getConfig().getBoolean("use-mysql")){
+                        Connection con = plugin.getMySQL().getConnection();
+
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                        LocalDateTime now = LocalDateTime.now();
+
+                        String name = event.getPlayer().getName();
+                        String uuid = event.getPlayer().getUniqueId().toString();
+                        String date = dtf.format(now);
+                        String executedCommand = msg[0];
+
+                        PreparedStatement create = con.prepareStatement("INSERT INTO `" + plugin.getConfig().getString("MySQL.table_name")
+                                + "` (`ID`, `UUID`, `USER`, `EXECUTED_COMMAND`, `DATE`) VALUES ('"
+                                + IDGenerator.getAlphaNumericString()
+                                + "', '" + uuid + "', '"
+                                + name
+                                + "', '"
+                                + executedCommand
+                                + "', '"
+                                + date
+                                + "');");
+
+                        create.executeUpdate();
+
+                    } else if (plugin.getConfig().getBoolean("use-sqlite")){
+                        Database con = plugin.getRDatabase();
+
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                        LocalDateTime now = LocalDateTime.now();
+
+                        String name = event.getPlayer().getName();
+                        String uuid = event.getPlayer().getUniqueId().toString();
+                        String date = dtf.format(now);
+                        String executedCommand = msg[0];
+
+                        PreparedStatement send = con.executeCommand(IDGenerator.getAlphaNumericString(),uuid,name,executedCommand,date);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 if (plugin.getConfig().getBoolean("blockedCommandAlert")) {
                     try {
                         Object enumTitle = getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0].getField("TITLE").get(null);
