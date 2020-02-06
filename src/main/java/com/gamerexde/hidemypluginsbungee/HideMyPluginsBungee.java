@@ -33,7 +33,7 @@ public class HideMyPluginsBungee extends Plugin {
 
     private List<String> blockedCommands;
 
-    String version = "2.3.3-SNAPSHOT";
+    String version = "2.3.4-SNAPSHOT";
 
     @Override
     public void onEnable() {

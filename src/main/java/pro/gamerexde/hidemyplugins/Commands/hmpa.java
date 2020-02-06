@@ -26,6 +26,18 @@ public class hmpa implements CommandExecutor {
 
         if (label.equalsIgnoreCase("hmpa")) {
             if (args.length == 1) {
+                if (args[0].equalsIgnoreCase("web")) {
+                    if (sender.hasPermission("hidemyplugins.admin.webinterface")) {
+                        if (plugin.getConfig().getBoolean("UsingWebInterface")){
+                            sender.sendMessage(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Access your Web Interface here: &e" + plugin.getConfig().getString("WebInterface")));
+                        } else {
+                            sender.sendMessage(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Web Interface is disabled in the &econfig.yml"));
+                        }
+                    } else {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', msgconfig.getString("noPerms") ));
+                    }
+                    return false;
+                }
                 if (args[0].equalsIgnoreCase("history")) {
                     if (sender.hasPermission("hidemyplugins.admin.history")) {
                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Usage: &e/hmpa history <user> <page>"));

@@ -88,3 +88,16 @@ blockedCommands:
   - '/calc'
   - '/eval'
   - 'plugman'
+
+# # # # # # # # # # #
+#  +--------------+ #
+#   Web Interface   #
+#  +--------------+ #
+# # # # # # # # # # #
+# https://github.com/Gamerexde/hidemyplugins-web-interface/
+
+# Allow this option if you're currently using HideMyPlugins Web Interface.
+UsingWebInterface: false
+
+# Here you will put the domain where HideMyPlugins Web is currently at.
+WebInterface: "https://gamerexde.com/hidemyplugins"

@@ -3,6 +3,10 @@ package com.gamerexde.hidemypluginsbungee.Commands;
 import com.gamerexde.hidemypluginsbungee.HideMyPluginsBungee;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
@@ -23,6 +27,15 @@ public class hmpa extends Command {
         if(commandSender instanceof ProxiedPlayer) {
             ProxiedPlayer player = (ProxiedPlayer) commandSender;
             if (args.length == 1) {
+                if (args[0].equalsIgnoreCase("web")) {
+                    if (player.hasPermission("hidemyplugins.admin.webinterface")) {
+                        if (plugin.getConfig().getBoolean("UsingWebInterface")){
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Access your Web Interface here: &e" + plugin.getConfig().getString("WebInterface")));
+                        } else {
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Web Interface is disabled in the &econfig.yml"));
+                        }
+                    }
+                }
                 if (args[0].equalsIgnoreCase("history")) {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Usage: &e/hmpa history <user> <page>"));
                 }
@@ -57,7 +70,17 @@ public class hmpa extends Command {
                                     String name = rs.getString("USER");
                                     String date = rs.getString("DATE");
                                     String executed_command = rs.getString("EXECUTED_COMMAND");
-                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e" + name + "   " + executed_command + "    " + date));
+                                    String id = rs.getString("ID");
+                                    if (plugin.getConfig().getBoolean("UsingWebInterface")){
+                                        TextComponent message = new TextComponent(ChatColor.translateAlternateColorCodes('&', "&e" + name + "   " + executed_command + "    " + date) );
+                                        message.setClickEvent( new ClickEvent( ClickEvent.Action.OPEN_URL, plugin.getConfig().getString("WebInterface") + "/profile.php?id=" + id));
+                                        message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder( ChatColor.translateAlternateColorCodes('&', "&eHideMyPlugins &bWeb Profile") ).create()));
+                                        player.sendMessage(message);
+
+                                    } else {
+                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e" + name + "   " + executed_command + "    " + date));
+
+                                    }
                                 }
 
                             }
@@ -104,7 +127,17 @@ public class hmpa extends Command {
                                         String name = rs.getString("USER");
                                         String date = rs.getString("DATE");
                                         String executed_command = rs.getString("EXECUTED_COMMAND");
-                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e" + name + "   " + executed_command + "    " + date));
+                                        String id = rs.getString("ID");
+                                        if (plugin.getConfig().getBoolean("UsingWebInterface")){
+                                            TextComponent message = new TextComponent(ChatColor.translateAlternateColorCodes('&', "&e" + name + "   " + executed_command + "    " + date) );
+                                            message.setClickEvent( new ClickEvent( ClickEvent.Action.OPEN_URL, plugin.getConfig().getString("WebInterface") + "/profile.php?id=" + id));
+                                            message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder( ChatColor.translateAlternateColorCodes('&', "&eHideMyPlugins &bWeb Profile") ).create()));
+                                            player.sendMessage(message);
+
+                                        } else {
+                                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e" + name + "   " + executed_command + "    " + date));
+
+                                        }
                                     }
                                 } else {
                                     int pageNum = page;
@@ -128,7 +161,17 @@ public class hmpa extends Command {
                                         String name = rs.getString("USER");
                                         String date = rs.getString("DATE");
                                         String executed_command = rs.getString("EXECUTED_COMMAND");
-                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e" + name + "   " + executed_command + "    " + date));
+                                        String id = rs.getString("ID");
+                                        if (plugin.getConfig().getBoolean("UsingWebInterface")){
+                                            TextComponent message = new TextComponent(ChatColor.translateAlternateColorCodes('&', "&e" + name + "   " + executed_command + "    " + date) );
+                                            message.setClickEvent( new ClickEvent( ClickEvent.Action.OPEN_URL, plugin.getConfig().getString("WebInterface") + "/profile.php?id=" + id));
+                                            message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder( ChatColor.translateAlternateColorCodes('&', "&eHideMyPlugins &bWeb Profile") ).create()));
+                                            player.sendMessage(message);
+
+                                        } else {
+                                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e" + name + "   " + executed_command + "    " + date));
+
+                                        }
                                     }
                                 }
                             }

@@ -1,6 +1,9 @@
 package com.gamerexde.hidemypluginsbungee.Event;
 
 import com.gamerexde.hidemypluginsbungee.HideMyPluginsBungee;
+import com.gamerexde.hidemypluginsbungee.Utils.DateGenerator;
+import com.gamerexde.hidemypluginsbungee.Utils.IDGenerator;
+
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -10,8 +13,6 @@ import net.md_5.bungee.event.EventHandler;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class Blocker implements Listener {
     private HideMyPluginsBungee plugin;
@@ -64,25 +65,19 @@ public class Blocker implements Listener {
                     if (plugin.getConfig().getBoolean("use-mysql")){
                         Connection con = plugin.getMySQL().getConnection();
 
-                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-                        LocalDateTime now = LocalDateTime.now();
-
                         String name = ((ProxiedPlayer) event.getSender()).getName();
                         String uuid = ((ProxiedPlayer) event.getSender()).getUniqueId().toString();
-                        String date = dtf.format(now);
                         String executedCommand = msg[0];
-
-                        String id = createIDString();
 
                         PreparedStatement create = con.prepareStatement("INSERT INTO `" + plugin.getConfig().getString("MySQL.table_name")
                                 + "` (`ID`, `UUID`, `USER`, `EXECUTED_COMMAND`, `DATE`) VALUES ('"
-                                + id
+                                + IDGenerator.getAlphaNumericString()
                                 + "', '" + uuid + "', '"
                                 + name
                                 + "', '"
                                 + executedCommand
                                 + "', '"
-                                + date
+                                + DateGenerator.getDate()
                                 + "');");
 
                         create.executeUpdate();
@@ -113,25 +108,20 @@ public class Blocker implements Listener {
                     if (plugin.getConfig().getBoolean("use-mysql")){
                         Connection con = plugin.getMySQL().getConnection();
 
-                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-                        LocalDateTime now = LocalDateTime.now();
-
                         String name = ((ProxiedPlayer) event.getSender()).getName();
                         String uuid = ((ProxiedPlayer) event.getSender()).getUniqueId().toString();
-                        String date = dtf.format(now);
                         String executedCommand = msg[0];
 
-                        String id = createIDString();
 
                         PreparedStatement create = con.prepareStatement("INSERT INTO `" + plugin.getConfig().getString("MySQL.table_name")
                                 + "` (`ID`, `UUID`, `USER`, `EXECUTED_COMMAND`, `DATE`) VALUES ('"
-                                + id
+                                + IDGenerator.getAlphaNumericString()
                                 + "', '" + uuid + "', '"
                                 + name
                                 + "', '"
                                 + executedCommand
                                 + "', '"
-                                + date
+                                + DateGenerator.getDate()
                                 + "');");
 
                         create.executeUpdate();
@@ -143,21 +133,5 @@ public class Blocker implements Listener {
                 break;
             }
         }
-    }
-    public static String createIDString() {
-        int n = 6;
-
-        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                + "0123456789";
-        StringBuilder sb = new StringBuilder(n);
-        for (int i = 0; i < n; i++) {
-            int index
-                    = (int)(AlphaNumericString.length()
-                    * Math.random());
-
-            sb.append(AlphaNumericString
-                    .charAt(index));
-        }
-        return sb.toString();
     }
 }

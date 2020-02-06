@@ -50,7 +50,7 @@ public final class HideMyPlugins extends JavaPlugin implements Listener {
     private FileConfiguration newConfig;
     private File configFile;
 
-    public static final String version = "2.3.3-SNAPSHOT";
+    public static final String version = "2.3.4-SNAPSHOT";
 
     private ProtocolManager protocolManager;
 
