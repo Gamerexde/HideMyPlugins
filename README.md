@@ -18,3 +18,10 @@ You will need  [ProtocolLib](http://bit.ly/1QMmyyW) in order to run HideMyPlugin
 ## Instalation:
 https://github.com/Gamerexde/HideMyPlugins/wiki/Installation
 
+## Web Interface
+
+HideMyPlugins Web is an addon for HideMyPlugins Plugin, this web interface allows you to see a history of users attempt to use blocked commands, all conveniently on a PHP Web Interface.
+
+You can get HideMyPlugins Web in Github:
+https://github.com/Gamerexde/hidemyplugins-web-interface
+
