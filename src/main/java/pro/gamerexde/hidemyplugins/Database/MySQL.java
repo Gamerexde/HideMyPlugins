@@ -34,6 +34,7 @@ public class MySQL {
                 if (getConnection() != null && !getConnection().isClosed()) {
                     return;
                 }
+
                 String dbDriver = plugin.getConfig().getString("database-driver");
                 String dbClass = plugin.getConfig().getString("database-class");
 

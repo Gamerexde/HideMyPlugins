@@ -6,7 +6,7 @@
 
     <groupId>pro.gamerexde</groupId>
     <artifactId>HideMyPlugins</artifactId>
-    <version>2.3.4-SNAPSHOT</version>
+    <version>2.3.5-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>HideMyPlugins</name>
@@ -32,16 +32,35 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.0</version>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
                 <executions>
                     <execution>
+                        <id>bungeecord</id>
                         <phase>package</phase>
                         <goals>
-                            <goal>shade</goal>
+                            <goal>jar</goal>
                         </goals>
                         <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <classifier>Bungee</classifier>
+                            <excludes>
+                                <exclude>**/pro/**</exclude>
+                                <exclude>**/plugin.yml</exclude>
+                            </excludes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>spigot</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>Spigot</classifier>
+                            <excludes>
+                                <exclude>**/com/**</exclude>
+                                <exclude>**/bungee.yml</exclude>
+                            </excludes>
                         </configuration>
                     </execution>
                 </executions>

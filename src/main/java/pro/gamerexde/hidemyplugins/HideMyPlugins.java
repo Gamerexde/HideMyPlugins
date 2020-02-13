@@ -1,6 +1,5 @@
 package pro.gamerexde.hidemyplugins;
 
-
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
@@ -50,7 +49,7 @@ public final class HideMyPlugins extends JavaPlugin implements Listener {
     private FileConfiguration newConfig;
     private File configFile;
 
-    public static final String version = "2.3.4-SNAPSHOT";
+    public static final String version = "2.3.5-SNAPSHOT";
 
     private ProtocolManager protocolManager;
 
@@ -177,11 +176,9 @@ public final class HideMyPlugins extends JavaPlugin implements Listener {
                             }
                         }
                         event.setCancelled(true);
-
                     }
                 }
             }
-
         });
     }
 
@@ -229,8 +226,6 @@ public final class HideMyPlugins extends JavaPlugin implements Listener {
             saveResource("messages.yml", false);
         }
     }
-
-
 
     public void reloadConfiguration(){
         reloadConfig();
