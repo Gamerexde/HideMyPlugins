@@ -14,16 +14,16 @@
 # # # # # # # # # # #
 
 #No permisions.
-noPerms: "&e&lHideMyPlugins> &7You don't have permissions..."
+noPerms: "&d&lHideMyPlugins> &7You don't have permissions..."
 
 # Deny message.
-blockMessage: '&e&lHideMyPlugins> &7Access Denied.'
+blockMessage: '&d&lHideMyPlugins> &7Access Denied.'
 
 # Admin Notify Deny message.
-blockAdminNotifyMessage: '&e&lHideMyPlugins> &e{USER} &7tried to use a blocked command.'
+blockAdminNotifyMessage: '&d&lHideMyPlugins> &d{USER} &7tried to use a blocked command.'
 
 # Bungee Admin Notify Deny message.
-blockBungeeAdminNotifyMessage: '&e&lHideMyPlugins> &e{USER} &7tried to use a blocked command on server &e{SERVER}.'
+blockBungeeAdminNotifyMessage: '&d&lHideMyPlugins> &d{USER} &7tried to use a blocked command on server &d{SERVER}.'
 
 # # # # # # # # # # #
 #  +--------------+ #
@@ -32,4 +32,4 @@ blockBungeeAdminNotifyMessage: '&e&lHideMyPlugins> &e{USER} &7tried to use a blo
 # # # # # # # # # # #
 
 # Title Deny message.
-titleBlockMessage: '&eAccess Denied'
+titleBlockMessage: '&dAccess Denied'

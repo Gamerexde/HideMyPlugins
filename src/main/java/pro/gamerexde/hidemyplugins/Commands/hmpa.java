@@ -34,9 +34,9 @@ public class hmpa implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("web")) {
                     if (sender.hasPermission("hidemyplugins.admin.webinterface")) {
                         if (plugin.getConfig().getBoolean("UsingWebInterface")){
-                            sender.sendMessage(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Access your Web Interface here: &e" + plugin.getConfig().getString("WebInterface")));
+                            sender.sendMessage(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Access your Web Interface here: &d" + plugin.getConfig().getString("WebInterface")));
                         } else {
-                            sender.sendMessage(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Web Interface is disabled in the &econfig.yml"));
+                            sender.sendMessage(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Web Interface is disabled in the &dconfig.yml"));
                         }
                     } else {
                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', msgconfig.getString("noPerms") ));
@@ -45,7 +45,7 @@ public class hmpa implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("history")) {
                     if (sender.hasPermission("hidemyplugins.admin.history")) {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Usage: &e/hmpa history <user> <page>"));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Usage: &d/hmpa history <user> <page>"));
                     } else {
                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', msgconfig.getString("noPerms") ));
                     }
@@ -73,20 +73,20 @@ public class hmpa implements CommandExecutor {
                                 ResultSet rs = stmt.executeQuery(query);
                                 ResultSet checkQuery = stmtQueryCheck.executeQuery(query);
 
-                                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Searching history for &e" + args[1] + ""));
+                                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Searching history for &d" + args[1] + ""));
 
                                 if (checkQuery.next()) {
                                     String name = checkQuery.getString("USER");
-                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Found commands for &e" + name + ""));
+                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Found commands for &d" + name + ""));
                                     stmtQueryCheck.close();
                                 } else {
-                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &e" + args[1] + "&7 dosen't have used blocked commands. This user is clean!"));
+                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &d" + args[1] + "&7 dosen't have used blocked commands. This user is clean!"));
                                     stmtQueryCheck.close();
                                     return false;
                                 }
 
                                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "\n"));
-                                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7           &8[&7Page: &e" + "1" + "&8]            "));
+                                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7           &8[&7Page: &d" + "1" + "&8]            "));
                                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8----------------------------"));
                                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7User     Command        Date"));
                                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8----------------------------"));
@@ -97,17 +97,17 @@ public class hmpa implements CommandExecutor {
                                     String executed_command = rs.getString("EXECUTED_COMMAND");
                                     String id = rs.getString("ID");
                                     if (plugin.getConfig().getBoolean("UsingWebInterface")){
-                                        TextComponent message = new TextComponent(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&e"
+                                        TextComponent message = new TextComponent(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&d"
                                                 + name + "   "
                                                 + executed_command
                                                 + "    " + date) );
                                         message.setClickEvent( new ClickEvent( ClickEvent.Action.OPEN_URL, plugin.getConfig().getString("WebInterface")
                                                 + "/profile.php?id=" + id));
-                                        message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&eHideMyPlugins &bWeb Profile") ).create()));
+                                        message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&dHideMyPlugins &bWeb Profile") ).create()));
                                         player.spigot().sendMessage(message);
 
                                     } else {
-                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e" + name + "   " + executed_command + "    " + date));
+                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d" + name + "   " + executed_command + "    " + date));
                                     }
                                 }
 
@@ -128,20 +128,20 @@ public class hmpa implements CommandExecutor {
                                 ResultSet rs = stmt.executeQuery(query);
                                 ResultSet checkQuery = stmtQueryCheck.executeQuery(query);
 
-                                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Searching history for &e" + args[1] + ""));
+                                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Searching history for &d" + args[1] + ""));
 
                                 if (checkQuery.next()) {
                                     String name = checkQuery.getString("USER");
-                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Found commands for &e" + name + ""));
+                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Found commands for &d" + name + ""));
                                     stmtQueryCheck.close();
                                 } else {
-                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &e" + args[1] + "&7 dosen't have used blocked commands. This user is clean!"));
+                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &d" + args[1] + "&7 dosen't have used blocked commands. This user is clean!"));
                                     stmtQueryCheck.close();
                                     return false;
                                 }
 
                                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "\n"));
-                                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7           &8[&7Page: &e" + "1" + "&8]            "));
+                                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7           &8[&7Page: &d" + "1" + "&8]            "));
                                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8----------------------------"));
                                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7User     Command        Date"));
                                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8----------------------------"));
@@ -152,17 +152,17 @@ public class hmpa implements CommandExecutor {
                                     String executed_command = rs.getString("EXECUTED_COMMAND");
                                     String id = rs.getString("ID");
                                     if (plugin.getConfig().getBoolean("UsingWebInterface")){
-                                        TextComponent message = new TextComponent(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&e"
+                                        TextComponent message = new TextComponent(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&d"
                                                 + name + "   "
                                                 + executed_command
                                                 + "    " + date) );
                                         message.setClickEvent( new ClickEvent( ClickEvent.Action.OPEN_URL, plugin.getConfig().getString("WebInterface")
                                                 + "/profile.php?id=" + id));
-                                        message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&eHideMyPlugins &bWeb Profile") ).create()));
+                                        message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&dHideMyPlugins &bWeb Profile") ).create()));
                                         player.spigot().sendMessage(message);
 
                                     } else {
-                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e" + name + "   " + executed_command + "    " + date));
+                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d" + name + "   " + executed_command + "    " + date));
 
                                     }
                                 }
@@ -201,20 +201,20 @@ public class hmpa implements CommandExecutor {
                                     ResultSet rs = stmt.executeQuery(query);
                                     ResultSet checkQuery = stmtQueryCheck.executeQuery(query);
 
-                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Searching history for &e" + args[1] + ""));
+                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Searching history for &d" + args[1] + ""));
 
                                     if (checkQuery.next()) {
                                         String name = checkQuery.getString("USER");
-                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Found commands for &e" + name + ""));
+                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Found commands for &d" + name + ""));
                                         stmtQueryCheck.close();
                                     } else {
-                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &e" + args[1] + "&7 dosen't have used blocked commands. This user is clean!"));
+                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &d" + args[1] + "&7 dosen't have used blocked commands. This user is clean!"));
                                         stmtQueryCheck.close();
                                         return false;
                                     }
 
                                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "\n"));
-                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7           &8[&7Page: &e" + "1" + "&8]            "));
+                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7           &8[&7Page: &d" + "1" + "&8]            "));
                                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8----------------------------"));
                                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7User     Command        Date"));
                                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8----------------------------"));
@@ -225,17 +225,17 @@ public class hmpa implements CommandExecutor {
                                         String executed_command = rs.getString("EXECUTED_COMMAND");
                                         String id = rs.getString("ID");
                                         if (plugin.getConfig().getBoolean("UsingWebInterface")){
-                                            TextComponent message = new TextComponent(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&e"
+                                            TextComponent message = new TextComponent(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&d"
                                                     + name + "   "
                                                     + executed_command
                                                     + "    " + date) );
                                             message.setClickEvent( new ClickEvent( ClickEvent.Action.OPEN_URL, plugin.getConfig().getString("WebInterface")
                                                     + "/profile.php?id=" + id));
-                                            message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder( net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&eHideMyPlugins &bWeb Profile") ).create()));
+                                            message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder( net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&dHideMyPlugins &bWeb Profile") ).create()));
                                             player.spigot().sendMessage(message);
 
                                         } else {
-                                            sender.sendMessage(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&e" + name + "   " + executed_command + "    " + date));
+                                            sender.sendMessage(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&d" + name + "   " + executed_command + "    " + date));
 
                                         }
                                     }
@@ -251,25 +251,25 @@ public class hmpa implements CommandExecutor {
                                     ResultSet rs = stmt.executeQuery(query);
                                     ResultSet checkQuery = stmtQueryCheck.executeQuery(query);
 
-                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Searching history for &e" + args[1] + ""));
+                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Searching history for &d" + args[1] + ""));
 
                                     if (checkQuery.next()) {
                                         String name = checkQuery.getString("USER");
-                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Found commands for &e" + name + ""));
+                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Found commands for &d" + name + ""));
                                         stmtQueryCheck.close();
                                     } else {
                                         if (args[2] == args[2]) {
-                                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Page &e" + args[2] + "&7 dosen't exist..." ));
+                                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Page &d" + args[2] + "&7 dosen't exist..." ));
                                             stmtQueryCheck.close();
                                             return false;
                                         }
-                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &e" + args[1] + "&7 dosen't have used blocked commands. This user is clean!"));
+                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &d" + args[1] + "&7 dosen't have used blocked commands. This user is clean!"));
                                         stmtQueryCheck.close();
                                         return false;
                                     }
 
                                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "\n"));
-                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7           &8[&7Page: &e" + args[2] + "&8]            "));
+                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7           &8[&7Page: &d" + args[2] + "&8]            "));
                                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8----------------------------"));
                                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7User     Command        Date"));
                                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8----------------------------"));
@@ -280,17 +280,17 @@ public class hmpa implements CommandExecutor {
                                         String executed_command = rs.getString("EXECUTED_COMMAND");
                                         String id = rs.getString("ID");
                                         if (plugin.getConfig().getBoolean("UsingWebInterface")){
-                                            TextComponent message = new TextComponent(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&e"
+                                            TextComponent message = new TextComponent(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&d"
                                                     + name + "   "
                                                     + executed_command
                                                     + "    " + date) );
                                             message.setClickEvent( new ClickEvent( ClickEvent.Action.OPEN_URL, plugin.getConfig().getString("WebInterface")
                                                     + "/profile.php?id=" + id));
-                                            message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder( net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&eHideMyPlugins &bWeb Profile") ).create()));
+                                            message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder( net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&dHideMyPlugins &bWeb Profile") ).create()));
                                             player.spigot().sendMessage(message);
 
                                         } else {
-                                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e" + name + "   " + executed_command + "    " + date));
+                                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d" + name + "   " + executed_command + "    " + date));
 
                                         }
                                     }
@@ -316,25 +316,25 @@ public class hmpa implements CommandExecutor {
                                     ResultSet rs = stmt.executeQuery(query);
                                     ResultSet checkQuery = stmtCheckQuery.executeQuery(query);
 
-                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Searching history for &e" + args[1] + ""));
+                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Searching history for &d" + args[1] + ""));
 
                                     if (checkQuery.next()) {
                                         String name = checkQuery.getString("USER");
-                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Found commands for &e" + name + ""));
+                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Found commands for &d" + name + ""));
                                         stmtCheckQuery.close();
                                     } else {
                                         if (args[2] == args[2]) {
-                                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Page &e" + args[2] + "&7 dosen't exist..." ));
+                                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Page &d" + args[2] + "&7 dosen't exist..." ));
                                             stmtCheckQuery.close();
                                             return false;
                                         }
-                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &e" + args[1] + "&7 dosen't have used blocked commands. This user is clean!"));
+                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &d" + args[1] + "&7 dosen't have used blocked commands. This user is clean!"));
                                         stmtCheckQuery.close();
                                         return false;
                                     }
 
                                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "\n"));
-                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7           &8[&7Page: &e" + args[2] + "&8]            "));
+                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7           &8[&7Page: &d" + args[2] + "&8]            "));
                                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8----------------------------"));
                                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7User     Command        Date"));
                                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8----------------------------"));
@@ -345,17 +345,17 @@ public class hmpa implements CommandExecutor {
                                         String executed_command = rs.getString("EXECUTED_COMMAND");
                                         String id = rs.getString("ID");
                                         if (plugin.getConfig().getBoolean("UsingWebInterface")){
-                                            TextComponent message = new TextComponent(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&e"
+                                            TextComponent message = new TextComponent(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&d"
                                                     + name + "   "
                                                     + executed_command
                                                     + "    " + date) );
                                             message.setClickEvent( new ClickEvent( ClickEvent.Action.OPEN_URL, plugin.getConfig().getString("WebInterface")
                                                     + "/profile.php?id=" + id));
-                                            message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder( net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&eHideMyPlugins &bWeb Profile") ).create()));
+                                            message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder( net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&dHideMyPlugins &bWeb Profile") ).create()));
                                             player.spigot().sendMessage(message);
 
                                         } else {
-                                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e" + name + "   " + executed_command + "    " + date));
+                                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d" + name + "   " + executed_command + "    " + date));
 
                                         }
                                     }
@@ -371,25 +371,25 @@ public class hmpa implements CommandExecutor {
                                     ResultSet rs = stmt.executeQuery(query);
                                     ResultSet checkQuery = stmtCheckQuery.executeQuery(query);
 
-                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Searching history for &e" + args[1] + ""));
+                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Searching history for &d" + args[1] + ""));
 
                                     if (checkQuery.next()) {
                                         String name = checkQuery.getString("USER");
-                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Found commands for &e" + name + ""));
+                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Found commands for &d" + name + ""));
                                         stmtCheckQuery.close();
                                     } else {
                                         if (args[2] == args[2]) {
-                                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Page &e" + args[2] + "&7 dosen't exist..." ));
+                                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Page &d" + args[2] + "&7 dosen't exist..." ));
                                             stmtCheckQuery.close();
                                             return false;
                                         }
-                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &e" + args[1] + "&7 dosen't have used blocked commands. This user is clean!"));
+                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &d" + args[1] + "&7 dosen't have used blocked commands. This user is clean!"));
                                         stmtCheckQuery.close();
                                         return false;
                                     }
 
                                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "\n"));
-                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7           &8[&7Page: &e" + args[2] + "&8]            "));
+                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7           &8[&7Page: &d" + args[2] + "&8]            "));
                                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8----------------------------"));
                                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7User     Command        Date"));
                                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8----------------------------"));
@@ -400,17 +400,17 @@ public class hmpa implements CommandExecutor {
                                         String executed_command = rs.getString("EXECUTED_COMMAND");
                                         String id = rs.getString("ID");
                                         if (plugin.getConfig().getBoolean("UsingWebInterface")){
-                                            TextComponent message = new TextComponent(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&e"
+                                            TextComponent message = new TextComponent(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&d"
                                                     + name + "   "
                                                     + executed_command
                                                     + "    " + date) );
                                             message.setClickEvent( new ClickEvent( ClickEvent.Action.OPEN_URL, plugin.getConfig().getString("WebInterface")
                                                     + "/profile.php?id=" + id));
-                                            message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder( net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&eHideMyPlugins &bWeb Profile") ).create()));
+                                            message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder( net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "&dHideMyPlugins &bWeb Profile") ).create()));
                                             player.spigot().sendMessage(message);
 
                                         } else {
-                                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e" + name + "   " + executed_command + "    " + date));
+                                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d" + name + "   " + executed_command + "    " + date));
 
                                         }
                                     }
@@ -433,8 +433,8 @@ public class hmpa implements CommandExecutor {
             return false;
         }
 
-        player.sendMessage("§8                     [§eHideMyPlugins §cAdmin§8]");
-        player.sendMessage("                      §e" + plugin.version +"");
+        player.sendMessage("§8                     [§dHideMyPlugins §cAdmin§8]");
+        player.sendMessage("                      §d" + plugin.version +"");
         player.sendMessage("");
         player.sendMessage("§7 - §a/hmpa §8-> §7Shows useful admin commands.");
         player.sendMessage("§7 - §a/hmpa history <user> <page>§8-> §7Shows history of used.");

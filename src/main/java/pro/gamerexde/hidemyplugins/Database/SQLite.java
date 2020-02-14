@@ -47,7 +47,7 @@ public class SQLite extends Database{
         connection = getSQLConnection();
         try {
             Statement s = connection.createStatement();
-            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Connecting to SQLite Database..."));
+            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Connecting to SQLite Database..."));
             s.executeUpdate("CREATE TABLE IF NOT EXISTS " + plugin.getConfig().getString("SQLite.table_name") + "("
                     + "ID VARCHAR(45) NOT NULL,"
                     + "USER VARCHAR(45) NOT NULL,"
@@ -59,7 +59,7 @@ public class SQLite extends Database{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Connected to SQLite successfully!"));
+        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Connected to SQLite successfully!"));
         initialize();
     }
 }

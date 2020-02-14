@@ -30,14 +30,14 @@ public class hmpa extends Command {
                 if (args[0].equalsIgnoreCase("web")) {
                     if (player.hasPermission("hidemyplugins.admin.webinterface")) {
                         if (plugin.getConfig().getBoolean("UsingWebInterface")){
-                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Access your Web Interface here: &e" + plugin.getConfig().getString("WebInterface")));
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Access your Web Interface here: &d" + plugin.getConfig().getString("WebInterface")));
                         } else {
-                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Web Interface is disabled in the &econfig.yml"));
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Web Interface is disabled in the &dconfig.yml"));
                         }
                     }
                 }
                 if (args[0].equalsIgnoreCase("history")) {
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Usage: &e/hmpa history <user> <page>"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Usage: &d/hmpa history <user> <page>"));
                 }
                 return;
             }
@@ -62,20 +62,20 @@ public class hmpa extends Command {
                                 ResultSet rs = stmt.executeQuery(query);
                                 ResultSet checkQuery = stmtCheckQuery.executeQuery(query);
 
-                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Searching history for &e" + args[1] + ""));
+                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Searching history for &d" + args[1] + ""));
 
                                 if (checkQuery.next()) {
                                     String name = checkQuery.getString("USER");
-                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Found commands for &e" + name + ""));
+                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Found commands for &d" + name + ""));
                                     stmtCheckQuery.close();
                                 } else {
-                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &e" + args[1] + "&7 dosen't have used blocked commands. This user is clean!"));
+                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &d" + args[1] + "&7 dosen't have used blocked commands. This user is clean!"));
                                     stmtCheckQuery.close();
                                     return;
                                 }
 
                                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', "\n"));
-                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7           &8[&7Page: &e" + "1" + "&8]            "));
+                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7           &8[&7Page: &d" + "1" + "&8]            "));
                                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8----------------------------"));
                                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7User     Command        Date"));
                                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8----------------------------"));
@@ -86,13 +86,13 @@ public class hmpa extends Command {
                                     String executed_command = rs.getString("EXECUTED_COMMAND");
                                     String id = rs.getString("ID");
                                     if (plugin.getConfig().getBoolean("UsingWebInterface")){
-                                        TextComponent message = new TextComponent(ChatColor.translateAlternateColorCodes('&', "&e" + name + "   " + executed_command + "    " + date) );
+                                        TextComponent message = new TextComponent(ChatColor.translateAlternateColorCodes('&', "&d" + name + "   " + executed_command + "    " + date) );
                                         message.setClickEvent( new ClickEvent( ClickEvent.Action.OPEN_URL, plugin.getConfig().getString("WebInterface") + "/profile.php?id=" + id));
-                                        message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder( ChatColor.translateAlternateColorCodes('&', "&eHideMyPlugins &bWeb Profile") ).create()));
+                                        message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder( ChatColor.translateAlternateColorCodes('&', "&dHideMyPlugins &bWeb Profile") ).create()));
                                         player.sendMessage(message);
 
                                     } else {
-                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e" + name + "   " + executed_command + "    " + date));
+                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d" + name + "   " + executed_command + "    " + date));
 
                                     }
                                 }
@@ -132,20 +132,20 @@ public class hmpa extends Command {
                                     ResultSet rs = stmt.executeQuery(query);
                                     ResultSet checkQuery = stmtCheckQuery.executeQuery(query);
 
-                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Searching history for &e" + args[1] + ""));
+                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Searching history for &d" + args[1] + ""));
 
                                     if (checkQuery.next()) {
                                         String name = checkQuery.getString("USER");
-                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Found commands for &e" + name + ""));
+                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Found commands for &d" + name + ""));
                                         stmtCheckQuery.close();
                                     } else {
-                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &e" + args[1] + "&7 dosen't have used blocked commands. This user is clean!"));
+                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &d" + args[1] + "&7 dosen't have used blocked commands. This user is clean!"));
                                         stmtCheckQuery.close();
                                         return;
                                     }
 
                                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', "\n"));
-                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7           &8[&7Page: &e" + "1" + "&8]            "));
+                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7           &8[&7Page: &d" + "1" + "&8]            "));
                                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8----------------------------"));
                                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7User     Command        Date"));
                                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8----------------------------"));
@@ -156,17 +156,17 @@ public class hmpa extends Command {
                                         String executed_command = rs.getString("EXECUTED_COMMAND");
                                         String id = rs.getString("ID");
                                         if (plugin.getConfig().getBoolean("UsingWebInterface")){
-                                            TextComponent message = new TextComponent(ChatColor.translateAlternateColorCodes('&', "&e"
+                                            TextComponent message = new TextComponent(ChatColor.translateAlternateColorCodes('&', "&d"
                                                     + name + "   "
                                                     + executed_command
                                                     + "    " + date) );
                                             message.setClickEvent( new ClickEvent( ClickEvent.Action.OPEN_URL, plugin.getConfig().getString("WebInterface")
                                                     + "/profile.php?id=" + id));
-                                            message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder( ChatColor.translateAlternateColorCodes('&', "&eHideMyPlugins &bWeb Profile") ).create()));
+                                            message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder( ChatColor.translateAlternateColorCodes('&', "&dHideMyPlugins &bWeb Profile") ).create()));
                                             player.sendMessage(message);
 
                                         } else {
-                                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e" + name + "   " + executed_command + "    " + date));
+                                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d" + name + "   " + executed_command + "    " + date));
 
                                         }
                                     }
@@ -182,25 +182,25 @@ public class hmpa extends Command {
                                     ResultSet rs = stmt.executeQuery(query);
                                     ResultSet checkQuery = stmtCheckQuery.executeQuery(query);
 
-                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Searching history for &e" + args[1] + ""));
+                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Searching history for &d" + args[1] + ""));
 
                                     if (checkQuery.next()) {
                                         String name = checkQuery.getString("USER");
-                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Found commands for &e" + name + ""));
+                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Found commands for &d" + name + ""));
                                         stmtCheckQuery.close();
                                     } else {
                                         if (args[2] == args[2]) {
-                                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Page &e" + args[2] + "&7 dosen't exist..." ));
+                                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Page &d" + args[2] + "&7 dosen't exist..." ));
                                             stmtCheckQuery.close();
                                             return;
                                         }
-                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &e" + args[1] + "&7 dosen't have used blocked commands. This user is clean!"));
+                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &d" + args[1] + "&7 dosen't have used blocked commands. This user is clean!"));
                                         stmtCheckQuery.close();
                                         return;
                                     }
 
                                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', "\n"));
-                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7           &8[&7Page: &e" + args[2] + "&8]            "));
+                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7           &8[&7Page: &d" + args[2] + "&8]            "));
                                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8----------------------------"));
                                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7User     Command        Date"));
                                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8----------------------------"));
@@ -211,13 +211,13 @@ public class hmpa extends Command {
                                         String executed_command = rs.getString("EXECUTED_COMMAND");
                                         String id = rs.getString("ID");
                                         if (plugin.getConfig().getBoolean("UsingWebInterface")){
-                                            TextComponent message = new TextComponent(ChatColor.translateAlternateColorCodes('&', "&e" + name + "   " + executed_command + "    " + date) );
+                                            TextComponent message = new TextComponent(ChatColor.translateAlternateColorCodes('&', "&d" + name + "   " + executed_command + "    " + date) );
                                             message.setClickEvent( new ClickEvent( ClickEvent.Action.OPEN_URL, plugin.getConfig().getString("WebInterface") + "/profile.php?id=" + id));
-                                            message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder( ChatColor.translateAlternateColorCodes('&', "&eHideMyPlugins &bWeb Profile") ).create()));
+                                            message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder( ChatColor.translateAlternateColorCodes('&', "&dHideMyPlugins &bWeb Profile") ).create()));
                                             player.sendMessage(message);
 
                                         } else {
-                                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e" + name + "   " + executed_command + "    " + date));
+                                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d" + name + "   " + executed_command + "    " + date));
 
                                         }
                                     }
@@ -234,7 +234,7 @@ public class hmpa extends Command {
 
             }
 
-            player.sendMessage("§8              [§eHideMyPlugins §bBungee §cAdmin§8]");
+            player.sendMessage("§8              [§dHideMyPlugins §bBungee §cAdmin§8]");
             player.sendMessage("");
             player.sendMessage("§7 - §a/hmpa §8-> §7Shows useful admin commands.");
             player.sendMessage("§7 - §a/hmpa history <user> <page>§8-> §7Shows history of used.");

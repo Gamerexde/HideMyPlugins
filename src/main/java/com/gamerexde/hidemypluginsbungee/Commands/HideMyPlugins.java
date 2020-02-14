@@ -16,7 +16,7 @@ public class HideMyPlugins extends Command {
             ProxiedPlayer player = (ProxiedPlayer) commandSender;
             if (args.length == 1) {
             }
-            player.sendMessage("§8                     [§eHideMyPlugins §bBungee§8]");
+            player.sendMessage("§8                     [§dHideMyPlugins §bBungee§8]");
             player.sendMessage("");
             player.sendMessage("§7 - §a/hmpa §8-> §7Shows useful admin commands.");
             player.sendMessage("");

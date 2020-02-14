@@ -17,9 +17,9 @@ public class MySQL {
         plugin = instance;
     }
 
-    public static final String USER_ERROR = "&e&lHideMyPlugins> &7Error while creating tables, verify user permissions and then try again...";
-    public static final String CONNECTION_USER_ERROR = "&e&lHideMyPlugins> &7The connection cannot be established due to a misconfiguration in the config.yml or the MySQL Server configuration. Fix the error and try again.";
-    public static final String INTERNAL_ERROR = "&e&lHideMyPlugins> &7Internal Error. Please post this issue in &chttps://github.com/Gamerexde/HideMyPlugins/issues &7. This is a fatal error.";
+    public static final String USER_ERROR = "&d&lHideMyPlugins> &7Error while creating tables, verify user permissions and then try again...";
+    public static final String CONNECTION_USER_ERROR = "&d&lHideMyPlugins> &7The connection cannot be established due to a misconfiguration in the config.yml or the MySQL Server configuration. Fix the error and try again.";
+    public static final String INTERNAL_ERROR = "&d&lHideMyPlugins> &7Internal Error. Please post this issue in &chttps://github.com/Gamerexde/HideMyPlugins/issues &7. This is a fatal error.";
 
 
     public void initMySQLDatabase() {
@@ -29,7 +29,7 @@ public class MySQL {
         username = plugin.getConfig().getString("MySQL.user");
         password = plugin.getConfig().getString("MySQL.password");
         try {
-            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Trying to connect to MySQL server &e" + host + ":" + port + ""));
+            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Trying to connect to MySQL server &d" + host + ":" + port + ""));
             synchronized (this) {
                 if (getConnection() != null && !getConnection().isClosed()) {
                     return;
@@ -42,18 +42,18 @@ public class MySQL {
                 setConnection(DriverManager.getConnection(dbDriver + this.host + ":"
                         + this.port + "/" + this.database, this.username, this.password));
 
-                Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7The MySQL connection to the server &e" + host + ":" + port + "&7 has been successfully established!"));
+                Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7The MySQL connection to the server &d" + host + ":" + port + "&7 has been successfully established!"));
                 createTable();
             }
         } catch (SQLException e) {
             Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', CONNECTION_USER_ERROR));
             e.printStackTrace();
-            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Server will shutdown for security reasons..."));
+            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Server will shutdown for security reasons..."));
             Bukkit.shutdown();
         } catch (ClassNotFoundException e) {
             Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', INTERNAL_ERROR));
             e.printStackTrace();
-            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Server will shutdown for security reasons..."));
+            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Server will shutdown for security reasons..."));
             Bukkit.shutdown();
         }
     }

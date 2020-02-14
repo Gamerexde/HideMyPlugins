@@ -22,10 +22,10 @@ public class Hidemyplugins implements CommandExecutor {
                     if (sender.hasPermission("hidemyplugins.reload")) {
                         plugin.reloadConfig();
                         plugin.reloadMsgConfig();
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Configuration reloaded!"));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Configuration reloaded!"));
                     }
                     else {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7You can't reload the plugin because you don't have permissions..."));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7You can't reload the plugin because you don't have permissions..."));
                     }
                     return false;
                 }
@@ -40,8 +40,8 @@ public class Hidemyplugins implements CommandExecutor {
 
             Player player = (Player) sender;
 
-            player.sendMessage("§8                       [§eHideMyPlugins§8]");
-            player.sendMessage("                      §e" + plugin.version +"");
+            player.sendMessage("§8                       [§dHideMyPlugins§8]");
+            player.sendMessage("                      §d" + plugin.version +"");
             player.sendMessage("");
             player.sendMessage("§7 - §a/hidemyplugins reload §8-> §7Reload the configuration.");
             player.sendMessage("§7 - §a/hmpa §8-> §7Shows useful admin commands.");

@@ -49,7 +49,7 @@ public final class HideMyPlugins extends JavaPlugin implements Listener {
     private FileConfiguration newConfig;
     private File configFile;
 
-    public static final String version = "2.3.5-SNAPSHOT";
+    public static final String version = "2.3.6-SNAPSHOT";
 
     private ProtocolManager protocolManager;
 
@@ -90,16 +90,16 @@ public final class HideMyPlugins extends JavaPlugin implements Listener {
 
         ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 
-        console.sendMessage(ChatColor.YELLOW + "  ___ ___    _____ __________ " + ChatColor.DARK_GRAY);
-        console.sendMessage(ChatColor.YELLOW + " /   |   \\  /     \\\\______   \\" + ChatColor.DARK_GRAY);
-        console.sendMessage(ChatColor.YELLOW + "/    ~    \\/  \\ /  \\|     ___/" + ChatColor.DARK_GRAY);
-        console.sendMessage(ChatColor.YELLOW + "\\    Y    /    Y    \\    |    " + ChatColor.DARK_GRAY);
-        console.sendMessage(ChatColor.YELLOW + " \\___|_  /\\____|__  /____|    " + ChatColor.DARK_GRAY);
-        console.sendMessage(ChatColor.YELLOW + "       \\/         \\/          " + ChatColor.DARK_GRAY);
-        console.sendMessage(ChatColor.GOLD + "       Ver: " + version + ChatColor.DARK_GRAY);
-        console.sendMessage(ChatColor.GOLD + "       Status: " + ChatColor.GREEN + "ON" + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.LIGHT_PURPLE + "  ___ ___    _____ __________ " + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.LIGHT_PURPLE + " /   |   \\  /     \\\\______   \\" + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.LIGHT_PURPLE + "/    ~    \\/  \\ /  \\|     ___/" + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.LIGHT_PURPLE + "\\    Y    /    Y    \\    |    " + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.LIGHT_PURPLE + " \\___|_  /\\____|__  /____|    " + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.LIGHT_PURPLE + "       \\/         \\/          " + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.DARK_PURPLE + "       Ver: " + version + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.DARK_PURPLE + "       Status: " + ChatColor.GREEN + "ON" + ChatColor.DARK_GRAY);
         console.sendMessage(ChatColor.GREEN + "");
-        console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7The plugin has loaded correctly!"));
+        console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7The plugin has loaded correctly!"));
 
         initDatabase();
 
@@ -186,7 +186,7 @@ public final class HideMyPlugins extends JavaPlugin implements Listener {
         if (this.getConfig().getBoolean("use-sqlite")){
             if (this.getConfig().getBoolean("use-mysql")) {
                 ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-                console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7You cannot select &cMySQL &7and &cSQLite &7at the same time in the config.yml, for security reasons the server will shutdown until you set up the config correctly..."));
+                console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7You cannot select &cMySQL &7and &cSQLite &7at the same time in the config.yml, for security reasons the server will shutdown until you set up the config correctly..."));
                 Bukkit.shutdown();
                 return;
             } else
@@ -195,7 +195,7 @@ public final class HideMyPlugins extends JavaPlugin implements Listener {
         } else if (this.getConfig().getBoolean("use-mysql")) {
             if (this.getConfig().getBoolean("use-sqlite")) {
                 ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-                console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7You cannot select &cMySQL &7and &cSQLite &7at the same time in the config.yml, for security reasons the server will shutdown until you set up the config correctly..."));
+                console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7You cannot select &cMySQL &7and &cSQLite &7at the same time in the config.yml, for security reasons the server will shutdown until you set up the config correctly..."));
                 Bukkit.shutdown();
                 return;
             } else
@@ -203,7 +203,7 @@ public final class HideMyPlugins extends JavaPlugin implements Listener {
             this.msql.initMySQLDatabase();
         } else {
             ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-            console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7You need to select at least one database method on the config.yml, for security reasons the server will shutdown until you set up the config correctly..."));
+            console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7You need to select at least one database method on the config.yml, for security reasons the server will shutdown until you set up the config correctly..."));
             Bukkit.shutdown();
         }
     }
@@ -235,16 +235,16 @@ public final class HideMyPlugins extends JavaPlugin implements Listener {
     public void onDisable() {
         ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 
-        console.sendMessage(ChatColor.YELLOW + "  ___ ___    _____ __________ " + ChatColor.DARK_GRAY);
-        console.sendMessage(ChatColor.YELLOW + " /   |   \\  /     \\\\______   \\" + ChatColor.DARK_GRAY);
-        console.sendMessage(ChatColor.YELLOW + "/    ~    \\/  \\ /  \\|     ___/" + ChatColor.DARK_GRAY);
-        console.sendMessage(ChatColor.YELLOW + "\\    Y    /    Y    \\    |    " + ChatColor.DARK_GRAY);
-        console.sendMessage(ChatColor.YELLOW + " \\___|_  /\\____|__  /____|    " + ChatColor.DARK_GRAY);
-        console.sendMessage(ChatColor.YELLOW + "       \\/         \\/          " + ChatColor.DARK_GRAY);
-        console.sendMessage(ChatColor.GOLD + "       Ver: " + version + ChatColor.DARK_GRAY);
-        console.sendMessage(ChatColor.GOLD + "       Status: " + ChatColor.RED + "OFF" + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.LIGHT_PURPLE + "  ___ ___    _____ __________ " + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.LIGHT_PURPLE + " /   |   \\  /     \\\\______   \\" + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.LIGHT_PURPLE + "/    ~    \\/  \\ /  \\|     ___/" + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.LIGHT_PURPLE + "\\    Y    /    Y    \\    |    " + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.LIGHT_PURPLE + " \\___|_  /\\____|__  /____|    " + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.LIGHT_PURPLE + "       \\/         \\/          " + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.DARK_PURPLE + "       Ver: " + version + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.DARK_PURPLE + "       Status: " + ChatColor.RED + "OFF" + ChatColor.DARK_GRAY);
         console.sendMessage(ChatColor.GREEN + "");
-        console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7The plugin will now shutdown..."));
+        console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7The plugin will now shutdown..."));
     }
 
     @Override
@@ -252,16 +252,16 @@ public final class HideMyPlugins extends JavaPlugin implements Listener {
         ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 
 
-        console.sendMessage(ChatColor.YELLOW + "  ___ ___    _____ __________ " + ChatColor.DARK_GRAY);
-        console.sendMessage(ChatColor.YELLOW + " /   |   \\  /     \\\\______   \\" + ChatColor.DARK_GRAY);
-        console.sendMessage(ChatColor.YELLOW + "/    ~    \\/  \\ /  \\|     ___/" + ChatColor.DARK_GRAY);
-        console.sendMessage(ChatColor.YELLOW + "\\    Y    /    Y    \\    |    " + ChatColor.DARK_GRAY);
-        console.sendMessage(ChatColor.YELLOW + " \\___|_  /\\____|__  /____|    " + ChatColor.DARK_GRAY);
-        console.sendMessage(ChatColor.YELLOW + "       \\/         \\/          " + ChatColor.DARK_GRAY);
-        console.sendMessage(ChatColor.GOLD + "       Ver: " + version + ChatColor.DARK_GRAY);
-        console.sendMessage(ChatColor.GOLD + "       Status: " + ChatColor.YELLOW + "Loading..." + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.LIGHT_PURPLE + "  ___ ___    _____ __________ " + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.LIGHT_PURPLE + " /   |   \\  /     \\\\______   \\" + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.LIGHT_PURPLE + "/    ~    \\/  \\ /  \\|     ___/" + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.LIGHT_PURPLE + "\\    Y    /    Y    \\    |    " + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.LIGHT_PURPLE + " \\___|_  /\\____|__  /____|    " + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.LIGHT_PURPLE + "       \\/         \\/          " + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.DARK_PURPLE + "       Ver: " + version + ChatColor.DARK_GRAY);
+        console.sendMessage(ChatColor.DARK_PURPLE + "       Status: " + ChatColor.YELLOW + "Loading..." + ChatColor.DARK_GRAY);
         console.sendMessage(ChatColor.GREEN + "");
-        console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Starting up..."));
+        console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Starting up..."));
     }
 
 }

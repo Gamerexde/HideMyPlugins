@@ -33,7 +33,7 @@ public class HideMyPluginsBungee extends Plugin {
 
     private List<String> blockedCommands;
 
-    String version = "2.3.5-SNAPSHOT";
+    String version = "2.3.6-SNAPSHOT";
 
     @Override
     public void onEnable() {
@@ -47,16 +47,16 @@ public class HideMyPluginsBungee extends Plugin {
         this.getProxy().getPluginManager().registerCommand(this, new hmpa(this));
 
         getLogger().info("\n");
-        getLogger().info(ChatColor.YELLOW + "  ___ ___    _____ __________ " + ChatColor.DARK_GRAY);
-        getLogger().info(ChatColor.YELLOW + " /   |   \\  /     \\\\______   \\" + ChatColor.DARK_GRAY);
-        getLogger().info(ChatColor.YELLOW + "/    ~    \\/  \\ /  \\|     ___/" + ChatColor.DARK_GRAY);
-        getLogger().info(ChatColor.YELLOW + "\\    Y    /    Y    \\    |    " + ChatColor.DARK_GRAY);
-        getLogger().info(ChatColor.YELLOW + " \\___|_  /\\____|__  /____|    " + ChatColor.DARK_GRAY);
-        getLogger().info(ChatColor.YELLOW + "       \\/         \\/          " + ChatColor.DARK_GRAY);
-        getLogger().info(ChatColor.GOLD + "       Ver: " + getVersion() + ChatColor.DARK_GRAY);
-        getLogger().info(ChatColor.GOLD + "       Status: " + ChatColor.GREEN + "ON" + ChatColor.DARK_GRAY);
+        getLogger().info(ChatColor.LIGHT_PURPLE + "  ___ ___    _____ __________ " + ChatColor.DARK_GRAY);
+        getLogger().info(ChatColor.LIGHT_PURPLE + " /   |   \\  /     \\\\______   \\" + ChatColor.DARK_GRAY);
+        getLogger().info(ChatColor.LIGHT_PURPLE + "/    ~    \\/  \\ /  \\|     ___/" + ChatColor.DARK_GRAY);
+        getLogger().info(ChatColor.LIGHT_PURPLE + "\\    Y    /    Y    \\    |    " + ChatColor.DARK_GRAY);
+        getLogger().info(ChatColor.LIGHT_PURPLE + " \\___|_  /\\____|__  /____|    " + ChatColor.DARK_GRAY);
+        getLogger().info(ChatColor.LIGHT_PURPLE + "       \\/         \\/          " + ChatColor.DARK_GRAY);
+        getLogger().info(ChatColor.DARK_PURPLE + "       Ver: " + getVersion() + ChatColor.DARK_GRAY);
+        getLogger().info(ChatColor.DARK_PURPLE + "       Status: " + ChatColor.GREEN + "ON" + ChatColor.DARK_GRAY);
         getLogger().info(ChatColor.GREEN + "");
-        getLogger().info(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7The plugin has loaded correctly!"));
+        getLogger().info(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7The plugin has loaded correctly!"));
 
         this.initDatabase();
     }
@@ -66,23 +66,23 @@ public class HideMyPluginsBungee extends Plugin {
 
         if (!this.configFile.exists()) {
             if (!this.configFile.getParentFile().exists() && !this.configFile.getParentFile().mkdirs()) {
-                throw new RuntimeException(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Could not create plugin's folder. Verify system permissions."));
+                throw new RuntimeException(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Could not create plugin's folder. Verify system permissions."));
             }
             try (final InputStream inputStream = this.getResourceAsStream("config.yml")) {
                 if (inputStream == null) {
-                    throw new RuntimeException(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Could not find plugin's folder."));
+                    throw new RuntimeException(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Could not find plugin's folder."));
                 }
                 Files.copy(inputStream, Paths.get(this.configFile.toURI()), StandardCopyOption.REPLACE_EXISTING);
             }
             catch (IOException exception) {
-                throw new RuntimeException(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Could not create config file."), exception);
+                throw new RuntimeException(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Could not create config file."), exception);
             }
         }
         try {
             this.config = ConfigurationProvider.getProvider((Class) YamlConfiguration.class).load(this.configFile);
         }
         catch (IOException exception) {
-            throw new RuntimeException(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Could not load config file."));
+            throw new RuntimeException(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Could not load config file."));
         }
         this.blockedCommands = (List<String>)this.config.getStringList("blockedCommands");
     }
@@ -104,23 +104,23 @@ public class HideMyPluginsBungee extends Plugin {
 
         if (!this.msgConfigFile.exists()) {
             if (!this.configFile.getParentFile().exists() && !this.msgConfigFile.getParentFile().mkdirs()) {
-                throw new RuntimeException(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Could not create plugin's folder. Verify system permissions."));
+                throw new RuntimeException(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Could not create plugin's folder. Verify system permissions."));
             }
             try (final InputStream inputStream = this.getResourceAsStream("messages.yml")) {
                 if (inputStream == null) {
-                    throw new RuntimeException(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Could not find plugin's folder."));
+                    throw new RuntimeException(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Could not find plugin's folder."));
                 }
                 Files.copy(inputStream, Paths.get(this.msgConfigFile.toURI()), StandardCopyOption.REPLACE_EXISTING);
             }
             catch (IOException exception) {
-                throw new RuntimeException(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Could not create messages file."), exception);
+                throw new RuntimeException(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Could not create messages file."), exception);
             }
         }
         try {
             this.msgConfig = ConfigurationProvider.getProvider((Class) YamlConfiguration.class).load(this.msgConfigFile);
         }
         catch (IOException exception) {
-            throw new RuntimeException(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Could not load messages file."));
+            throw new RuntimeException(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Could not load messages file."));
         }
     }
 
@@ -135,23 +135,23 @@ public class HideMyPluginsBungee extends Plugin {
     public void initDatabase() {
         if (this.getConfig().getBoolean("use-sqlite")) {
             if (this.getConfig().getBoolean("use-mysql")) {
-                getLogger().info(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7You cannot select &cMySQL &7and &cSQLite &7at the same time in the config.yml, for security reasons the server will shutdown until you set up the config correctly..."));
+                getLogger().info(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7You cannot select &cMySQL &7and &cSQLite &7at the same time in the config.yml, for security reasons the server will shutdown until you set up the config correctly..."));
                 ProxyServer.getInstance().stop();
                 return;
             } else
-                getLogger().info(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7SQLite is not supported on BungeeCord, you need use MySQL."));
-                getLogger().info(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7For security reasons the server will shutdown until you set up the config correctly..."));
+                getLogger().info(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7SQLite is not supported on BungeeCord, you need use MySQL."));
+                getLogger().info(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7For security reasons the server will shutdown until you set up the config correctly..."));
                 ProxyServer.getInstance().stop();
         } else if (this.getConfig().getBoolean("use-mysql")) {
             if (this.getConfig().getBoolean("use-sqlite")) {
-                getLogger().info(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7You cannot select &cMySQL &7and &cSQLite &7at the same time in the config.yml, for security reasons the server will shutdown until you set up the config correctly..."));
+                getLogger().info(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7You cannot select &cMySQL &7and &cSQLite &7at the same time in the config.yml, for security reasons the server will shutdown until you set up the config correctly..."));
                 ProxyServer.getInstance().stop();
                 return;
             } else
                 this.msql = new MySQL(this);
             this.msql.initMySQLDatabase();
         } else {
-            getLogger().info(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7You need to select at least one database method on the config.yml, for security reasons the server will shutdown until you set up the config correctly..."));
+            getLogger().info(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7You need to select at least one database method on the config.yml, for security reasons the server will shutdown until you set up the config correctly..."));
             ProxyServer.getInstance().stop();
         }
     }
@@ -163,32 +163,32 @@ public class HideMyPluginsBungee extends Plugin {
     @Override
     public void onDisable() {
         getLogger().info("\n");
-        getLogger().info(ChatColor.YELLOW + "  ___ ___    _____ __________ " + ChatColor.DARK_GRAY);
-        getLogger().info(ChatColor.YELLOW + " /   |   \\  /     \\\\______   \\" + ChatColor.DARK_GRAY);
-        getLogger().info(ChatColor.YELLOW + "/    ~    \\/  \\ /  \\|     ___/" + ChatColor.DARK_GRAY);
-        getLogger().info(ChatColor.YELLOW + "\\    Y    /    Y    \\    |    " + ChatColor.DARK_GRAY);
-        getLogger().info(ChatColor.YELLOW + " \\___|_  /\\____|__  /____|    " + ChatColor.DARK_GRAY);
-        getLogger().info(ChatColor.YELLOW + "       \\/         \\/          " + ChatColor.DARK_GRAY);
-        getLogger().info(ChatColor.GOLD + "       Ver: " + getVersion() + ChatColor.DARK_GRAY);
-        getLogger().info(ChatColor.GOLD + "       Status: " + ChatColor.RED + "OFF" + ChatColor.DARK_GRAY);
+        getLogger().info(ChatColor.LIGHT_PURPLE + "  ___ ___    _____ __________ " + ChatColor.DARK_GRAY);
+        getLogger().info(ChatColor.LIGHT_PURPLE + " /   |   \\  /     \\\\______   \\" + ChatColor.DARK_GRAY);
+        getLogger().info(ChatColor.LIGHT_PURPLE + "/    ~    \\/  \\ /  \\|     ___/" + ChatColor.DARK_GRAY);
+        getLogger().info(ChatColor.LIGHT_PURPLE + "\\    Y    /    Y    \\    |    " + ChatColor.DARK_GRAY);
+        getLogger().info(ChatColor.LIGHT_PURPLE + " \\___|_  /\\____|__  /____|    " + ChatColor.DARK_GRAY);
+        getLogger().info(ChatColor.LIGHT_PURPLE + "       \\/         \\/          " + ChatColor.DARK_GRAY);
+        getLogger().info(ChatColor.DARK_PURPLE + "       Ver: " + getVersion() + ChatColor.DARK_GRAY);
+        getLogger().info(ChatColor.DARK_PURPLE + "       Status: " + ChatColor.RED + "OFF" + ChatColor.DARK_GRAY);
         getLogger().info(ChatColor.GREEN + "");
-        getLogger().info(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7The plugin has unloaded correctly!"));
+        getLogger().info(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7The plugin has unloaded correctly!"));
 
     }
 
     @Override
     public void onLoad() {
         getLogger().info("\n");
-        getLogger().info(ChatColor.YELLOW + "  ___ ___    _____ __________ " + ChatColor.DARK_GRAY);
-        getLogger().info(ChatColor.YELLOW + " /   |   \\  /     \\\\______   \\" + ChatColor.DARK_GRAY);
-        getLogger().info(ChatColor.YELLOW + "/    ~    \\/  \\ /  \\|     ___/" + ChatColor.DARK_GRAY);
-        getLogger().info(ChatColor.YELLOW + "\\    Y    /    Y    \\    |    " + ChatColor.DARK_GRAY);
-        getLogger().info(ChatColor.YELLOW + " \\___|_  /\\____|__  /____|    " + ChatColor.DARK_GRAY);
-        getLogger().info(ChatColor.YELLOW + "       \\/         \\/          " + ChatColor.DARK_GRAY);
-        getLogger().info(ChatColor.GOLD + "       Ver: " + getVersion() + ChatColor.DARK_GRAY);
-        getLogger().info(ChatColor.GOLD + "       Status: " + ChatColor.YELLOW + "Loading..." + ChatColor.DARK_GRAY);
+        getLogger().info(ChatColor.LIGHT_PURPLE + "  ___ ___    _____ __________ " + ChatColor.DARK_GRAY);
+        getLogger().info(ChatColor.LIGHT_PURPLE + " /   |   \\  /     \\\\______   \\" + ChatColor.DARK_GRAY);
+        getLogger().info(ChatColor.LIGHT_PURPLE + "/    ~    \\/  \\ /  \\|     ___/" + ChatColor.DARK_GRAY);
+        getLogger().info(ChatColor.LIGHT_PURPLE + "\\    Y    /    Y    \\    |    " + ChatColor.DARK_GRAY);
+        getLogger().info(ChatColor.LIGHT_PURPLE + " \\___|_  /\\____|__  /____|    " + ChatColor.DARK_GRAY);
+        getLogger().info(ChatColor.LIGHT_PURPLE + "       \\/         \\/          " + ChatColor.DARK_GRAY);
+        getLogger().info(ChatColor.DARK_PURPLE + "       Ver: " + getVersion() + ChatColor.DARK_GRAY);
+        getLogger().info(ChatColor.DARK_PURPLE + "       Status: " + ChatColor.YELLOW + "Loading..." + ChatColor.DARK_GRAY);
         getLogger().info(ChatColor.GREEN + "");
-        getLogger().info(ChatColor.translateAlternateColorCodes('&', "&e&lHideMyPlugins> &7Starting up..."));
+        getLogger().info(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Starting up..."));
 
     }
 
