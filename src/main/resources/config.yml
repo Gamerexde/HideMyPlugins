@@ -88,7 +88,11 @@ blockedCommands:
   - '/calc'
   - '/eval'
   - 'plugman'
-  - 'me'
+
+# Here you can whitelist commands that got blocked.
+# If a command is blocked like minecraft:tell you can unblock it here.
+whitelistedCommands:
+  - 'minecraft:tell'
 
 # # # # # # # # # # #
 #  +--------------+ #

@@ -32,8 +32,9 @@ public class HideMyPluginsBungee extends Plugin {
     private Configuration msgConfig;
 
     private List<String> blockedCommands;
+    private List<String> whitelistedCommands;
 
-    String version = "2.3.6-SNAPSHOT";
+    String version = "2.3.7-SNAPSHOT";
 
     @Override
     public void onEnable() {
@@ -85,6 +86,7 @@ public class HideMyPluginsBungee extends Plugin {
             throw new RuntimeException(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Could not load config file."));
         }
         this.blockedCommands = (List<String>)this.config.getStringList("blockedCommands");
+        this.whitelistedCommands = (List<String>)this.config.getStringList("whitelistedCommands");
     }
 
     public File getConfigFile() {
@@ -98,6 +100,12 @@ public class HideMyPluginsBungee extends Plugin {
     public List<String> getBlockedCommands() {
         return Collections.unmodifiableList((List<? extends String>)this.blockedCommands);
     }
+
+    public List<String> getWhitelistedCommands() {
+        return Collections.unmodifiableList((List<? extends String>)this.whitelistedCommands);
+    }
+
+
 
     public void loadMsgConfig(){
         this.msgConfigFile = new File(this.getDataFolder(), "messages.yml");

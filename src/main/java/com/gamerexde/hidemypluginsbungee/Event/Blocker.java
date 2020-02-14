@@ -6,6 +6,10 @@ import com.gamerexde.hidemypluginsbungee.Utils.IDGenerator;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
@@ -37,6 +41,13 @@ public class Blocker implements Listener {
             return;
         }
         for (final String command : plugin.getBlockedCommands()) {
+            for (final String whitelistedCommands : plugin.getWhitelistedCommands()) {
+                if (msg[0].toLowerCase().equals("/" + whitelistedCommands)) {
+                    return;
+                } else {
+                    continue;
+                }
+            }
             if (msg[0].toLowerCase().equals("/" + command)) {
                 if (player.hasPermission("hidemyplugins.access")) {
                     return;
@@ -89,7 +100,15 @@ public class Blocker implements Listener {
                 break;
             }
         }
+
         for (final String command : plugin.getBlockedCommands()) {
+            for (final String whitelistedCommands : plugin.getWhitelistedCommands()) {
+                if (msg[0].toLowerCase().equals("/" + whitelistedCommands)) {
+                    return;
+                } else {
+                    continue;
+                }
+            }
             if (msg[0].toLowerCase().equals("/" + command)) {
                 event.setCancelled(true);
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getMsgConfig().getString("blockMessage")));
@@ -100,7 +119,7 @@ public class Blocker implements Listener {
                             message = message.replace("{USER}", ((ProxiedPlayer) event.getSender()).getName());
                             message = message.replace("{SERVER}", ((ProxiedPlayer) event.getSender()).getServer().getInfo().getName());
 
-                            online.sendMessage(ChatColor.translateAlternateColorCodes('&', message.replace("{USER}", ((ProxiedPlayer) event.getSender()).getName())));
+                            online.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
                         }
                     }
                 }

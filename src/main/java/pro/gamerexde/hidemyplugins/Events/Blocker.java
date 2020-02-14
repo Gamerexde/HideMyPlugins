@@ -38,6 +38,13 @@ public class Blocker implements Listener {
         final FileConfiguration config = HideMyPlugins.getInstance().getConfig();
         final FileConfiguration msgconfig = HideMyPlugins.getInstance().getMsgConfig();
         for (final String command : HideMyPlugins.getInstance().getBlockedCommands()) {
+            for (final String whitelistedCommands : HideMyPlugins.getInstance().getWhitelistCommands()) {
+                if (msg[0].toLowerCase().equals("/" + whitelistedCommands)) {
+                    return;
+                } else {
+                    continue;
+                }
+            }
             if (msg[0].toLowerCase().equals("/" + command)) {
                 if (player.hasPermission("hidemyplugins.access")) {
                     return;
@@ -123,6 +130,13 @@ public class Blocker implements Listener {
         }
 
         for (final String command : HideMyPlugins.getInstance().getBlockedCommands()) {
+            for (final String whitelistedCommands : HideMyPlugins.getInstance().getWhitelistCommands()) {
+                if (msg[0].toLowerCase().equals("/" + whitelistedCommands)) {
+                    return;
+                } else {
+                    continue;
+                }
+            }
             if (msg[0].toLowerCase().equals("/" + command)) {
                 List<Player> output = new ArrayList<Player>();
                 for (Player players : Bukkit.getOnlinePlayers()) {
