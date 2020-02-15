@@ -34,7 +34,7 @@ public class HideMyPluginsBungee extends Plugin {
     private List<String> blockedCommands;
     private List<String> whitelistedCommands;
 
-    String version = "2.3.7-SNAPSHOT";
+    String version = "2.3.8-SNAPSHOT";
 
     @Override
     public void onEnable() {
@@ -64,7 +64,6 @@ public class HideMyPluginsBungee extends Plugin {
 
     public void loadConfig(){
         this.configFile = new File(this.getDataFolder(), "config.yml");
-
         if (!this.configFile.exists()) {
             if (!this.configFile.getParentFile().exists() && !this.configFile.getParentFile().mkdirs()) {
                 throw new RuntimeException(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Could not create plugin's folder. Verify system permissions."));

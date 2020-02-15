@@ -2,6 +2,7 @@ package pro.gamerexde.hidemyplugins.Events;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,6 +23,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 import static pro.gamerexde.hidemyplugins.Utils.Reflection.getNMSClass;
 
@@ -63,6 +65,15 @@ public class Blocker implements Listener {
                     return;
                 }
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', (String) Objects.requireNonNull(msgconfig.getString("blockMessage"))));
+
+                if (plugin.getConfig().getBoolean("sounds.enable-sounds")) {
+                    String[] arr = HideMyPlugins.getInstance().getSoundsArray().toArray(new String[0]);
+
+                    Random random = new Random();
+                    int randomSelect = random.nextInt(arr.length);
+
+                    player.playSound(player.getLocation(), Sound.valueOf(arr[randomSelect]), 10f, 1f);
+                }
 
                 if (plugin.getConfig().getBoolean("blockedCommandAlert")) {
                     try {
@@ -153,6 +164,16 @@ public class Blocker implements Listener {
                     return;
                 }
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', (String) Objects.requireNonNull(msgconfig.getString("blockMessage"))));
+
+                if (plugin.getConfig().getBoolean("sounds.enable-sounds")) {
+                    String[] arr = HideMyPlugins.getInstance().getSoundsArray().toArray(new String[0]);
+
+                    Random random = new Random();
+                    int randomSelect = random.nextInt(arr.length);
+
+                    player.playSound(player.getLocation(), Sound.valueOf(arr[randomSelect]), 10f, 1f);
+                }
+
                 try {
                     if (plugin.getConfig().getBoolean("use-mysql")){
                         Connection con = plugin.getMySQL().getConnection();

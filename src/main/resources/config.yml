@@ -96,6 +96,28 @@ whitelistedCommands:
 
 # # # # # # # # # # #
 #  +--------------+ #
+#       Sounds      #
+#  +--------------+ #
+# # # # # # # # # # #
+
+sounds:
+  # Enable or disable sounds.
+  enable-sounds: false
+
+  # Set the type of sound here, you can find a list of
+  # sounds here.
+  #
+  # If you use minecraft 1.9x - 1.15.2 or newer use this sound list.
+  # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
+  #
+  # If you use minecraft 1.8x use this sound list.
+  # https://pastebin.com/ykhFMPuy
+  blocked-command-sound:
+    - 'ENTITY_ENDERMAN_SCREAM'
+    - 'ENTITY_ENDERMAN_DEATH'
+
+# # # # # # # # # # #
+#  +--------------+ #
 #   Web Interface   #
 #  +--------------+ #
 # # # # # # # # # # #

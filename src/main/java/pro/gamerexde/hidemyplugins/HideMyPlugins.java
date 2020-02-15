@@ -49,7 +49,7 @@ public final class HideMyPlugins extends JavaPlugin implements Listener {
     private FileConfiguration newConfig;
     private File configFile;
 
-    public static final String version = "2.3.7-SNAPSHOT";
+    public static final String version = "2.3.8-SNAPSHOT";
 
     private ProtocolManager protocolManager;
 
@@ -85,6 +85,10 @@ public final class HideMyPlugins extends JavaPlugin implements Listener {
 
     public List<String> getWhitelistCommands() {
         return new ArrayList<String>(getConfig().getStringList("whitelistedCommands"));
+    }
+
+    public List<String> getSoundsArray() {
+        return new ArrayList<String>(getConfig().getStringList("sounds.blocked-command-sound"));
     }
 
     @Override
