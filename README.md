@@ -1,5 +1,9 @@
 ![](https://i.imgur.com/5VUVj5F.png "Banner")
-[![Build Status](https://ci.gamerexde.com/job/HideMyPlugins/badge/icon)](https://ci.gamerexde.com/job/HideMyPlugins/)
+[![Build Status](https://ci.gamerexde.com/job/HideMyPlugins/badge/icon?style=flat-square)](https://ci.gamerexde.com/job/HideMyPlugins/)
+[![Ver](https://ci.gamerexde.com/job/HideMyPlugins/badge/icon?style=flat-square&subject=MC%20Version&status=1.8x%20-%201.15.2&color=blue)](https://ci.gamerexde.com/job/HideMyPlugins/)
+[![Wiki](https://ci.gamerexde.com/job/HideMyPlugins/badge/icon?style=flat-square&subject=Wiki&status=Github&color=purple)](https://github.com/Gamerexde/HideMyPlugins/wiki)
+[![Java](https://ci.gamerexde.com/job/HideMyPlugins/badge/icon?style=flat-square&subject=Java&status=8&color=yellow)](https://github.com/Gamerexde/HideMyPlugins/)
+
 
 The best way to protect your Plugins.
 
