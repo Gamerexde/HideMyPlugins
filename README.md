@@ -1,4 +1,4 @@
-![](https://i.imgur.com/TV1ju15.png "Banner")
+![](https://i.imgur.com/5VUVj5F.png "Banner")
 [![Build Status](https://ci.gamerexde.com/job/HideMyPlugins/badge/icon)](https://ci.gamerexde.com/job/HideMyPlugins/)
 
 The best way to protect your Plugins.
