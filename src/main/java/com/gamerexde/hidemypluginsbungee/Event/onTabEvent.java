@@ -37,10 +37,18 @@ public class onTabEvent implements Listener {
         if (command.length() < 1) {
             return;
         }
+        if (command.equals("/")) {
+            event.setCancelled(true);
+            return;
+        }
+        if (command.contains(":")) {
+            event.setCancelled(true);
+            return;
+        }
         command = command.substring(1);
         if (this.plugin.equalsIgnoreCase(this.plugin.getBlockedCommands(), command)) {
             event.setCancelled(true);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getMsgConfig().getString("blockMessage")));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getMsgConfig().getString("deny.block_message")));
             if (plugin.getConfig().getBoolean("tabCompletionLoggin")) {
                 try {
                     if (plugin.getConfig().getBoolean("use-mysql")) {

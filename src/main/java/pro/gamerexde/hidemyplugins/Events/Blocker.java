@@ -52,7 +52,7 @@ public class Blocker implements Listener {
                     return;
                 } else {
                     event.setCancelled(true);
-                    if (Objects.requireNonNull(msgconfig.getString("blockMessage")).equalsIgnoreCase("none")) {
+                    if (Objects.requireNonNull(msgconfig.getString("deny.block_message")).equalsIgnoreCase("none")) {
                         return;
                     }
                 }
@@ -61,10 +61,10 @@ public class Blocker implements Listener {
                     continue;
                 }
                 event.setCancelled(true);
-                if (Objects.requireNonNull(msgconfig.getString("blockMessage")).equalsIgnoreCase("none")) {
+                if (Objects.requireNonNull(msgconfig.getString("deny.block_message")).equalsIgnoreCase("none")) {
                     return;
                 }
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', (String) Objects.requireNonNull(msgconfig.getString("blockMessage"))));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', (String) Objects.requireNonNull(msgconfig.getString("deny.block_message"))));
 
                 if (plugin.getConfig().getBoolean("sounds.enable-sounds")) {
                     String[] arr = HideMyPlugins.getInstance().getSoundsArray().toArray(new String[0]);
@@ -78,7 +78,7 @@ public class Blocker implements Listener {
                 if (plugin.getConfig().getBoolean("blockedCommandAlert")) {
                     try {
                         Object enumTitle = getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0].getField("TITLE").get(null);
-                        Object chat = getNMSClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class).invoke(null, "{\"text\":\"" + ChatColor.translateAlternateColorCodes('&', (String) Objects.requireNonNull(msgconfig.getString("titleBlockMessage"))) + "\"}");
+                        Object chat = getNMSClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class).invoke(null, "{\"text\":\"" + ChatColor.translateAlternateColorCodes('&', (String) Objects.requireNonNull(msgconfig.getString("deny.title_block_message"))) + "\"}");
 
                         Constructor<?> titleConstructor = getNMSClass("PacketPlayOutTitle").getConstructor(getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0], getNMSClass("IChatBaseComponent"), int.class, int.class, int.class);
                         Object packetReflection = titleConstructor.newInstance(enumTitle, chat, 20, 40, 20);
@@ -129,7 +129,7 @@ public class Blocker implements Listener {
                 for (Player players : Bukkit.getOnlinePlayers()) {
                     if (players.hasPermission("hidemyplugins.notify.message")) {
                         if (plugin.getConfig().getBoolean("adminNotify")) {
-                            String message = msgconfig.getString("blockAdminNotifyMessage");
+                            String message = msgconfig.getString("admin_messages.block_admin_notify_message");
                             message = message.replace("{USER}", event.getPlayer().getName());
 
                             players.sendMessage(ChatColor.translateAlternateColorCodes('&', message.replace("{USER}", event.getPlayer().getName())));
@@ -153,17 +153,17 @@ public class Blocker implements Listener {
                 for (Player players : Bukkit.getOnlinePlayers()) {
                     if (players.hasPermission("hidemyplugins.notify.message")) {
                         if (plugin.getConfig().getBoolean("adminNotify")) {
-                            String message = msgconfig.getString("blockAdminNotifyMessage");
+                            String message = msgconfig.getString("admin_messages.block_admin_notify_message");
                             message = message.replace("{USER}", event.getPlayer().getName());
 
                             players.sendMessage(ChatColor.translateAlternateColorCodes('&', message.replace("{USER}", event.getPlayer().getName())));
                         }
                     }
                 }
-                if (Objects.requireNonNull((String) Objects.requireNonNull(msgconfig.getString("blockMessage"))).equalsIgnoreCase("none")) {
+                if (Objects.requireNonNull((String) Objects.requireNonNull(msgconfig.getString("deny.block_message"))).equalsIgnoreCase("none")) {
                     return;
                 }
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', (String) Objects.requireNonNull(msgconfig.getString("blockMessage"))));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', (String) Objects.requireNonNull(msgconfig.getString("deny.block_message"))));
 
                 if (plugin.getConfig().getBoolean("sounds.enable-sounds")) {
                     String[] arr = HideMyPlugins.getInstance().getSoundsArray().toArray(new String[0]);
@@ -210,7 +210,7 @@ public class Blocker implements Listener {
                 if (plugin.getConfig().getBoolean("blockedCommandAlert")) {
                     try {
                         Object enumTitle = getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0].getField("TITLE").get(null);
-                        Object chat = getNMSClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class).invoke(null, "{\"text\":\"" + ChatColor.translateAlternateColorCodes('&', (String) Objects.requireNonNull(msgconfig.getString("titleBlockMessage"))) + "\"}");
+                        Object chat = getNMSClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class).invoke(null, "{\"text\":\"" + ChatColor.translateAlternateColorCodes('&', (String) Objects.requireNonNull(msgconfig.getString("deny.title_block_message"))) + "\"}");
 
                         Constructor<?> titleConstructor = getNMSClass("PacketPlayOutTitle").getConstructor(getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0], getNMSClass("IChatBaseComponent"), int.class, int.class, int.class);
                         Object packetReflection = titleConstructor.newInstance(enumTitle, chat, 20, 40, 20);

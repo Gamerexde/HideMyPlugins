@@ -59,12 +59,12 @@ public class Blocker implements Listener {
                     continue;
                 }
                 event.setCancelled(true);
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getMsgConfig().getString("blockMessage")));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getMsgConfig().getString("deny.block_message")));
                 for (ProxiedPlayer online : ProxyServer.getInstance().getPlayers()) {
                     if (online.hasPermission("hidemyplugins.notify.message")) {
 
                         if (plugin.getConfig().getBoolean("adminNotify")) {
-                            String message = this.plugin.getMsgConfig().getString("blockBungeeAdminNotifyMessage");
+                            String message = this.plugin.getMsgConfig().getString("admin_message.block_bungee_admin_notify_message");
                             message = message.replace("{USER}", ((ProxiedPlayer) event.getSender()).getName());
                             message = message.replace("{SERVER}", ((ProxiedPlayer) event.getSender()).getServer().getInfo().getName());
 
@@ -111,11 +111,11 @@ public class Blocker implements Listener {
             }
             if (msg[0].toLowerCase().equals("/" + command)) {
                 event.setCancelled(true);
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getMsgConfig().getString("blockMessage")));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getMsgConfig().getString("deny.block_message")));
                 for (ProxiedPlayer online : ProxyServer.getInstance().getPlayers()) {
                     if (online.hasPermission("hidemyplugins.notify.message")) {
                         if (plugin.getConfig().getBoolean("adminNotify")) {
-                            String message = this.plugin.getMsgConfig().getString("blockBungeeAdminNotifyMessage");
+                            String message = this.plugin.getMsgConfig().getString("admin_message.block_bungee_admin_notify_message");
                             message = message.replace("{USER}", ((ProxiedPlayer) event.getSender()).getName());
                             message = message.replace("{SERVER}", ((ProxiedPlayer) event.getSender()).getServer().getInfo().getName());
 

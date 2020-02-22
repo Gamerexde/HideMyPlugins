@@ -51,9 +51,9 @@ database-class: "com.mysql.jdbc.Driver"
 tabCompletionLoggin: true
 
 # This option will enable/disable title alerts to players who use
-# the TAB COMPLETION method. I recomended that you turn this off if
-# you use MC 1.14 or newer, since this can annoy users...
-tabCompletionAlert: true
+# the TAB COMPLETION method. It is recomended that you turn this off
+# if you use MC 1.14 or newer, since this can annoy users...
+tabCompletionAlert: false
 
 # # # # # # # # # # #
 #  +--------------+ #

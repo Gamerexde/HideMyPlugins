@@ -13,6 +13,8 @@ import net.md_5.bungee.api.plugin.Command;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.List;
+import java.util.Objects;
 
 public class hmpa extends Command {
 
@@ -24,103 +26,46 @@ public class hmpa extends Command {
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
+        String noPerms = plugin.getMsgConfig().getString("noPerms");
+
+        String historyUsageCommand = plugin.getMsgConfig().getString("commands.history_usage");
+
+        String webInterfaceCommand = plugin.getMsgConfig().getString("admin.web_interface_command");
+        String webInterfaceCommandNoPerm = plugin.getMsgConfig().getString("admin.web_interface_command_no_enabled");
+
+        webInterfaceCommand = webInterfaceCommand.replace("{WEB}", Objects.requireNonNull(plugin.getConfig().getString("WebInterface")));
+
         if(commandSender instanceof ProxiedPlayer) {
             ProxiedPlayer player = (ProxiedPlayer) commandSender;
             if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("web")) {
                     if (player.hasPermission("hidemyplugins.admin.webinterface")) {
                         if (plugin.getConfig().getBoolean("UsingWebInterface")){
-                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Access your Web Interface here: &d" + plugin.getConfig().getString("WebInterface")));
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', webInterfaceCommand));
                         } else {
-                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Web Interface is disabled in the &dconfig.yml"));
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', webInterfaceCommandNoPerm));
                         }
+                    } else {
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', noPerms));
+                        return;
                     }
                 }
                 if (args[0].equalsIgnoreCase("history")) {
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Usage: &d/hmpa history <user> <page>"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', historyUsageCommand));
                 }
                 return;
             }
             if (args.length == 2) {
-                if (args[1].equalsIgnoreCase(args[1])) {
-                    if (player.hasPermission("hidemyplugins.admin.history")) {
-                        try {
-                            if (plugin.getConfig().getBoolean("use-mysql")) {
-                                Connection con = plugin.getMySQL().getConnection();
+                if (args[0].equalsIgnoreCase("history")) {
+                    if(args[1].equalsIgnoreCase(args[1])) {
+                        if (player.hasPermission("hidemyplugins.admin.history")) {
+                            try {
+                                if (plugin.getConfig().getBoolean("use-mysql")) {
+                                    Connection con = plugin.getMySQL().getConnection();
 
-                                Statement stmt = con.createStatement();
-                                Statement stmtCheckQuery = con.createStatement();
+                                    Statement stmt = con.createStatement();
+                                    Statement stmtCheckQuery = con.createStatement();
 
-                                int pageNum = 0 ;
-                                int pageLength = 10;
-
-                                String query = String.format("SELECT * FROM " + plugin.getConfig().getString("MySQL.table_name")
-                                        + " WHERE `USER` LIKE '"
-                                        + args[1]
-                                        + "' ORDER BY `DATE` ASC LIMIT %d, %d", pageNum * pageLength, pageLength);
-
-                                ResultSet rs = stmt.executeQuery(query);
-                                ResultSet checkQuery = stmtCheckQuery.executeQuery(query);
-
-                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Searching history for &d" + args[1] + ""));
-
-                                if (checkQuery.next()) {
-                                    String name = checkQuery.getString("USER");
-                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Found commands for &d" + name + ""));
-                                    stmtCheckQuery.close();
-                                } else {
-                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &d" + args[1] + "&7 dosen't have used blocked commands. This user is clean!"));
-                                    stmtCheckQuery.close();
-                                    return;
-                                }
-
-                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "\n"));
-                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7           &8[&7Page: &d" + "1" + "&8]            "));
-                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8----------------------------"));
-                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7User     Command        Date"));
-                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8----------------------------"));
-
-                                while (rs.next()) {
-                                    String name = rs.getString("USER");
-                                    String date = rs.getString("DATE");
-                                    String executed_command = rs.getString("EXECUTED_COMMAND");
-                                    String id = rs.getString("ID");
-                                    if (plugin.getConfig().getBoolean("UsingWebInterface")){
-                                        TextComponent message = new TextComponent(ChatColor.translateAlternateColorCodes('&', "&d" + name + "   " + executed_command + "    " + date) );
-                                        message.setClickEvent( new ClickEvent( ClickEvent.Action.OPEN_URL, plugin.getConfig().getString("WebInterface") + "/profile.php?id=" + id));
-                                        message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder( ChatColor.translateAlternateColorCodes('&', "&dHideMyPlugins &bWeb Profile") ).create()));
-                                        player.sendMessage(message);
-
-                                    } else {
-                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d" + name + "   " + executed_command + "    " + date));
-
-                                    }
-                                }
-
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getMsgConfig().getString("noPerms") ));
-                    }
-                    return;
-                }
-
-            }
-            if (args.length == 3) {
-                if (args[2].equalsIgnoreCase(args[2])) {
-                    if (player.hasPermission("hidemyplugins.admin.history")) {
-                        try {
-                            if (plugin.getConfig().getBoolean("use-mysql")) {
-                                Connection con = plugin.getMySQL().getConnection();
-
-                                Statement stmt = con.createStatement();
-                                Statement stmtCheckQuery = con.createStatement();
-
-                                int page = Integer.parseInt(args[2]);
-
-                                if (page < 2) {
                                     int pageNum = 0 ;
                                     int pageLength = 10;
 
@@ -132,102 +77,238 @@ public class hmpa extends Command {
                                     ResultSet rs = stmt.executeQuery(query);
                                     ResultSet checkQuery = stmtCheckQuery.executeQuery(query);
 
-                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Searching history for &d" + args[1] + ""));
+                                    String adminHistorySearching = plugin.getMsgConfig().getString("admin.history_searching");
+                                    adminHistorySearching = adminHistorySearching.replace("{USER}", args[1]);
+
+                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', adminHistorySearching));
 
                                     if (checkQuery.next()) {
                                         String name = checkQuery.getString("USER");
-                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Found commands for &d" + name + ""));
-                                        stmtCheckQuery.close();
+
+                                        String adminHistoryFound = plugin.getMsgConfig().getString("admin.history_found");
+                                        adminHistoryFound = adminHistoryFound.replace("{USER}", name);
+
+                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', adminHistoryFound));
+                                        checkQuery.close();
                                     } else {
-                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &d" + args[1] + "&7 dosen't have used blocked commands. This user is clean!"));
-                                        stmtCheckQuery.close();
+                                        String adminHistoryNotFound = plugin.getMsgConfig().getString("admin.history_not_found");
+                                        adminHistoryNotFound = adminHistoryNotFound.replace("{USER}", args[1]);
+
+                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', adminHistoryNotFound));
+                                        checkQuery.close();
                                         return;
                                     }
 
+                                    List<String> header = plugin.getAdminTableHeaderArray();
+
                                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', "\n"));
-                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7           &8[&7Page: &d" + "1" + "&8]            "));
-                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8----------------------------"));
-                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7User     Command        Date"));
-                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8----------------------------"));
+                                    for(String output: header) {
+                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', output.replace("{PAGE}", "1")));
+                                    }
 
                                     while (rs.next()) {
                                         String name = rs.getString("USER");
                                         String date = rs.getString("DATE");
                                         String executed_command = rs.getString("EXECUTED_COMMAND");
                                         String id = rs.getString("ID");
+
+                                        String historyResult = plugin.getMsgConfig().getString("admin.history_result");
+                                        historyResult = historyResult.replace("{USER}", name);
+                                        historyResult = historyResult.replace("{DATE}", date);
+                                        historyResult = historyResult.replace("{COMMAND}", executed_command);
+
                                         if (plugin.getConfig().getBoolean("UsingWebInterface")){
-                                            TextComponent message = new TextComponent(ChatColor.translateAlternateColorCodes('&', "&d"
-                                                    + name + "   "
-                                                    + executed_command
-                                                    + "    " + date) );
+                                            TextComponent message = new TextComponent(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', historyResult));
                                             message.setClickEvent( new ClickEvent( ClickEvent.Action.OPEN_URL, plugin.getConfig().getString("WebInterface")
                                                     + "/profile.php?id=" + id));
-                                            message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder( ChatColor.translateAlternateColorCodes('&', "&dHideMyPlugins &bWeb Profile") ).create()));
+                                            message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(plugin.getMsgConfig().getString("admin.history_result_hover")))).create()));
                                             player.sendMessage(message);
-
                                         } else {
-                                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d" + name + "   " + executed_command + "    " + date));
-
-                                        }
-                                    }
-                                } else {
-                                    int pageNum = page;
-                                    int pageLength = 5;
-
-                                    String query = String.format("SELECT * FROM " + plugin.getConfig().getString("MySQL.table_name")
-                                            + " WHERE `USER` LIKE '"
-                                            + args[1]
-                                            + "' ORDER BY `DATE` ASC LIMIT %d, %d", pageNum * pageLength, pageLength);
-
-                                    ResultSet rs = stmt.executeQuery(query);
-                                    ResultSet checkQuery = stmtCheckQuery.executeQuery(query);
-
-                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Searching history for &d" + args[1] + ""));
-
-                                    if (checkQuery.next()) {
-                                        String name = checkQuery.getString("USER");
-                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Found commands for &d" + name + ""));
-                                        stmtCheckQuery.close();
-                                    } else {
-                                        if (args[2] == args[2]) {
-                                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Page &d" + args[2] + "&7 dosen't exist..." ));
-                                            stmtCheckQuery.close();
-                                            return;
-                                        }
-                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &d" + args[1] + "&7 dosen't have used blocked commands. This user is clean!"));
-                                        stmtCheckQuery.close();
-                                        return;
-                                    }
-
-                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "\n"));
-                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7           &8[&7Page: &d" + args[2] + "&8]            "));
-                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8----------------------------"));
-                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7User     Command        Date"));
-                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8----------------------------"));
-
-                                    while (rs.next()) {
-                                        String name = rs.getString("USER");
-                                        String date = rs.getString("DATE");
-                                        String executed_command = rs.getString("EXECUTED_COMMAND");
-                                        String id = rs.getString("ID");
-                                        if (plugin.getConfig().getBoolean("UsingWebInterface")){
-                                            TextComponent message = new TextComponent(ChatColor.translateAlternateColorCodes('&', "&d" + name + "   " + executed_command + "    " + date) );
-                                            message.setClickEvent( new ClickEvent( ClickEvent.Action.OPEN_URL, plugin.getConfig().getString("WebInterface") + "/profile.php?id=" + id));
-                                            message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder( ChatColor.translateAlternateColorCodes('&', "&dHideMyPlugins &bWeb Profile") ).create()));
-                                            player.sendMessage(message);
-
-                                        } else {
-                                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d" + name + "   " + executed_command + "    " + date));
+                                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', historyResult));
 
                                         }
                                     }
                                 }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        } else {
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', noPerms));
                         }
-                    } else {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getMsgConfig().getString("noPerms") ));
+                    }
+                    return;
+                }
+
+            }
+            if (args.length == 3) {
+                if (args[0].equalsIgnoreCase("history")) {
+                    if (args[1].equalsIgnoreCase(args[1])) {
+                        if (args[2].equalsIgnoreCase(args[2])) {
+                            if (player.hasPermission("hidemyplugins.admin.history")) {
+                                try {
+                                    Integer.parseInt(args[2]);
+                                }catch(NumberFormatException e){
+                                    String pageNotInt = plugin.getMsgConfig().getString("admin.history_page_not_number");
+                                    pageNotInt = pageNotInt.replace("{PAGE}", args[2]);
+
+                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', pageNotInt));
+
+                                    return;
+                                }
+
+                                try {
+                                    if (plugin.getConfig().getBoolean("use-mysql")) {
+                                        Connection con = plugin.getMySQL().getConnection();
+
+                                        Statement stmt = con.createStatement();
+                                        Statement stmtCheckQuery = con.createStatement();
+
+                                        int page = Integer.parseInt(args[2]);
+
+                                        if (page < 2) {
+                                            int pageNum = 0 ;
+                                            int pageLength = 10;
+
+                                            String query = String.format("SELECT * FROM " + plugin.getConfig().getString("MySQL.table_name")
+                                                    + " WHERE `USER` LIKE '"
+                                                    + args[1]
+                                                    + "' ORDER BY `DATE` ASC LIMIT %d, %d", pageNum * pageLength, pageLength);
+
+                                            ResultSet rs = stmt.executeQuery(query);
+                                            ResultSet checkQuery = stmtCheckQuery.executeQuery(query);
+
+                                            String adminHistorySearching = plugin.getMsgConfig().getString("admin.history_searching");
+                                            adminHistorySearching = adminHistorySearching.replace("{USER}", args[1]);
+
+                                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', adminHistorySearching));
+
+                                            if (checkQuery.next()) {
+                                                String name = checkQuery.getString("USER");
+
+                                                String adminHistoryFound = plugin.getMsgConfig().getString("admin.history_found");
+                                                adminHistoryFound = adminHistoryFound.replace("{USER}", name);
+
+                                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', adminHistoryFound));
+                                                checkQuery.close();
+                                            } else {
+                                                String adminHistoryNotFound = plugin.getMsgConfig().getString("admin.history_not_found");
+                                                adminHistoryNotFound = adminHistoryNotFound.replace("{USER}", args[1]);
+
+                                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', adminHistoryNotFound));
+                                                checkQuery.close();
+                                                return;
+                                            }
+
+                                            List<String> header = plugin.getAdminTableHeaderArray();
+
+                                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "\n"));
+                                            for(String output: header) {
+                                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', output.replace("{PAGE}", "1")));
+                                            }
+
+                                            while (rs.next()) {
+                                                String name = rs.getString("USER");
+                                                String date = rs.getString("DATE");
+                                                String executed_command = rs.getString("EXECUTED_COMMAND");
+                                                String id = rs.getString("ID");
+
+                                                String historyResult = plugin.getMsgConfig().getString("admin.history_result");
+                                                historyResult = historyResult.replace("{USER}", name);
+                                                historyResult = historyResult.replace("{DATE}", date);
+                                                historyResult = historyResult.replace("{COMMAND}", executed_command);
+
+                                                if (plugin.getConfig().getBoolean("UsingWebInterface")){
+                                                    TextComponent message = new TextComponent(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', historyResult));
+                                                    message.setClickEvent( new ClickEvent( ClickEvent.Action.OPEN_URL, plugin.getConfig().getString("WebInterface")
+                                                            + "/profile.php?id=" + id));
+                                                    message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(plugin.getMsgConfig().getString("admin.history_result_hover")))).create()));
+                                                    player.sendMessage(message);
+                                                } else {
+                                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', historyResult));
+
+                                                }
+                                            }
+                                        } else {
+                                            int pageNum = page;
+                                            int pageLength = 5;
+
+                                            String query = String.format("SELECT * FROM " + plugin.getConfig().getString("MySQL.table_name")
+                                                    + " WHERE `USER` LIKE '"
+                                                    + args[1]
+                                                    + "' ORDER BY `DATE` ASC LIMIT %d, %d", pageNum * pageLength, pageLength);
+
+                                            ResultSet rs = stmt.executeQuery(query);
+                                            ResultSet checkQuery = stmtCheckQuery.executeQuery(query);
+
+                                            String adminHistorySearching = plugin.getMsgConfig().getString("admin.history_searching");
+                                            adminHistorySearching = adminHistorySearching.replace("{USER}", args[1]);
+
+                                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', adminHistorySearching));
+
+                                            if (checkQuery.next()) {
+                                                String name = checkQuery.getString("USER");
+
+                                                String adminHistoryFound = plugin.getMsgConfig().getString("admin.history_found");
+                                                adminHistoryFound = adminHistoryFound.replace("{USER}", name);
+
+                                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', adminHistoryFound));
+                                                checkQuery.close();
+                                            } else {
+                                                if (args[2] == args[2]) {
+                                                    String adminHistoryPageNotFound = plugin.getMsgConfig().getString("admin.history_page_not_found");
+                                                    adminHistoryPageNotFound = adminHistoryPageNotFound.replace("{PAGE}", args[2]);
+
+                                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', adminHistoryPageNotFound));
+                                                    checkQuery.close();
+                                                    return;
+                                                }
+                                                String adminHistoryNotFound = plugin.getMsgConfig().getString("admin.history_not_found");
+                                                adminHistoryNotFound = adminHistoryNotFound.replace("{USER}", args[1]);
+
+                                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', adminHistoryNotFound));
+                                                checkQuery.close();
+                                                return;
+                                            }
+
+                                            List<String> header = plugin.getAdminTableHeaderArray();
+
+                                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "\n"));
+                                            for(String output: header) {
+                                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', output.replace("{PAGE}", args[2])));
+                                            }
+
+                                            while (rs.next()) {
+                                                String name = rs.getString("USER");
+                                                String date = rs.getString("DATE");
+                                                String executed_command = rs.getString("EXECUTED_COMMAND");
+                                                String id = rs.getString("ID");
+
+                                                String historyResult = plugin.getMsgConfig().getString("admin.history_result");
+                                                historyResult = historyResult.replace("{USER}", name);
+                                                historyResult = historyResult.replace("{DATE}", date);
+                                                historyResult = historyResult.replace("{COMMAND}", executed_command);
+
+                                                if (plugin.getConfig().getBoolean("UsingWebInterface")){
+                                                    TextComponent message = new TextComponent(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', historyResult));
+                                                    message.setClickEvent( new ClickEvent( ClickEvent.Action.OPEN_URL, plugin.getConfig().getString("WebInterface")
+                                                            + "/profile.php?id=" + id));
+                                                    message.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(plugin.getMsgConfig().getString("admin.history_result_hover")))).create()));
+                                                    player.sendMessage(message);
+
+                                                } else {
+                                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', historyResult));
+
+                                                }
+                                            }
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            } else {
+                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', noPerms));
+                            }
+                        }
                     }
                     return;
                 }

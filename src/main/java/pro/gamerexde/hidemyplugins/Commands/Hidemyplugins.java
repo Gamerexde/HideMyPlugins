@@ -22,20 +22,15 @@ public class Hidemyplugins implements CommandExecutor {
                     if (sender.hasPermission("hidemyplugins.reload")) {
                         plugin.reloadConfig();
                         plugin.reloadMsgConfig();
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Configuration reloaded!"));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getMsgConfig().getString("admin.reload")));
                     }
                     else {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7You can't reload the plugin because you don't have permissions..."));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getMsgConfig().getString("noPerms")));
                     }
                     return false;
                 }
             }
             if(args.length == 1) {
-            }
-
-            if (!(sender instanceof Player)) {
-                sender.sendMessage("(!) You need to be a player in order to execute that command.");
-                return false;
             }
 
             Player player = (Player) sender;

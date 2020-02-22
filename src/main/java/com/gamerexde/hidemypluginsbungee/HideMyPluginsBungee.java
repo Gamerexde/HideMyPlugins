@@ -34,7 +34,9 @@ public class HideMyPluginsBungee extends Plugin {
     private List<String> blockedCommands;
     private List<String> whitelistedCommands;
 
-    String version = "2.3.8-SNAPSHOT";
+    private List<String> adminTableHeaderArray;
+
+    String version = "2.3.9-SNAPSHOT";
 
     @Override
     public void onEnable() {
@@ -104,6 +106,10 @@ public class HideMyPluginsBungee extends Plugin {
         return Collections.unmodifiableList((List<? extends String>)this.whitelistedCommands);
     }
 
+    public List<String> getAdminTableHeaderArray() {
+        return Collections.unmodifiableList((List<? extends String>)this.adminTableHeaderArray);
+    }
+
 
 
     public void loadMsgConfig(){
@@ -129,6 +135,7 @@ public class HideMyPluginsBungee extends Plugin {
         catch (IOException exception) {
             throw new RuntimeException(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Could not load messages file."));
         }
+        this.adminTableHeaderArray = (List<String>)this.msgConfig.getStringList("admin.history_table_header");
     }
 
     public File getMsgConfigFile() {

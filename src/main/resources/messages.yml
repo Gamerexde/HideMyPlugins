@@ -9,27 +9,48 @@
 
 # # # # # # # # # # #
 #  +--------------+ #
-#      Messages     #
+#      General      #
 #  +--------------+ #
 # # # # # # # # # # #
 
-#No permisions.
-noPerms: "&d&lHideMyPlugins> &7You don't have permissions..."
+noPerms: '&d&lHideMyPlugins> &7You don''t have permissions...'
 
-# Deny message.
-blockMessage: '&d&lHideMyPlugins> &7Access Denied.'
-
-# Admin Notify Deny message.
-blockAdminNotifyMessage: '&d&lHideMyPlugins> &d{USER} &7tried to use a blocked command.'
-
-# Bungee Admin Notify Deny message.
-blockBungeeAdminNotifyMessage: '&d&lHideMyPlugins> &d{USER} &7tried to use a blocked command on server &d{SERVER}.'
+commands:
+  history_usage: '&d&lHideMyPlugins> &7Usage: &d/hmpa history <user> <page>'
 
 # # # # # # # # # # #
 #  +--------------+ #
-#       Title       #
+#   Deny Messages   #
 #  +--------------+ #
 # # # # # # # # # # #
 
-# Title Deny message.
-titleBlockMessage: '&dAccess Denied'
+deny:
+  title_block_message: '&dAccess Denied'
+  block_message: '&d&lHideMyPlugins> &7Access Denied.'
+
+# # # # # # # # # # #
+#  +--------------+ #
+#      Admin        #
+#  +--------------+ #
+# # # # # # # # # # #
+
+admin:
+  reload: '&d&lHideMyPlugins> &7Configuration reloaded!'
+  web_interface_command: '&d&lHideMyPlugins> &7Access your Web Interface here: &d{WEB}'
+  web_interface_command_no_enabled: '&d&lHideMyPlugins> &7Web Interface is disabled in the &dconfig.yml'
+  history_searching: '&d&lHideMyPlugins> &7Searching history for &d{USER}'
+  history_found: '&d&lHideMyPlugins> &7Found commands for &d{USER}'
+  history_not_found: "&d&lHideMyPlugins> &d{USER} &7hasn't used blocked commands. This user is clean!"
+  history_page_not_found: '&d&lHideMyPlugins> &7Page &d{PAGE} &7dosen''t exist...'
+  history_page_not_number: '&d&lHideMyPlugins> &d{PAGE} &7is not a number.'
+  history_table_header:
+    - '           &8[&7Page: &d{PAGE}&8]'
+    - '&8----------------------------'
+    - '&7User     Command        Date'
+    - '&8----------------------------'
+  history_result: '&d{USER} {COMMAND} {DATE}'
+  history_result_hover: '&aHideMyPlugins Web Profile'
+
+admin_messages:
+  block_admin_notify_message: '&d&lHideMyPlugins> &d{USER} &7tried to use a blocked command.'
+  block_bungee_admin_notify_message: '&d&lHideMyPlugins> &d{USER} &7tried to use a blocked command on server &d{SERVER}&7.'
