@@ -25,7 +25,7 @@ public class Hidemyplugins implements CommandExecutor {
 
             if (plugin.getConfig().getBoolean("stealth-mode.enabled")) {
                 if (!player.hasPermission("hidemyplugins.access")) {
-                    player.sendMessage(plugin.getConfig().getString("stealth-mode.command-not-found"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("stealth-mode.command-not-found")));
                     return false;
                 }
             }

@@ -1,6 +1,7 @@
 package com.gamerexde.hidemypluginsbungee.Commands;
 
 import com.gamerexde.hidemypluginsbungee.HideMyPluginsBungee;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
@@ -19,7 +20,7 @@ public class HideMyPlugins extends Command {
 
             if (plugin.getConfig().getBoolean("stealth-mode.enabled")) {
                 if (!player.hasPermission("hidemyplugins.access")) {
-                    player.sendMessage(plugin.getConfig().getString("stealth-mode.command-not-found"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("stealth-mode.command-not-found")));
                     return;
                 }
             }
