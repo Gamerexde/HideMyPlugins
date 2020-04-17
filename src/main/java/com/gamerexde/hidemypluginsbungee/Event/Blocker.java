@@ -1,5 +1,6 @@
 package com.gamerexde.hidemypluginsbungee.Event;
 
+import com.gamerexde.hidemypluginsbungee.Database.Database;
 import com.gamerexde.hidemypluginsbungee.HideMyPluginsBungee;
 import com.gamerexde.hidemypluginsbungee.Utils.DateGenerator;
 import com.gamerexde.hidemypluginsbungee.Utils.IDGenerator;
@@ -74,24 +75,13 @@ public class Blocker implements Listener {
                 }
                 try {
                     if (plugin.getConfig().getBoolean("use-mysql")){
-                        Connection con = plugin.getMySQL().getConnection();
+                        Database con = plugin.getMySQL();
 
                         String name = ((ProxiedPlayer) event.getSender()).getName();
                         String uuid = ((ProxiedPlayer) event.getSender()).getUniqueId().toString();
                         String executedCommand = msg[0];
 
-                        PreparedStatement create = con.prepareStatement("INSERT INTO `" + plugin.getConfig().getString("MySQL.table_name")
-                                + "` (`ID`, `UUID`, `USER`, `EXECUTED_COMMAND`, `DATE`) VALUES ('"
-                                + IDGenerator.getAlphaNumericString()
-                                + "', '" + uuid + "', '"
-                                + name
-                                + "', '"
-                                + executedCommand
-                                + "', '"
-                                + DateGenerator.getDate()
-                                + "');");
-
-                        create.executeUpdate();
+                        PreparedStatement send = con.executeCommand(IDGenerator.getAlphaNumericString(),uuid,name,executedCommand, DateGenerator.getDate());
 
                     }
                 } catch (Exception e) {
@@ -124,27 +114,14 @@ public class Blocker implements Listener {
                     }
                 }
                 try {
-                    if (plugin.getConfig().getBoolean("use-mysql")){
-                        Connection con = plugin.getMySQL().getConnection();
+                    if (plugin.getConfig().getBoolean("use-mysql")) {
+                        Database con = plugin.getMySQL();
 
                         String name = ((ProxiedPlayer) event.getSender()).getName();
                         String uuid = ((ProxiedPlayer) event.getSender()).getUniqueId().toString();
                         String executedCommand = msg[0];
 
-
-                        PreparedStatement create = con.prepareStatement("INSERT INTO `" + plugin.getConfig().getString("MySQL.table_name")
-                                + "` (`ID`, `UUID`, `USER`, `EXECUTED_COMMAND`, `DATE`) VALUES ('"
-                                + IDGenerator.getAlphaNumericString()
-                                + "', '" + uuid + "', '"
-                                + name
-                                + "', '"
-                                + executedCommand
-                                + "', '"
-                                + DateGenerator.getDate()
-                                + "');");
-
-                        create.executeUpdate();
-
+                        PreparedStatement send = con.executeCommand(IDGenerator.getAlphaNumericString(),uuid,name,executedCommand, DateGenerator.getDate());
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

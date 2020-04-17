@@ -90,38 +90,13 @@ public class Blocker implements Listener {
                     }
                 }
                 try {
-                    if (plugin.getConfig().getBoolean("use-mysql")){
-                        Connection con = plugin.getMySQL().getConnection();
+                    Database con = plugin.getRDatabase();
 
-                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-                        LocalDateTime now = LocalDateTime.now();
+                    String name = event.getPlayer().getName();
+                    String uuid = event.getPlayer().getUniqueId().toString();
+                    String executedCommand = msg[0];
 
-                        String name = event.getPlayer().getName();
-                        String uuid = event.getPlayer().getUniqueId().toString();
-                        String executedCommand = msg[0];
-
-                        PreparedStatement create = con.prepareStatement("INSERT INTO `" + plugin.getConfig().getString("MySQL.table_name")
-                                + "` (`ID`, `UUID`, `USER`, `EXECUTED_COMMAND`, `DATE`) VALUES ('"
-                                + IDGenerator.getAlphaNumericString()
-                                + "', '" + uuid + "', '"
-                                + name
-                                + "', '"
-                                + executedCommand
-                                + "', '"
-                                + DateGenerator.getDate()
-                                + "');");
-
-                        create.executeUpdate();
-
-                    } else if (plugin.getConfig().getBoolean("use-sqlite")){
-                        Database con = plugin.getRDatabase();
-
-                        String name = event.getPlayer().getName();
-                        String uuid = event.getPlayer().getUniqueId().toString();
-                        String executedCommand = msg[0];
-
-                        PreparedStatement send = con.executeCommand(IDGenerator.getAlphaNumericString(),uuid,name,executedCommand,DateGenerator.getDate());
-                    }
+                    PreparedStatement send = con.executeCommand(IDGenerator.getAlphaNumericString(),uuid,name,executedCommand,DateGenerator.getDate());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -175,35 +150,13 @@ public class Blocker implements Listener {
                 }
 
                 try {
-                    if (plugin.getConfig().getBoolean("use-mysql")){
-                        Connection con = plugin.getMySQL().getConnection();
+                    Database con = plugin.getRDatabase();
 
-                        String name = event.getPlayer().getName();
-                        String uuid = event.getPlayer().getUniqueId().toString();
-                        String executedCommand = msg[0];
+                    String name = event.getPlayer().getName();
+                    String uuid = event.getPlayer().getUniqueId().toString();
+                    String executedCommand = msg[0];
 
-                        PreparedStatement create = con.prepareStatement("INSERT INTO `" + plugin.getConfig().getString("MySQL.table_name")
-                                + "` (`ID`, `UUID`, `USER`, `EXECUTED_COMMAND`, `DATE`) VALUES ('"
-                                + IDGenerator.getAlphaNumericString()
-                                + "', '" + uuid + "', '"
-                                + name
-                                + "', '"
-                                + executedCommand
-                                + "', '"
-                                + DateGenerator.getDate()
-                                + "');");
-
-                        create.executeUpdate();
-
-                    } else if (plugin.getConfig().getBoolean("use-sqlite")){
-                        Database con = plugin.getRDatabase();
-
-                        String name = event.getPlayer().getName();
-                        String uuid = event.getPlayer().getUniqueId().toString();
-                        String executedCommand = msg[0];
-
-                        PreparedStatement send = con.executeCommand(IDGenerator.getAlphaNumericString(),uuid,name,executedCommand,DateGenerator.getDate());
-                    }
+                    PreparedStatement send = con.executeCommand(IDGenerator.getAlphaNumericString(),uuid,name,executedCommand,DateGenerator.getDate());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

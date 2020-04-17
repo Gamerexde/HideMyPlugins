@@ -12,6 +12,7 @@ import net.md_5.bungee.api.plugin.Command;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Objects;
@@ -37,6 +38,12 @@ public class hmpa extends Command {
 
         if(commandSender instanceof ProxiedPlayer) {
             ProxiedPlayer player = (ProxiedPlayer) commandSender;
+            if (plugin.getConfig().getBoolean("stealth-mode.enabled")) {
+                if (!player.hasPermission("hidemyplugins.access")) {
+                    player.sendMessage(plugin.getConfig().getString("stealth-mode.command-not-found"));
+                    return;
+                }
+            }
             if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("web")) {
                     if (player.hasPermission("hidemyplugins.admin.webinterface")) {
@@ -59,12 +66,18 @@ public class hmpa extends Command {
                 if (args[0].equalsIgnoreCase("history")) {
                     if(args[1].equalsIgnoreCase(args[1])) {
                         if (player.hasPermission("hidemyplugins.admin.history")) {
+                            Connection con = null;
+                            Statement stmt = null;
+                            Statement stmtCheckQuery = null;
+                            ResultSet rs = null;
+                            ResultSet checkQuery = null;
+
                             try {
                                 if (plugin.getConfig().getBoolean("use-mysql")) {
-                                    Connection con = plugin.getMySQL().getConnection();
+                                    con = plugin.getMySQL().getSQLConnection();
 
-                                    Statement stmt = con.createStatement();
-                                    Statement stmtCheckQuery = con.createStatement();
+                                    stmt = con.createStatement();
+                                    stmtCheckQuery = con.createStatement();
 
                                     int pageNum = 0 ;
                                     int pageLength = 10;
@@ -74,8 +87,8 @@ public class hmpa extends Command {
                                             + args[1]
                                             + "' ORDER BY `DATE` ASC LIMIT %d, %d", pageNum * pageLength, pageLength);
 
-                                    ResultSet rs = stmt.executeQuery(query);
-                                    ResultSet checkQuery = stmtCheckQuery.executeQuery(query);
+                                    rs = stmt.executeQuery(query);
+                                    checkQuery = stmtCheckQuery.executeQuery(query);
 
                                     String adminHistorySearching = plugin.getMsgConfig().getString("admin.history_searching");
                                     adminHistorySearching = adminHistorySearching.replace("{USER}", args[1]);
@@ -131,6 +144,21 @@ public class hmpa extends Command {
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
+                            } finally {
+                                try {
+                                    if (con != null)
+                                        con.close();
+                                    if (rs != null)
+                                        rs.close();
+                                    if (checkQuery != null)
+                                        checkQuery.close();
+                                    if (stmt != null)
+                                        stmt.close();
+                                    if (stmtCheckQuery != null)
+                                        stmtCheckQuery.close();
+                                } catch (SQLException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         } else {
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&', noPerms));
@@ -156,12 +184,18 @@ public class hmpa extends Command {
                                     return;
                                 }
 
+                                Connection con = null;
+                                Statement stmt = null;
+                                Statement stmtCheckQuery = null;
+                                ResultSet rs = null;
+                                ResultSet checkQuery = null;
+
                                 try {
                                     if (plugin.getConfig().getBoolean("use-mysql")) {
-                                        Connection con = plugin.getMySQL().getConnection();
+                                        con = plugin.getMySQL().getSQLConnection();
 
-                                        Statement stmt = con.createStatement();
-                                        Statement stmtCheckQuery = con.createStatement();
+                                        stmt = con.createStatement();
+                                        stmtCheckQuery = con.createStatement();
 
                                         int page = Integer.parseInt(args[2]);
 
@@ -174,8 +208,8 @@ public class hmpa extends Command {
                                                     + args[1]
                                                     + "' ORDER BY `DATE` ASC LIMIT %d, %d", pageNum * pageLength, pageLength);
 
-                                            ResultSet rs = stmt.executeQuery(query);
-                                            ResultSet checkQuery = stmtCheckQuery.executeQuery(query);
+                                            rs = stmt.executeQuery(query);
+                                            checkQuery = stmtCheckQuery.executeQuery(query);
 
                                             String adminHistorySearching = plugin.getMsgConfig().getString("admin.history_searching");
                                             adminHistorySearching = adminHistorySearching.replace("{USER}", args[1]);
@@ -237,8 +271,8 @@ public class hmpa extends Command {
                                                     + args[1]
                                                     + "' ORDER BY `DATE` ASC LIMIT %d, %d", pageNum * pageLength, pageLength);
 
-                                            ResultSet rs = stmt.executeQuery(query);
-                                            ResultSet checkQuery = stmtCheckQuery.executeQuery(query);
+                                            rs = stmt.executeQuery(query);
+                                            checkQuery = stmtCheckQuery.executeQuery(query);
 
                                             String adminHistorySearching = plugin.getMsgConfig().getString("admin.history_searching");
                                             adminHistorySearching = adminHistorySearching.replace("{USER}", args[1]);
@@ -304,6 +338,21 @@ public class hmpa extends Command {
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
+                                } finally {
+                                    try {
+                                        if (con != null)
+                                            con.close();
+                                        if (rs != null)
+                                            rs.close();
+                                        if (checkQuery != null)
+                                            checkQuery.close();
+                                        if (stmt != null)
+                                            stmt.close();
+                                        if (stmtCheckQuery != null)
+                                            stmtCheckQuery.close();
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                             } else {
                                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', noPerms));

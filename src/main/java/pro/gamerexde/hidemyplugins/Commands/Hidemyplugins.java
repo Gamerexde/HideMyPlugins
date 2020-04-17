@@ -17,6 +17,19 @@ public class Hidemyplugins implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (label.equalsIgnoreCase("HideMyPlugins")) {
+            if (!(sender instanceof Player)) {
+                sender.sendMessage("(!) You need to be a player in order to execute that command.");
+                return false;
+            }
+            Player player = (Player) sender;
+
+            if (plugin.getConfig().getBoolean("stealth-mode.enabled")) {
+                if (!player.hasPermission("hidemyplugins.access")) {
+                    player.sendMessage(plugin.getConfig().getString("stealth-mode.command-not-found"));
+                    return false;
+                }
+            }
+
             if(args.length == 1) {
                 if(args[0].equalsIgnoreCase("reload")){
                     if (sender.hasPermission("hidemyplugins.reload")) {
@@ -32,8 +45,6 @@ public class Hidemyplugins implements CommandExecutor {
             }
             if(args.length == 1) {
             }
-
-            Player player = (Player) sender;
 
             player.sendMessage("§8                       [§dHideMyPlugins§8]");
             player.sendMessage("                      §d" + plugin.version +"");

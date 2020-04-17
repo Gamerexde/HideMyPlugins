@@ -2,6 +2,7 @@ package com.gamerexde.hidemypluginsbungee;
 
 import com.gamerexde.hidemypluginsbungee.Commands.HideMyPlugins;
 import com.gamerexde.hidemypluginsbungee.Commands.hmpa;
+import com.gamerexde.hidemypluginsbungee.Database.Database;
 import com.gamerexde.hidemypluginsbungee.Database.MySQL;
 import com.gamerexde.hidemypluginsbungee.Event.Blocker;
 import com.gamerexde.hidemypluginsbungee.Event.onTabEvent;
@@ -23,7 +24,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class HideMyPluginsBungee extends Plugin {
-    private MySQL msql;
+    private Database db;
 
     private File configFile;
     private Configuration config;
@@ -36,7 +37,7 @@ public class HideMyPluginsBungee extends Plugin {
 
     private List<String> adminTableHeaderArray;
 
-    String version = "2.3.9-SNAPSHOT";
+    String version = "2.3.10-SNAPSHOT";
 
     @Override
     public void onEnable() {
@@ -46,7 +47,7 @@ public class HideMyPluginsBungee extends Plugin {
         this.getProxy().getPluginManager().registerListener((Plugin)this, (Listener)new onTabEvent(this));
         this.getProxy().getPluginManager().registerListener((Plugin)this, (Listener)new Blocker(this));
 
-        this.getProxy().getPluginManager().registerCommand(this, new HideMyPlugins());
+        this.getProxy().getPluginManager().registerCommand(this, new HideMyPlugins(this));
         this.getProxy().getPluginManager().registerCommand(this, new hmpa(this));
 
         getLogger().info("\n");
@@ -161,17 +162,18 @@ public class HideMyPluginsBungee extends Plugin {
                 getLogger().info(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7You cannot select &cMySQL &7and &cSQLite &7at the same time in the config.yml, for security reasons the server will shutdown until you set up the config correctly..."));
                 ProxyServer.getInstance().stop();
                 return;
-            } else
-                this.msql = new MySQL(this);
-            this.msql.initMySQLDatabase();
+            } else this.db = new MySQL(this); this.db.load();
         } else {
             getLogger().info(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7You need to select at least one database method on the config.yml, for security reasons the server will shutdown until you set up the config correctly..."));
             ProxyServer.getInstance().stop();
         }
     }
 
-    public MySQL getMySQL() {
-        return this.msql;
+    public Database getMySQL() {
+        this.db = new MySQL(this);
+        this.db.reconnect();
+
+        return this.db;
     }
 
     @Override

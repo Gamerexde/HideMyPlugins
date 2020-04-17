@@ -62,4 +62,7 @@ public class SQLite extends Database{
         Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Connected to SQLite successfully!"));
         initialize();
     }
+
+    @Override
+    public void reconnect() { }
 }

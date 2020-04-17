@@ -6,7 +6,7 @@ import pro.gamerexde.hidemyplugins.HideMyPlugins;
 
 import java.sql.*;
 
-public class MySQL {
+public class MySQL extends Database {
     private Connection connection;
     public String host, database, username, password;
     public int port;
@@ -14,7 +14,15 @@ public class MySQL {
     HideMyPlugins plugin;
 
     public MySQL(HideMyPlugins instance) {
+        super(instance);
         plugin = instance;
+    }
+
+    @Override
+    public void load() { this.initMySQLDatabase(); }
+
+    public void reconnect() {
+        reconnectMySQL();
     }
 
     public static final String USER_ERROR = "&d&lHideMyPlugins> &7Error while creating tables, verify user permissions and then try again...";
@@ -31,7 +39,7 @@ public class MySQL {
         try {
             Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Trying to connect to MySQL server &d" + host + ":" + port + ""));
             synchronized (this) {
-                if (getConnection() != null && !getConnection().isClosed()) {
+                if (getSQLConnection() != null && !getSQLConnection().isClosed()) {
                     return;
                 }
 
@@ -58,15 +66,47 @@ public class MySQL {
         }
     }
 
+    public void reconnectMySQL() {
+        host = plugin.getConfig().getString("MySQL.host");
+        port = plugin.getConfig().getInt("MySQL.port");
+        database = plugin.getConfig().getString("MySQL.database");
+        username = plugin.getConfig().getString("MySQL.user");
+        password = plugin.getConfig().getString("MySQL.password");
+        try {
+            synchronized (this) {
+                if (getSQLConnection() != null && !getSQLConnection().isClosed()) {
+                    return;
+                }
 
-    public Connection getConnection() {
+                String dbDriver = plugin.getConfig().getString("database-driver");
+                String dbClass = plugin.getConfig().getString("database-class");
+
+                Class.forName(dbClass);
+                setConnection(DriverManager.getConnection(dbDriver + this.host + ":"
+                        + this.port + "/" + this.database, this.username, this.password));
+            }
+        } catch (SQLException e) {
+            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', CONNECTION_USER_ERROR));
+            e.printStackTrace();
+            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Server will shutdown for security reasons..."));
+            Bukkit.shutdown();
+        } catch (ClassNotFoundException e) {
+            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', INTERNAL_ERROR));
+            e.printStackTrace();
+            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7Server will shutdown for security reasons..."));
+            Bukkit.shutdown();
+        }
+    }
+
+
+    public Connection getSQLConnection() {
         return connection;
     }
 
 
     public void createTable() {
         try {
-            Connection con = getConnection();
+            Connection con = getSQLConnection();
             PreparedStatement create = con.prepareStatement("CREATE TABLE IF NOT EXISTS " + plugin.getConfig().getString("MySQL.table_name") + " ("
                     + "ID VARCHAR(45) NOT NULL,"
                     + "USER VARCHAR(45) NOT NULL,"

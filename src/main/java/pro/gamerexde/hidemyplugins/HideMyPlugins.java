@@ -46,12 +46,11 @@ import static pro.gamerexde.hidemyplugins.Utils.Reflection.getNMSClass;
 
 public final class HideMyPlugins extends JavaPlugin implements Listener {
     private Database db;
-    private MySQL msql;
 
     private FileConfiguration newConfig;
     private File configFile;
 
-    public static final String version = "2.3.9-SNAPSHOT";
+    public static final String version = "2.3.10-SNAPSHOT";
 
     private ProtocolManager protocolManager;
 
@@ -163,41 +162,17 @@ public final class HideMyPlugins extends JavaPlugin implements Listener {
                             }
                             if (getConfig().getBoolean("tabCompletionLoggin")) {
                                 try {
-                                    if (plugin.getConfig().getBoolean("use-mysql")){
-                                        Connection con = getMySQL().getConnection();
+                                    Database con = getRDatabase();
 
-                                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-                                        LocalDateTime now = LocalDateTime.now();
+                                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                                    LocalDateTime now = LocalDateTime.now();
 
-                                        String name = event.getPlayer().getName();
-                                        String uuid = event.getPlayer().getUniqueId().toString();
-                                        String date = dtf.format(now);
-                                        String executedCommand = "TAB COMPLETION";
+                                    String name = event.getPlayer().getName();
+                                    String uuid = event.getPlayer().getUniqueId().toString();
+                                    String date = dtf.format(now);
+                                    String executedCommand = "TAB COMPLETION";
 
-                                        PreparedStatement create = con.prepareStatement("INSERT INTO `"
-                                                + plugin.getConfig().getString("MySQL.table_name")
-                                                + "` (`ID`, `UUID`, `USER`, `EXECUTED_COMMAND`, `DATE`) VALUES ('"
-                                                + IDGenerator.getAlphaNumericString() + "', '"
-                                                + uuid + "', '"
-                                                + name + "', '" + executedCommand
-                                                + "', '" + date
-                                                + "');");
-
-                                        create.executeUpdate();
-
-                                    } else if (plugin.getConfig().getBoolean("use-sqlite")){
-                                        Database con = getRDatabase();
-
-                                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-                                        LocalDateTime now = LocalDateTime.now();
-
-                                        String name = event.getPlayer().getName();
-                                        String uuid = event.getPlayer().getUniqueId().toString();
-                                        String date = dtf.format(now);
-                                        String executedCommand = "TAB COMPLETION";
-
-                                        PreparedStatement send = con.executeCommand(IDGenerator.getAlphaNumericString(),uuid,name,executedCommand,date);
-                                    }
+                                    PreparedStatement send = con.executeCommand(IDGenerator.getAlphaNumericString(),uuid,name,executedCommand,date);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -228,8 +203,8 @@ public final class HideMyPlugins extends JavaPlugin implements Listener {
                 Bukkit.shutdown();
                 return;
             } else
-            this.msql = new MySQL(this);
-            this.msql.initMySQLDatabase();
+            this.db = new MySQL(this);
+            this.db.load();
         } else {
             ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
             console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lHideMyPlugins> &7You need to select at least one database method on the config.yml, for security reasons the server will shutdown until you set up the config correctly..."));
@@ -238,11 +213,11 @@ public final class HideMyPlugins extends JavaPlugin implements Listener {
     }
 
     public Database getRDatabase() {
+        if (getConfig().getBoolean("use-mysql")) {
+            this.db = new MySQL(this);
+            this.db.reconnect();
+        }
         return this.db;
-    }
-
-    public MySQL getMySQL() {
-        return this.msql;
     }
 
 

@@ -118,6 +118,17 @@ sounds:
 
 # # # # # # # # # # #
 #  +--------------+ #
+#    Stealth Mode   #
+#  +--------------+ #
+# # # # # # # # # # #
+
+# Stealth Mode allows you to hide all HideMyPlugins commands to normal users.
+stealth-mode:
+  enabled: false
+  command-not-found: Unknown command. Type "/help" for help.
+
+# # # # # # # # # # #
+#  +--------------+ #
 #   Web Interface   #
 #  +--------------+ #
 # # # # # # # # # # #

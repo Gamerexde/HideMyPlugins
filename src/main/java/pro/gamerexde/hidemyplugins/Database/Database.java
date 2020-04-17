@@ -18,6 +18,8 @@ public abstract class Database {
 
     public abstract void load();
 
+    public abstract void reconnect();
+
     public Connection initialize() {
         connection = getSQLConnection();
         return connection;

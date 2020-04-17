@@ -1,5 +1,6 @@
 package com.gamerexde.hidemypluginsbungee.Event;
 
+import com.gamerexde.hidemypluginsbungee.Database.Database;
 import com.gamerexde.hidemypluginsbungee.HideMyPluginsBungee;
 import com.gamerexde.hidemypluginsbungee.Utils.DateGenerator;
 import com.gamerexde.hidemypluginsbungee.Utils.IDGenerator;
@@ -52,22 +53,13 @@ public class onTabEvent implements Listener {
             if (plugin.getConfig().getBoolean("tabCompletionLoggin")) {
                 try {
                     if (plugin.getConfig().getBoolean("use-mysql")) {
-                        Connection con = plugin.getMySQL().getConnection();
+                        Database con = plugin.getMySQL();
 
                         String name = player.getName();
                         String uuid = player.getUniqueId().toString();
                         String executedCommand = "TAB COMPLETION";
 
-                        PreparedStatement create = con.prepareStatement("INSERT INTO `"
-                                + plugin.getConfig().getString("MySQL.table_name")
-                                + "` (`ID`, `UUID`, `USER`, `EXECUTED_COMMAND`, `DATE`) VALUES ('"
-                                + IDGenerator.getAlphaNumericString() + "', '"
-                                + uuid + "', '"
-                                + name + "', '" + executedCommand
-                                + "', '" + DateGenerator.getDate()
-                                + "');");
-
-                        create.executeUpdate();
+                        PreparedStatement send = con.executeCommand(IDGenerator.getAlphaNumericString(), uuid, name, executedCommand, DateGenerator.getDate());
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
