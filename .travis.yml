@@ -4,7 +4,8 @@ before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y openjdk-8-jdk
   - sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
+  - apt-get -y install maven
 sudo: required
 
 install: true
-script: ./mvnw clean install
+script: ./mvn clean install
