@@ -1,5 +1,5 @@
 language: java
-jdk: openjdk-8-jre
+jdk: openjdk-8-jdk
 
 install: true
 script: ./mvnw clean install
