@@ -1,4 +1,6 @@
 ![](https://i.imgur.com/5VUVj5F.png "Banner")
+[![Build Status](https://travis-ci.com/Gamerexde/HideMyPlugins.svg?branch=master)](https://travis-ci.com/github/Gamerexde/HideMyPlugins)
+
 The best way to protect your Plugins.
 
 ## Introduction:
